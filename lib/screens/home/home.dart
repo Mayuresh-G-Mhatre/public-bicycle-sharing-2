@@ -42,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
         showUnselectedLabels: false,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
+            icon: Icon(Icons.account_circle),
             label: 'Account',
           ),
         ],
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_balance_wallet_outlined),
+              leading: Icon(Icons.account_balance_wallet),
               title: Text('Wallet'),
               onTap: () {
                 // navigate to wallet screen
