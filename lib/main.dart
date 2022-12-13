@@ -268,9 +268,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
+      // body: Center(
+      //   child: _pages.elementAt(_selectedIndex),
+      // ),
     );
   }
 }
