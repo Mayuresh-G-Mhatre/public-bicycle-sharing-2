@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/loading/loading.dart';
+import 'package:public_bicycle_sharing/screens/loading/splash.dart';
+import 'package:public_bicycle_sharing/screens/login/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoadingScreen(),
+      home: SplashScreen(),
     );
   }
 }

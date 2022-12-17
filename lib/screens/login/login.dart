@@ -27,6 +27,16 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 18.0,
+              child: Text(
+                'Welcome!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
             Image(
               image: AssetImage('assets/bicycle.png'),
             ),
@@ -77,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-// verify OTP and move to HomeScreen
+                // verify OTP and move to HomeScreen
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => HomeScreen(),
