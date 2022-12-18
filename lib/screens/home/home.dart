@@ -7,6 +7,8 @@ import 'package:public_bicycle_sharing/screens/settings/settings.dart';
 import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -15,9 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isDarkTheme = false;
   int _selectedIndex = 0;
 
-  static List<Widget> _pages = <Widget>[
-    HomeScreen(),
-    AccountScreen(),
+  static final List<Widget> _pages = <Widget>[
+    const HomeScreen(),
+    const AccountScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.qr_code_scanner_outlined),
+        child: const Icon(Icons.qr_code_scanner_outlined),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey[300],
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         showUnselectedLabels: false,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -52,11 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       appBar: AppBar(
-        title: Text('PBS'),
+        title: const Text('WePedL'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.dark_mode_outlined),
+            icon: const Icon(Icons.dark_mode_outlined),
             onPressed: () {
               setState(() {
                 _isDarkTheme = !_isDarkTheme;
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         child: Column(
           children: <Widget>[
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/pp.jpg'),
               ),
@@ -76,61 +78,61 @@ class _HomeScreenState extends State<HomeScreen> {
               accountEmail: Text('johnwick@gmail.com'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
               onTap: () {
                 // navigate to profile screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ProfileScreen(),
+                    builder: (context) => const ProfileScreen(),
                   ),
                 );
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_balance_wallet),
-              title: Text('Wallet'),
+              leading: const Icon(Icons.account_balance_wallet),
+              title: const Text('Wallet'),
               onTap: () {
                 // navigate to wallet screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => WalletScreen(),
+                    builder: (context) => const WalletScreen(),
                   ),
                 );
               },
             ),
             ListTile(
-              leading: Icon(Icons.pedal_bike_rounded),
-              title: Text('Ride History'),
+              leading: const Icon(Icons.pedal_bike_rounded),
+              title: const Text('Ride History'),
               onTap: () {
                 // navigate to history screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => HistoryScreen(),
+                    builder: (context) => const HistoryScreen(),
                   ),
                 );
               },
             ),
             ListTile(
-              leading: Icon(Icons.person_add_alt),
-              title: Text('Refer'),
+              leading: const Icon(Icons.person_add_alt),
+              title: const Text('Refer'),
               onTap: () {
                 // navigate to refer screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ReferScreen(),
+                    builder: (context) => const ReferScreen(),
                   ),
                 );
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
               onTap: () {
                 // navigate to settings screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => SettingsScreen(),
+                    builder: (context) => const SettingsScreen(),
                   ),
                 );
               },

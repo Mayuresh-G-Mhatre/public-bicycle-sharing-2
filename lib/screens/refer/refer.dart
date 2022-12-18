@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ReferScreen extends StatefulWidget {
+  const ReferScreen({super.key});
+
   @override
   _ReferScreenState createState() => _ReferScreenState();
 }
@@ -10,9 +12,9 @@ class _ReferScreenState extends State<ReferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Refer'),
+        title: const Text('Refer'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Refer Screen'),
       ),
     );

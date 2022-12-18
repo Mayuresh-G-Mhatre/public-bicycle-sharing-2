@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 300,
               child: Lottie.asset('assets/bicycle_anim.json'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     isRepeatingAnimation: false,
                     repeatForever: false,
                     totalRepeatCount: 0,
-                    pause: Duration(milliseconds: 0),
+                    pause: const Duration(milliseconds: 0),
                     onFinished: () {
                       Navigator.pushReplacement(
                           context,

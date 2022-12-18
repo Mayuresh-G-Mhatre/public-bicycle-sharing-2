@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class WalletScreen extends StatefulWidget {
+  const WalletScreen({super.key});
+
   @override
   _WalletScreenState createState() => _WalletScreenState();
 }
@@ -10,9 +12,9 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wallet'),
+        title: const Text('Wallet'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Wallet Screen'),
       ),
     );

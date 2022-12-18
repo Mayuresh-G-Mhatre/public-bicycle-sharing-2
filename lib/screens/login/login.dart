@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   bool _isLoading = false;
 
   void _sendOtp() async {
@@ -27,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 18.0,
               child: Text(
                 'Welcome!',
@@ -37,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            Image(
+            const Image(
               image: AssetImage('assets/bicycle.png'),
             ),
             Padding(
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 maxLength: 10,
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   counterText: '',
                   border: OutlineInputBorder(),
                   // hintText: 'Enter Phone Number',
@@ -61,18 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () {
                       _sendOtp();
                     },
-                    child: Text('Send OTP'),
+                    child: const Text('Send OTP'),
                   ),
-            SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
+            const SizedBox(height: 20.0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(90, 0, 90, 0),
               child: TextField(
                 textAlign: TextAlign.center,
                 maxLength: 4,
@@ -84,17 +86,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 // verify OTP and move to HomeScreen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => const HomeScreen(),
                   ),
                 );
               },
-              child: Text('Verify OTP'),
+              child: const Text('Verify OTP'),
             ),
           ],
         ),
