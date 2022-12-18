@@ -79,104 +79,109 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
         title: const Text('WePedL'),
         centerTitle: true,
       ),
-      drawer: SidebarX(
-        showToggleButton: false,
-        theme: const SidebarXTheme(
-          width: 200,
-        ),
-        headerBuilder: (context, extended) {
-          return SizedBox(
-            height: 170,
-            child: Column(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: CircleAvatar(
-                    radius: 50,
-                    // implement avatar choosing //
-                    backgroundImage: AssetImage('assets/pp.jpg'),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                // get username from database //
-                Text('John Wick',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    )),
-              ],
-            ),
-          );
-        },
-        controller: SidebarXController(selectedIndex: 0, extended: true),
-        items: [
-          SidebarXItem(
-            icon: Icons.not_listed_location,
-            label: '  Ride History',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const HistoryScreen(),
-                ),
-              );
-            },
+      drawer: SafeArea(
+        child: SidebarX(
+          showToggleButton: false,
+          theme: const SidebarXTheme(
+            width: 250,
           ),
-          SidebarXItem(
-            icon: Icons.group_add,
-            label: '  Refer & Earn',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ReferScreen(),
-                ),
-              );
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.settings,
-            label: '  Settings',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
-                ),
-              );
-            },
-          ),
-        ],
-        footerBuilder: (context, extended) {
-          return SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextButton.icon(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue),
-                ),
-                onPressed: () {
-                  // logic for logout and disconnect from firebase //
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+          headerBuilder: (context, extended) {
+            return SizedBox(
+              height: 190,
+              child: Column(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CircleAvatar(
+                      radius: 60,
+                      // implement avatar choosing //
+                      backgroundImage: AssetImage('assets/pp.jpg'),
                     ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.exit_to_app,
-                  size: 15.0,
-                  color: Colors.white,
-                ),
-                label: const Text(
-                  "Logout",
-                  style: TextStyle(
-                    fontSize: 12.0,
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  // get username from database //
+                  Text('John Wick',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+            );
+          },
+          controller: SidebarXController(selectedIndex: 0, extended: true),
+          items: [
+            SidebarXItem(
+              icon: Icons.not_listed_location,
+              label: '  Ride History',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HistoryScreen(),
+                  ),
+                );
+              },
+            ),
+            SidebarXItem(
+              icon: Icons.group_add,
+              label: '  Refer & Earn',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ReferScreen(),
+                  ),
+                );
+              },
+            ),
+            SidebarXItem(
+              icon: Icons.settings,
+              label: '  Settings',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+          footerBuilder: (context, extended) {
+            return SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextButton.icon(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(10.0)),
+                    backgroundColor:
+                        const MaterialStatePropertyAll<Color>(Colors.blue),
+                  ),
+                  onPressed: () {
+                    // logic for logout and disconnect from firebase //
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.exit_to_app,
+                    size: 18.0,
                     color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       // logic for routing navigation bar tabs
       body: Center(
