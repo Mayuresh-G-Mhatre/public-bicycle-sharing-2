@@ -10,11 +10,8 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wallet'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: Text('Wallet Screen'),
       ),
     );

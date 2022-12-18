@@ -10,11 +10,8 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: Text('Account Screen'),
       ),
     );
