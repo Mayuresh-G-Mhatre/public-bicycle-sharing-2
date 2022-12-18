@@ -82,6 +82,7 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
       drawer: SafeArea(
         child: SidebarX(
           showToggleButton: false,
+          animationDuration: const Duration(milliseconds: 0),
           theme: const SidebarXTheme(
             width: 250,
           ),

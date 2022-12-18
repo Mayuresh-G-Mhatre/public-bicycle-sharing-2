@@ -25,13 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               const Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 5),
                 child: SizedBox(
                   height: 18.0,
                   child: Text(
@@ -47,12 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 image: AssetImage('assets/bicycle.png'),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextField(
                   maxLength: 10,
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
+                    labelText: 'Phone Number',
                     counterText: '',
                     border: OutlineInputBorder(),
                     // hintText: 'Enter Phone Number',
@@ -60,9 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   fontSize: 10,
                     // ),
                     prefixIcon: Icon(Icons.phone_outlined),
-                    prefix: Text('+91 '),
+                    // prefix: Text('+91 '),
+                    prefixText: '+91 ',
                     prefixStyle: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
                     ),
                   ),
                 ),
@@ -84,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   maxLength: 4,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                    labelText: 'OTP',
                     counterText: '',
                     border: OutlineInputBorder(),
                     // hintText: 'Enter OTP',
