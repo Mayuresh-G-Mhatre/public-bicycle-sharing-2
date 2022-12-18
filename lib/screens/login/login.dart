@@ -27,15 +27,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(
-              height: 18.0,
-              child: Text(
-                'Welcome!',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: 18.0,
+                child: Text(
+                  'Welcome!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
                 ),
               ),
             ),

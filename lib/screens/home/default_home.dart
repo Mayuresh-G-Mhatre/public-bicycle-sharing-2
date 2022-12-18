@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/account/account.dart';
 import 'package:public_bicycle_sharing/screens/help/get_help.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
@@ -25,7 +26,7 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
     const HomeScreen(),
     const WalletScreen(),
     const GetHelpScreen(),
-    const AccountScreen(),
+    const ProfileScreen(),
   ];
 
   // no need of this as added anonymous function in salomon
@@ -74,49 +75,45 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
           ),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Colors.grey[300],
-      //   elevation: 5,
-      //   currentIndex: _selectedIndex,
-      //   onTap: _onItemTapped,
-      //   showUnselectedLabels: false,
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.account_circle),
-      //       label: 'Account',
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         title: const Text('WePedL'),
         centerTitle: true,
       ),
       drawer: SidebarX(
+        showToggleButton: false,
+        theme: const SidebarXTheme(
+          width: 200,
+        ),
         headerBuilder: (context, extended) {
-          return const SizedBox(
-            height: 200,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: CircleAvatar(
-                radius: 70,
-                backgroundImage: AssetImage('assets/pp.jpg'),
-              ),
+          return SizedBox(
+            height: 170,
+            child: Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircleAvatar(
+                    radius: 50,
+                    // implement avatar choosing //
+                    backgroundImage: AssetImage('assets/pp.jpg'),
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                // get username from database //
+                Text('John Wick',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+              ],
             ),
           );
         },
-        headerDivider: const Divider(
-          indent: 5.0,
-          endIndent: 5.0,
-        ),
         controller: SidebarXController(selectedIndex: 0, extended: true),
         items: [
           SidebarXItem(
             icon: Icons.not_listed_location,
-            label: 'Ride History',
+            label: '  Ride History',
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -127,7 +124,7 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
           ),
           SidebarXItem(
             icon: Icons.group_add,
-            label: 'Refer & Earn',
+            label: '  Refer & Earn',
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -138,7 +135,7 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
           ),
           SidebarXItem(
             icon: Icons.settings,
-            label: 'Settings',
+            label: '  Settings',
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -150,106 +147,37 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
         ],
         footerBuilder: (context, extended) {
           return SizedBox(
-            child: TextButton.icon(
-              style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.exit_to_app,
-                size: 15.0,
-                color: Colors.white,
-              ),
-              label: const Text(
-                "Logout",
-                style: TextStyle(
-                  fontSize: 12.0,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextButton.icon(
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue),
+                ),
+                onPressed: () {
+                  // logic for logout and disconnect from firebase //
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.exit_to_app,
+                  size: 15.0,
                   color: Colors.white,
+                ),
+                label: const Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           );
         },
       ),
-      // drawer: Drawer(
-      //   child: Column(
-      //     children: <Widget>[
-      //       const UserAccountsDrawerHeader(
-      //         currentAccountPicture: CircleAvatar(
-      //           backgroundImage: AssetImage('assets/pp.jpg'),
-      //         ),
-      //         accountName: Text('John Wick'),
-      //         accountEmail: Text('johnwick@gmail.com'),
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(Icons.person),
-      //         title: const Text('Profile'),
-      //         onTap: () {
-      //           // navigate to profile screen
-      //           Navigator.of(context).push(
-      //             MaterialPageRoute(
-      //               builder: (context) => const ProfileScreen(),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(Icons.account_balance_wallet),
-      //         title: const Text('Wallet'),
-      //         onTap: () {
-      //           // navigate to wallet screen
-      //           Navigator.of(context).push(
-      //             MaterialPageRoute(
-      //               builder: (context) => const WalletScreen(),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(Icons.pedal_bike_rounded),
-      //         title: const Text('Ride History'),
-      //         onTap: () {
-      //           // navigate to history screen
-      //           Navigator.of(context).push(
-      //             MaterialPageRoute(
-      //               builder: (context) => const HistoryScreen(),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(Icons.person_add_alt),
-      //         title: const Text('Refer'),
-      //         onTap: () {
-      //           // navigate to refer screen
-      //           Navigator.of(context).push(
-      //             MaterialPageRoute(
-      //               builder: (context) => const ReferScreen(),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(Icons.settings),
-      //         title: const Text('Settings'),
-      //         onTap: () {
-      //           // navigate to settings screen
-      //           Navigator.of(context).push(
-      //             MaterialPageRoute(
-      //               builder: (context) => const SettingsScreen(),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
       // logic for routing navigation bar tabs
       body: Center(
         child: _pages.elementAt(_selectedIndex),
