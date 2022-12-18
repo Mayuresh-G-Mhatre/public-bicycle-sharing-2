@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/home/home.dart';
+import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // verify OTP and move to HomeScreen
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
+                    builder: (context) => const DefaultHomeScreen(),
                   ),
                 );
               },
