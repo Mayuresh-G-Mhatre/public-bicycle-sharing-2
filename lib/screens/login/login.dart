@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
+import 'package:public_bicycle_sharing/screens/login/otp.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,16 +10,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneController = TextEditingController();
-  bool _isLoading = false;
 
-  void _sendOtp() async {
-    setState(() {
-      _isLoading = true;
-    });
-// send OTP to phone number provided
-    setState(() {
-      _isLoading = false;
-    });
+  String getPhoneNumber(TextEditingController tec) {
+    return _phoneController.text;
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               const Padding(
-                padding: EdgeInsets.fromLTRB(0, 30, 0, 5),
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 10),
                 child: SizedBox(
                   height: 18.0,
                   child: Text(
@@ -46,6 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const Image(
                 image: AssetImage('assets/bicycle.png'),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -62,7 +64,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   fontSize: 10,
                     // ),
                     prefixIcon: Icon(Icons.phone_outlined),
-                    // prefix: Text('+91 '),
                     prefixText: '+91 ',
                     prefixStyle: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -72,40 +73,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 16.0),
-              _isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: () {
-                        _sendOtp();
-                      },
-                      child: const Text('Send OTP'),
-                    ),
-              const SizedBox(height: 20.0),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(90, 0, 90, 0),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  maxLength: 4,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'OTP',
-                    counterText: '',
-                    border: OutlineInputBorder(),
-                    // hintText: 'Enter OTP',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // verify OTP and move to HomeScreen
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const DefaultHomeScreen(),
+                      builder: (context) => OtpScreen(phoneNumber: _phoneController.text),
                     ),
                   );
                 },
-                child: const Text('Verify OTP'),
+                child: const Text('Send OTP'),
               ),
             ],
           ),
