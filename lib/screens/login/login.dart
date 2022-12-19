@@ -75,11 +75,15 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => OtpScreen(phoneNumber: _phoneController.text),
-                    ),
-                  );
+                  // if no input in text field then disable button else enable
+                  _phoneController.text.length == 10
+                      ? Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OtpScreen(phoneNumber: _phoneController.text),
+                          ),
+                        )
+                      : null;
                 },
                 child: const Text('Send OTP'),
               ),

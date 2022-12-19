@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
 
@@ -15,6 +17,9 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  final OtpFieldController otpController = OtpFieldController();
+  bool otpFilled = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,20 +45,35 @@ class _OtpScreenState extends State<OtpScreen> {
               ],
             ),
             const SizedBox(height: 20.0),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(90, 0, 90, 0),
-              child: TextField(
-                autofocus: true,
-                textAlign: TextAlign.center,
-                maxLength: 4,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
+              child: OTPTextField(
+                controller: otpController,
+                length: 4,
+                width: MediaQuery.of(context).size.width,
+                textFieldAlignment: MainAxisAlignment.spaceAround,
+                fieldWidth: 35,
+                fieldStyle: FieldStyle.box,
+                outlineBorderRadius: 10,
+                style: const TextStyle(fontSize: 15),
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'OTP',
-                  counterText: '',
-                  border: OutlineInputBorder(),
-                  // hintText: 'Enter OTP',
-                ),
+                onCompleted: (pin) {
+                  otpFilled = true;
+                },
               ),
+
+              // child: TextField(
+              //   autofocus: true,
+              //   textAlign: TextAlign.center,
+              //   maxLength: 4,
+              //   keyboardType: TextInputType.number,
+              //   decoration: InputDecoration(
+              //     labelText: 'OTP',
+              //     counterText: '',
+              //     border: OutlineInputBorder(),
+              //     // hintText: 'Enter OTP',
+              //   ),
+              // ),
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -78,11 +98,13 @@ class _OtpScreenState extends State<OtpScreen> {
             ElevatedButton(
               onPressed: () {
                 // verify OTP and move to HomeScreen
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const DefaultHomeScreen(),
-                  ),
-                );
+                otpFilled
+                    ? Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const DefaultHomeScreen(),
+                        ),
+                      )
+                    : null;
               },
               child: const Text('Verify OTP'),
             ),
