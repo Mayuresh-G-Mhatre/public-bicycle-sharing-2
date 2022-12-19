@@ -25,7 +25,7 @@ class _OtpScreenState extends State<OtpScreen> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 50),
+            const SizedBox(height: 200),
             const Text(
               'OTP Verification',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),

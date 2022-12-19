@@ -27,13 +27,6 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
     const ProfileScreen(),
   ];
 
-  // no need of this as added anonymous function in salomon
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +75,7 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
           showToggleButton: false,
           animationDuration: const Duration(milliseconds: 0),
           theme: const SidebarXTheme(
-            width: 250,
+            width: 220,
           ),
           headerBuilder: (context, extended) {
             return SizedBox(
