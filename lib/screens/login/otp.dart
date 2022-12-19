@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -18,6 +20,25 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   late OtpFieldController otpController = OtpFieldController();
   bool otpFilled = false;
+  int _seconds = 60;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _seconds--;
+        if (_seconds == 0) {
+          _timer.cancel();
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,15 +92,26 @@ class _OtpScreenState extends State<OtpScreen> {
                   "Didn't recieve any code?",
                   style: TextStyle(fontSize: 12.0),
                 ),
-                TextButton(
-                  onPressed: () {
-                    // logic for sending firebase otp //
-                  },
-                  child: const Text(
-                    'Resend Code',
-                    style: TextStyle(fontSize: 12.0),
-                  ),
-                )
+                _seconds > 0
+                    ? Text(
+                        ' Resend in ${_seconds}s',
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                        ),
+                      )
+                    : TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _seconds = 60;
+                          });
+                          _startTimer();
+                          // logic for sending firebase otp //
+                        },
+                        child: const Text(
+                          'Resend Code',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                      )
               ],
             ),
             const SizedBox(height: 8.0),
