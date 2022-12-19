@@ -9,10 +9,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _phoneController = TextEditingController();
+  late TextEditingController _phoneController;
+  FocusNode inputNode = FocusNode();
+  bool isButtonEnabled = false;
+
+  void openKeyboard() {
+    FocusScope.of(context).requestFocus(inputNode);
+  }
 
   String getPhoneNumber(TextEditingController tec) {
     return _phoneController.text;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _phoneController = TextEditingController();
+    _phoneController.addListener(() {
+      final isButtonEnabled = _phoneController.text.length == 10;
+      setState(() {
+        this.isButtonEnabled = isButtonEnabled;
+      });
+    });
   }
 
   @override
@@ -53,16 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextField(
                   maxLength: 10,
+                  // auto focus and open keyboard
+                  focusNode: inputNode,
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
                     labelText: 'Phone Number',
                     counterText: '',
                     border: OutlineInputBorder(),
-                    // hintText: 'Enter Phone Number',
-                    // hintStyle: TextStyle(
-                    //   fontSize: 10,
-                    // ),
                     prefixIcon: Icon(Icons.phone_outlined),
                     prefixText: '+91 ',
                     prefixStyle: TextStyle(
@@ -74,17 +91,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  // if no input in text field then disable button else enable
-                  _phoneController.text.length == 10
-                      ? Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                OtpScreen(phoneNumber: _phoneController.text),
-                          ),
-                        )
-                      : null;
-                },
+                onPressed: isButtonEnabled
+                    ? () {
+                        // if no input in text field then disable button else enable
+                        setState(() {
+                          isButtonEnabled = false;
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => OtpScreen(
+                                phoneNumber: _phoneController.text,
+                              ),
+                            ),
+                          );
+                        });
+                      }
+                    : null,
                 child: const Text('Send OTP'),
               ),
             ],
