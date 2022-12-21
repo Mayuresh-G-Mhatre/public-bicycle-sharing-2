@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:multiavatar/multiavatar.dart';
 import 'package:public_bicycle_sharing/screens/help/get_help.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
@@ -9,15 +11,20 @@ import 'package:public_bicycle_sharing/screens/settings/settings.dart';
 import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:public_bicycle_sharing/screens/login/my_paint.dart';
+import 'package:public_bicycle_sharing/screens/login/svg_wrapper.dart';
 
 class DefaultHomeScreen extends StatefulWidget {
   const DefaultHomeScreen({super.key});
 
   @override
-  Default_HomePageSScreen createState() => Default_HomePageSScreen();
+  _DefaultHomeScreenState createState() => _DefaultHomeScreenState();
 }
 
-class Default_HomePageSScreen extends State<DefaultHomeScreen> {
+class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
+  // get svg string from firestore database and set here //
+  String svgCode = multiavatar('086');
+  late DrawableRoot svgRoot;
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
@@ -26,6 +33,37 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
     const GetHelpScreen(),
     const ProfileScreen(),
   ];
+
+  Widget avatarPreview() {
+    return Container(
+      height: 100.0,
+      width: 100.0,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: svgRoot == null
+          ? const SizedBox.shrink()
+          : CustomPaint(
+              painter: MyPainter(svgRoot, const Size(100.0, 100.0)),
+              child: Container(),
+            ),
+    );
+  }
+
+  _generateSvg() async {
+    return SvgWrapper(svgCode).generateLogo().then((value) {
+      setState(() {
+        svgRoot = value!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _generateSvg();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,20 +119,16 @@ class Default_HomePageSScreen extends State<DefaultHomeScreen> {
             return SizedBox(
               height: 190,
               child: Column(
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: CircleAvatar(
-                      radius: 60,
-                      // implement avatar choosing //
-                      backgroundImage: AssetImage('assets/pp.jpg'),
-                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: avatarPreview(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
-                  // get username from database //
-                  Text('John Wick',
+                  // get name from firestore database and set here //
+                  const Text('John Wick',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       )),

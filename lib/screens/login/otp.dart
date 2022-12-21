@@ -20,6 +20,7 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   late OtpFieldController otpController = OtpFieldController();
+  final FocusNode _otpFocusNode = FocusNode();
   bool otpFilled = false;
   int _seconds = 60;
   late Timer _timer;
@@ -43,6 +44,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).requestFocus(_otpFocusNode);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -68,21 +70,26 @@ class _OtpScreenState extends State<OtpScreen> {
             const SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
-              child: OTPTextField(
-                controller: otpController,
-                length: 4,
-                width: MediaQuery.of(context).size.width,
-                textFieldAlignment: MainAxisAlignment.spaceAround,
-                fieldWidth: 35,
-                fieldStyle: FieldStyle.box,
-                outlineBorderRadius: 10,
-                style: const TextStyle(fontSize: 15),
-                keyboardType: TextInputType.number,
-                onChanged: (otp) {
-                  setState(() {
-                    otpFilled = otp.length == 4;
-                  });
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(_otpFocusNode);
                 },
+                child: OTPTextField(
+                  controller: otpController,
+                  length: 4,
+                  width: MediaQuery.of(context).size.width,
+                  textFieldAlignment: MainAxisAlignment.spaceAround,
+                  fieldWidth: 35,
+                  fieldStyle: FieldStyle.box,
+                  outlineBorderRadius: 10,
+                  style: const TextStyle(fontSize: 15),
+                  keyboardType: TextInputType.number,
+                  onChanged: (otp) {
+                    setState(() {
+                      otpFilled = otp.length == 4;
+                    });
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -122,6 +129,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   ? () {
                       setState(() {
                         otpFilled = true;
+                        // check if otp is correct by qureying firestore database //
+
                         // simulate firebase //
                         // check if phone number exists in firestore and if doesn't then route to registration screen //
                         // else route to home screen //

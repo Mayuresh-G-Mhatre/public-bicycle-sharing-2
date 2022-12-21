@@ -51,65 +51,67 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(width: 58.0),
-                _avatarPreview(),
-                const SizedBox(width: 10.0),
-                _randomButton(),
-                // const SizedBox(height: 35.0),
-                // _textField(),
-              ],
-            ),
-            const SizedBox(height: 30.0),
-            Form(
-              key: _formKey,
-              child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 60.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _nameField(),
-                  const SizedBox(height: 12.0),
-                  _emailField(),
-                  const SizedBox(height: 12.0),
-                  _phoneNumberField(),
-                  const SizedBox(height: 30.0),
-                  ElevatedButton(
-                    onPressed: (_nameErrorText == null &&
-                            _emailErrorText == null)
-                        ? () {
-                            // save svg code string to firestore database //
-                            print('Multiavatar string: ${randomField.text}');
-                            if (_formKey.currentState!.validate() &&
-                                _nameErrorText == null &&
-                                _emailErrorText == null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DefaultHomeScreen(),
-                                ),
-                              );
-                            }
-                          }
-                        : null,
-                    child: const Text('Enter'),
-                  ),
+                  const SizedBox(width: 58.0),
+                  avatarPreview(),
+                  const SizedBox(width: 10.0),
+                  _randomButton(),
+                  // const SizedBox(height: 35.0),
+                  // _textField(),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 30.0),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _nameField(),
+                    const SizedBox(height: 12.0),
+                    _emailField(),
+                    const SizedBox(height: 12.0),
+                    _phoneNumberField(),
+                    const SizedBox(height: 30.0),
+                    ElevatedButton(
+                      onPressed: (_nameErrorText == null &&
+                              _emailErrorText == null)
+                          ? () {
+                              // save svg code string to firestore database //
+                              print('Multiavatar string: ${randomField.text}');
+                              if (_formKey.currentState!.validate() &&
+                                  _nameErrorText == null &&
+                                  _emailErrorText == null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DefaultHomeScreen(),
+                                  ),
+                                );
+                              }
+                            }
+                          : null,
+                      child: const Text('Enter'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _avatarPreview() {
+  Widget avatarPreview() {
     return Container(
       height: 100.0,
       width: 100.0,
@@ -222,7 +224,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       child: TextField(
         readOnly: true,
         enabled: false,
-        style: TextStyle(color: Colors.grey[600]),
+        style: const TextStyle(color: Colors.grey),
         controller: phoneController,
         maxLength: 30,
         keyboardType: TextInputType.phone,
