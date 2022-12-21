@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 12680), () {
+    Timer(const Duration(milliseconds: 12600), () {
       setState(() {
         splashPrefixText = '';
       });
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(width: (MediaQuery.of(context).size.width) / 2.5),
+                SizedBox(width: (MediaQuery.of(context).size.width) / 2.4),
                 Text(
                   splashPrefixText,
                   style: const TextStyle(
