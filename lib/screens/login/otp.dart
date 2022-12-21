@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
+import 'package:public_bicycle_sharing/screens/login/register.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
@@ -97,6 +98,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ' Resend in ${_seconds}s',
                         style: const TextStyle(
                           fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       )
                     : TextButton(
@@ -120,11 +122,23 @@ class _OtpScreenState extends State<OtpScreen> {
                   ? () {
                       setState(() {
                         otpFilled = true;
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const DefaultHomeScreen(),
-                          ),
-                        );
+                        // simulate firebase //
+                        // check if phone number exists in firestore and if doesn't then route to registration screen //
+                        // else route to home screen //
+                        if (widget.phoneNumber == '0000000000') {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => RegistrationScreen(
+                                  phoneNumber: widget.phoneNumber),
+                            ),
+                          );
+                        } else {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const DefaultHomeScreen(),
+                            ),
+                          );
+                        }
                       });
                     }
                   : null,

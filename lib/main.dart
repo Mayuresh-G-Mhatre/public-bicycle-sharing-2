@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/loading/loading.dart';
 import 'package:public_bicycle_sharing/screens/loading/splash.dart';
-import 'package:public_bicycle_sharing/screens/login/login.dart';
 
 void main() => runApp(MyApp());
 
