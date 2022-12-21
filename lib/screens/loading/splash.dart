@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -11,6 +13,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String splashPrefixText = 'We';
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(milliseconds: 12700), () {
+      setState(() {
+        splashPrefixText = '';
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         alignment: Alignment.center,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
@@ -28,13 +42,13 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                // const SizedBox(width: 20.0, height: 100.0),
-                const Text(
-                  'We',
-                  style: TextStyle(
+                SizedBox(width: (MediaQuery.of(context).size.width) / 2.7),
+                Text(
+                  splashPrefixText,
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -61,6 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       RotateAnimatedText('DiscoveR'),
                       RotateAnimatedText('TraveL'),
                       RotateAnimatedText('PedL'),
+                      // ScaleAnimatedText(''),
                       // RotateAnimatedText('ExercisE'),
                       // RotateAnimatedText('RelaX'),
                       // RotateAnimatedText('InspirE'),
