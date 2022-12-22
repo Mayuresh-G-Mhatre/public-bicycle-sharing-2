@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:multiavatar/multiavatar.dart';
 import 'package:public_bicycle_sharing/screens/help/get_help.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
@@ -11,8 +9,6 @@ import 'package:public_bicycle_sharing/screens/settings/settings.dart';
 import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:public_bicycle_sharing/screens/login/my_paint.dart';
-import 'package:public_bicycle_sharing/screens/login/svg_wrapper.dart';
 
 class DefaultHomeScreen extends StatefulWidget {
   const DefaultHomeScreen({super.key});
@@ -22,9 +18,6 @@ class DefaultHomeScreen extends StatefulWidget {
 }
 
 class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
-  // get svg string from firestore database and set here //
-  String svgCode = multiavatar('086');
-  late DrawableRoot svgRoot;
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
@@ -34,44 +27,13 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     const ProfileScreen(),
   ];
 
-  Widget avatarPreview() {
-    return Container(
-      height: 100.0,
-      width: 100.0,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      child: svgRoot == null
-          ? const SizedBox.shrink()
-          : CustomPaint(
-              painter: MyPainter(svgRoot, const Size(100.0, 100.0)),
-              child: Container(),
-            ),
-    );
-  }
-
-  _generateSvg() async {
-    return SvgWrapper(svgCode).generateLogo().then((value) {
-      setState(() {
-        svgRoot = value!;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _generateSvg();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label: const Text("Scan QR"),
+        label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
       ),
       bottomNavigationBar: SalomonBottomBar(
@@ -120,9 +82,12 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
               height: 190,
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: avatarPreview(),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage('assets/pp.jpg'),
+                    ),
                   ),
                   const SizedBox(
                     height: 5.0,

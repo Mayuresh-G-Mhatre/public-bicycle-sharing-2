@@ -1,11 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:multiavatar/multiavatar.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/screens/login/my_paint.dart';
-import 'package:public_bicycle_sharing/screens/login/svg_wrapper.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -16,8 +10,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  String svgCode = multiavatar('086');
-  late DrawableRoot svgRoot;
   final _formKey = GlobalKey<FormState>();
   final _emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
@@ -28,25 +20,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool nameError = false;
   bool emailError = false;
 
-  TextEditingController randomField = TextEditingController(text: '086');
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   late TextEditingController phoneController =
       TextEditingController(text: '+91 ${widget.phoneNumber}');
-
-  _generateSvg() async {
-    return SvgWrapper(svgCode).generateLogo().then((value) {
-      setState(() {
-        svgRoot = value!;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _generateSvg();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +38,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(width: 58.0),
-                  avatarPreview(),
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('assets/pp.jpg'),
+                  ),
                   const SizedBox(width: 10.0),
-                  _randomButton(),
-                  // const SizedBox(height: 35.0),
-                  // _textField(),
                 ],
               ),
               const SizedBox(height: 30.0),
@@ -81,24 +56,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _phoneNumberField(),
                     const SizedBox(height: 30.0),
                     ElevatedButton(
-                      onPressed: (_nameErrorText == null &&
-                              _emailErrorText == null)
-                          ? () {
-                              // save svg code string to firestore database //
-                              print('Multiavatar string: ${randomField.text}');
-                              if (_formKey.currentState!.validate() &&
-                                  _nameErrorText == null &&
-                                  _emailErrorText == null) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DefaultHomeScreen(),
-                                  ),
-                                );
-                              }
-                            }
-                          : null,
+                      onPressed:
+                          (_nameErrorText == null && _emailErrorText == null)
+                              ? () {
+                                  if (_formKey.currentState!.validate() &&
+                                      _nameErrorText == null &&
+                                      _emailErrorText == null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DefaultHomeScreen(),
+                                      ),
+                                    );
+                                  }
+                                }
+                              : null,
                       child: const Text('Enter'),
                     ),
                   ],
@@ -106,53 +79,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget avatarPreview() {
-    return Container(
-      height: 100.0,
-      width: 100.0,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      child: svgRoot == null
-          ? const SizedBox.shrink()
-          : CustomPaint(
-              painter: MyPainter(svgRoot, const Size(100.0, 100.0)),
-              child: Container(),
-            ),
-    );
-  }
-
-  Widget _textField() {
-    return TextField(
-      controller: randomField,
-      textAlign: TextAlign.center,
-      style: const TextStyle(color: Colors.white),
-      onChanged: (field) {
-        if (field.isNotEmpty) {
-          setState(() {
-            svgCode = multiavatar(field);
-          });
-          // dev.log(svgCode);
-        } else {
-          setState(() {
-            svgCode = multiavatar('321');
-          });
-        }
-        _generateSvg();
-      },
-      decoration: const InputDecoration(
-        fillColor: Colors.white10,
-        border: InputBorder.none,
-        filled: true,
-        hintText: "type anything here",
-        hintStyle: TextStyle(
-          color: Colors.grey,
         ),
       ),
     );
@@ -234,32 +160,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.person),
         ),
-      ),
-    );
-  }
-
-  Widget _randomButton() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        width: 50.0,
-        height: 50.0,
-        padding: const EdgeInsets.all(8.0),
-        color: Colors.blue,
-        child: IconButton(
-            iconSize: 18.0,
-            onPressed: () {
-              var l = List.generate(12, (_) => Random().nextInt(100));
-              randomField.text = l.join();
-              setState(() {
-                svgCode = multiavatar(randomField.text);
-              });
-              _generateSvg();
-            },
-            icon: const Icon(
-              Icons.refresh,
-              color: Colors.white70,
-            )),
       ),
     );
   }
