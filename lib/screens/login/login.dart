@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/login/otp.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +10,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // shared pref //
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  // shared pref //
   late TextEditingController _phoneController;
   FocusNode inputNode = FocusNode();
   bool isButtonEnabled = false;
@@ -92,18 +96,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: isButtonEnabled
-                    ? () {
+                    ? () async {
                         // if no input in text field then disable button else enable
                         setState(() {
                           isButtonEnabled = false;
-                          Navigator.of(context).push(
+                        });
+                        Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => OtpScreen(
                                 phoneNumber: _phoneController.text,
                               ),
                             ),
                           );
-                        });
+                          await sprefs.setPhoneNumber(
+                              _phoneController.text); // shared prefs //
                       }
                     : null,
                 child: const Text('Send OTP'),

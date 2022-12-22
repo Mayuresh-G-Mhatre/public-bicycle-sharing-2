@@ -7,7 +7,9 @@ import 'package:public_bicycle_sharing/screens/refer/refer.dart';
 import 'package:public_bicycle_sharing/screens/ride_history/history.dart';
 import 'package:public_bicycle_sharing/screens/settings/settings.dart';
 import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class DefaultHomeScreen extends StatefulWidget {
@@ -18,7 +20,12 @@ class DefaultHomeScreen extends StatefulWidget {
 }
 
 class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
+  // shared pref //
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  // shared pref //
   int _selectedIndex = 0;
+  late int _avatarIndex;
+  late String _name;
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
@@ -26,6 +33,42 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     const GetHelpScreen(),
     const ProfileScreen(),
   ];
+
+  // shared pref //
+  Future<void> getAvatarIndex() async {
+    int? avatarIndex = await sprefs.getAvatarIndex();
+    setState(() {
+      _avatarIndex = avatarIndex!;
+    });
+  }
+  // shared pref //
+
+  // shared pref //
+  Future<void> getName() async {
+    String? name = await sprefs.getName();
+    setState(() {
+      _name = name!;
+    });
+  }
+  // shared pref //
+
+  // shared prefs //
+  Future<void> logoutSharedPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    // Other logout logic goes here
+  }
+  // shared prefs //
+  
+  @override
+  void initState() {
+    super.initState();
+    // shared pref //
+    getAvatarIndex();
+    getName();
+    // shared pref //
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,21 +125,24 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
               height: 190,
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: CircleAvatar(
                       radius: 60,
-                      backgroundImage: AssetImage('assets/pp.jpg'),
+                      backgroundImage: AssetImage(
+                          'assets/avatars/$_avatarIndex.png'), // shared prefs //
                     ),
                   ),
                   const SizedBox(
                     height: 5.0,
                   ),
                   // get name from firestore database and set here //
-                  const Text('John Wick',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Text(
+                    _name, // shared prefs //
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             );
@@ -150,6 +196,9 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                   ),
                   onPressed: () {
                     // logic for logout and disconnect from firebase //
+                    // shared prefs //
+                    logoutSharedPrefs();
+                    // shared prefs //
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const LoginScreen(),
