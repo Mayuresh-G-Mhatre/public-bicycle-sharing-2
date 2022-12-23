@@ -21,7 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
   late String? _nameErrorText = '';
   late String? _emailErrorText = '';
-  int _avatarInd = 1; // shared prefs //
+  int _sharedPrefAvatarInd = 1; // shared prefs //
   late String _name;
   late String _email;
   late String _phoneNumber; // shared prefs //
@@ -44,85 +44,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 60.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(defaultAvatar),
-                  ),
-                  const SizedBox(width: 10.0),
-
-                  Expanded(
-                    child: SizedBox(
-                      // width: MediaQuery.of(context).size.width / 2,
-                      width: 200,
-                      height: 100,
-                      child: Card(
-                        child: GridView.count(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                            horizontal: 5.0,
-                          ),
-                          crossAxisCount: 5,
-                          children: List.generate(10, (index) {
-                            index = index + 1;
-                            return GestureDetector(
-                              onTap: () {
-                                // Handle image tap
-                                // print('clicked image no: $index');
-                                setState(() {
-                                  defaultAvatar = 'assets/avatars/$index.png';
-                                  _avatarInd = index; // shared prefs //
-                                });
-                              },
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    AssetImage('assets/avatars/$index.png'),
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-                    ),
-                  )
-
-                  // Expanded(
-                  //   child: SizedBox(
-                  //     width: 400,
-                  //     height: 90,
-                  //     child: Card(
-                  //       child: GridView.builder(
-                  //         padding: EdgeInsets.symmetric(
-                  //           vertical: 10.0,
-                  //           horizontal: 5.0,
-                  //         ),
-                  //         scrollDirection: Axis.vertical,
-                  //         itemCount: _imageUrls.length,
-                  //         itemBuilder: (context, index) {
-                  //           return IconButton(
-                  //             icon: CircleAvatar(
-                  //               radius: 20.0,
-                  //               backgroundImage: AssetImage(_imageUrls[index]),
-                  //             ),
-                  //             onPressed: () {
-                  //               print(
-                  //                   'Pressed on image no: ${_imageUrls[index]}');
-                  //             },
-                  //           );
-                  //         },
-                  //         gridDelegate:
-                  //             SliverGridDelegateWithFixedCrossAxisCount(
-                  //           crossAxisCount: 5,
-                  //           crossAxisSpacing: 3.0,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+              _avatarBox(),
               const SizedBox(height: 30.0),
               Form(
                 key: _formKey,
@@ -151,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     // logic to store avatar index, name, email and phone number in firestore database //
 
                                     // shared pref //
-                                    await sprefs.setAvatarIndex(_avatarInd);
+                                    await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
                                     await sprefs.setPhoneNumber(_phoneNumber);
                                     await sprefs.setName(_name);
                                     await sprefs.setEmail(_email);
@@ -168,6 +90,87 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _avatarBox() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage(defaultAvatar),
+        ),
+        const SizedBox(width: 10.0),
+
+        Expanded(
+          child: SizedBox(
+            // width: MediaQuery.of(context).size.width / 2,
+            width: 200,
+            height: 100,
+            child: Card(
+              child: GridView.count(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 5.0,
+                ),
+                crossAxisCount: 5,
+                children: List.generate(10, (index) {
+                  index = index + 1;
+                  return GestureDetector(
+                    onTap: () {
+                      // Handle image tap
+                      // print('clicked image no: $index');
+                      setState(() {
+                        defaultAvatar = 'assets/avatars/$index.png';
+                        _sharedPrefAvatarInd = index; // shared prefs //
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/avatars/$index.png'),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+        )
+
+        // Expanded(
+        //   child: SizedBox(
+        //     width: 400,
+        //     height: 90,
+        //     child: Card(
+        //       child: GridView.builder(
+        //         padding: EdgeInsets.symmetric(
+        //           vertical: 10.0,
+        //           horizontal: 5.0,
+        //         ),
+        //         scrollDirection: Axis.vertical,
+        //         itemCount: _imageUrls.length,
+        //         itemBuilder: (context, index) {
+        //           return IconButton(
+        //             icon: CircleAvatar(
+        //               radius: 20.0,
+        //               backgroundImage: AssetImage(_imageUrls[index]),
+        //             ),
+        //             onPressed: () {
+        //               print(
+        //                   'Pressed on image no: ${_imageUrls[index]}');
+        //             },
+        //           );
+        //         },
+        //         gridDelegate:
+        //             SliverGridDelegateWithFixedCrossAxisCount(
+        //           crossAxisCount: 5,
+        //           crossAxisSpacing: 3.0,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+      ],
     );
   }
 

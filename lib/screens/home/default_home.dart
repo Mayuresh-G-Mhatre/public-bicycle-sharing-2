@@ -23,6 +23,10 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   // shared pref //
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
+
+  String defaultAvatar = 'assets/avatars/1.png'; // maybe useless
+  int _sharedPrefAvatarInd = 1; // shared prefs //
+
   int _selectedIndex = 0;
   late int _avatarIndex;
   late String _name;
@@ -78,16 +82,62 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
         label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
       ),
-      bottomNavigationBar: _bottomBar(),
       appBar: AppBar(
         title: const Text('WePedL'),
         centerTitle: true,
       ),
       drawer: _sideBar(),
+      bottomNavigationBar: _bottomBar(),
       // logic for routing navigation bar tabs
       body: Center(
         child: _pages.elementAt(_selectedIndex),
       ),
+    );
+  }
+
+  Widget _avatarBox() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CircleAvatar(
+          radius: 45,
+          backgroundImage: AssetImage(defaultAvatar),
+        ),
+        const SizedBox(width: 10.0),
+        Expanded(
+          child: SizedBox(
+            // width: MediaQuery.of(context).size.width / 2,
+            width: 200,
+            height: 100,
+            child: Card(
+              child: GridView.count(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 5.0,
+                ),
+                crossAxisCount: 2,
+                children: List.generate(10, (index) {
+                  index = index + 1;
+                  return GestureDetector(
+                    onTap: () {
+                      // Handle image tap
+                      print('clicked image no: $index');
+                      setState(() {
+                        defaultAvatar = 'assets/avatars/$index.png';
+                        _sharedPrefAvatarInd = index; // shared prefs //
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/avatars/$index.png'),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -106,10 +156,42 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundImage: AssetImage(
-                        'assets/avatars/$_avatarIndex.png'), // shared prefs //
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        // print('tapped');
+                        Scaffold.of(context).closeDrawer();
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 5.0),
+                            child: AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              title: const Text('Choose your Avatar'),
+                              content: _avatarBox(),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Done'),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage(
+                          'assets/avatars/$_avatarIndex.png'), // shared prefs //
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -126,7 +208,10 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
             ),
           );
         },
-        controller: SidebarXController(selectedIndex: 0, extended: true),
+        controller: SidebarXController(
+          selectedIndex: 0,
+          extended: true,
+        ),
         items: [
           SidebarXItem(
             icon: Icons.not_listed_location,
