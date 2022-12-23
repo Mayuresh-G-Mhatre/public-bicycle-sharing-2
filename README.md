@@ -1,16 +1,67 @@
-# public_bicycle_sharing
 
-A new Flutter project.
+![Logo](/screenshots/icon.png)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# WePedL - Public Bicycle Sharing Android Application
 
-A few resources to get you started if this is your first Flutter project:
+WePedL is a Public Bicycle Sharing Android app built using flutter and firebase.
+Using this app users can register with phone number, recharge wallet, scan qr code on bicycle to unlock it and rent it.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/shubham-indalkar/public-bicycle-sharing.git
+```
+
+Go to the project directory
+
+```bash
+  cd public-bicycle-sharing
+```
+
+Install dependencies
+
+```bash
+  flutter pub get
+```
+
+Run the application
+
+```bash
+  flutter run lib/main.dart
+```
+
+
+## Usage/Examples
+
+There will be two branches:
+        
+    1. main - store locally using shared preferences
+        ~ Use any random digits for phone number and otp to login.
+        ~ Use phone number '0000000000' and random digits otp to register.
+    2. firebase - firebase integration
+        ~ Work in progress
+
+
+## Screenshots
+
+![Splash Screen](/screenshots/splash_screen.mp4)
+
+![Login Screen](/screenshots/login_screen.png)
+
+![OTP Screen](/screenshots/otp_screen.png)
+
+![Registration Screen](/screenshots/registration_screen.png)
+
+![Home Screen](/screenshots/home_screen.png)
+
+![Drawer](/screenshots/drawer.png)
+
+![Avatar Picker](/screenshots/avatar_picker.png)
+
+
