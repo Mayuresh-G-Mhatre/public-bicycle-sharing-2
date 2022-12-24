@@ -115,7 +115,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   horizontal: 5.0,
                 ),
                 crossAxisCount: 5,
-                children: List.generate(10, (index) {
+                children: List.generate(15, (index) {
                   index = index + 1;
                   return GestureDetector(
                     onTap: () {

@@ -63,6 +63,12 @@ class _SplashScreenState extends State<SplashScreen> {
                     repeatForever: false,
                     totalRepeatCount: 0,
                     pause: const Duration(milliseconds: 0),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()));
+                    },
                     onFinished: () {
                       Navigator.pushReplacement(
                           context,

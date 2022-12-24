@@ -128,8 +128,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                               vertical: 10.0,
                               horizontal: 5.0,
                             ),
-                            crossAxisCount: 2,
-                            children: List.generate(10, (index) {
+                            crossAxisCount: 3,
+                            children: List.generate(15, (index) {
                               index = index + 1;
                               return GestureDetector(
                                 onTap: () {
