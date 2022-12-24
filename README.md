@@ -50,7 +50,7 @@ There will be two branches:
 
 ## Screenshots
 
-<video src="screenshots/splash_screen.mp4" width="358" height="681"></video>
+![Spash Screen](/screenshots/splash_screen.gif)
 
 <img src="screenshots/login_screen.jpg" width="358" height="681">
 
