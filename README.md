@@ -50,17 +50,17 @@ There will be two branches:
 
 ## Screenshots
 
-![Splash Screen](/screenshots/splash_screen.mp4)
+<video src="screenshots/splash_screen.mp4" width="358" height="681"></video>
 
-![Login Screen](/screenshots/login_screen.png)
+<img src="screenshots/login_screen.jpg" width="358" height="681">
 
-![OTP Screen](/screenshots/otp_screen.png)
+<img src="screenshots/otp_screen.jpg" width="358" height="681">
 
-![Registration Screen](/screenshots/registration_screen.png)
+<img src="screenshots/registration_screen.jpg" width="358" height="681">
 
-![Home Screen](/screenshots/home_screen.png)
+<img src="screenshots/home_screen.jpg" width="358" height="681">
 
-![Drawer](/screenshots/drawer.png)
+<img src="screenshots/drawer.jpg" width="358" height="681">
 
 ![Avatar Picker](/screenshots/avatar_picker.png)
 
