@@ -95,50 +95,83 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     );
   }
 
-  Widget _avatarBox() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 45,
-          backgroundImage: AssetImage(defaultAvatar),
-        ),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: SizedBox(
-            // width: MediaQuery.of(context).size.width / 2,
-            width: 200,
-            height: 100,
-            child: Card(
-              child: GridView.count(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 5.0,
+  Future<void> showAvatarPicker(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                crossAxisCount: 2,
-                children: List.generate(10, (index) {
-                  index = index + 1;
-                  return GestureDetector(
-                    onTap: () {
-                      // Handle image tap
-                      print('clicked image no: $index');
-                      setState(() {
-                        defaultAvatar = 'assets/avatars/$index.png';
-                        _sharedPrefAvatarInd = index; // shared prefs //
-                      });
-                    },
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/avatars/$index.png'),
+                title: const Text('Choose your Avatar'),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 45,
+                      backgroundImage: AssetImage(defaultAvatar),
                     ),
-                  );
-                }),
+                    const SizedBox(width: 10.0),
+                    Expanded(
+                      child: SizedBox(
+                        // width: MediaQuery.of(context).size.width / 2,
+                        width: 200,
+                        height: 100,
+                        child: Card(
+                          // color: Colors.red,
+                          child: GridView.count(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 5.0,
+                            ),
+                            crossAxisCount: 2,
+                            children: List.generate(10, (index) {
+                              index = index + 1;
+                              return GestureDetector(
+                                onTap: () {
+                                  // Handle image tap
+                                  // print('clicked image no: $index');
+                                  setState(() {
+                                    defaultAvatar = 'assets/avatars/$index.png';
+                                    _sharedPrefAvatarInd =
+                                        index; // shared prefs //
+                                    _avatarIndex = index;
+                                  });
+                                },
+                                child: FractionallySizedBox(
+                                  widthFactor: 0.8,
+                                  heightFactor: 0.8,
+                                  child: CircleAvatar(
+                                    radius: 10,
+                                    backgroundImage:
+                                        AssetImage('assets/avatars/$index.png'),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
+                    },
+                    child: const Text('Done'),
+                  )
+                ],
               ),
-            ),
-          ),
-        )
-      ],
-    );
+            );
+          });
+        });
   }
 
   Widget _sideBar() {
@@ -157,35 +190,12 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       setState(() {
                         // print('tapped');
                         Scaffold.of(context).closeDrawer();
                       });
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 5.0),
-                            child: AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              title: const Text('Choose your Avatar'),
-                              content: _avatarBox(),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Done'),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                      await showAvatarPicker(context);
                     },
                     child: CircleAvatar(
                       radius: 60,
