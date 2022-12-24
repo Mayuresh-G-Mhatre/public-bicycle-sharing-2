@@ -76,12 +76,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text("Unlock"),
-        icon: const Icon(Icons.qr_code_scanner_outlined),
-      ),
       appBar: AppBar(
         title: const Text('WePedL'),
         centerTitle: true,

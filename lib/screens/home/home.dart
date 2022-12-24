@@ -10,8 +10,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: const Text("Unlock"),
+        icon: const Icon(Icons.qr_code_scanner_outlined),
+      ),
+      body: const Center(
         child: Text('Home Screen'),
       ),
     );

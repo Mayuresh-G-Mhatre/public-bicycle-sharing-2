@@ -27,14 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueAccent,
-      body: GestureDetector(
-        onTap: () {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()));
-        },
-        child: Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      },
+      child: Scaffold(
+        backgroundColor: Colors.blueAccent,
+        body: Container(
           alignment: Alignment.center,
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
