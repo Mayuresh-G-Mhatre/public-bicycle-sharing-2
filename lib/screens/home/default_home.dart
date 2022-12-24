@@ -122,6 +122,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                         width: 200,
                         height: 100,
                         child: Card(
+                          elevation: 0,
                           // color: Colors.red,
                           child: GridView.count(
                             padding: const EdgeInsets.symmetric(

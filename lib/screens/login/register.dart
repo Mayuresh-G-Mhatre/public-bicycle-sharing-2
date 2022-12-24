@@ -109,6 +109,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             width: 200,
             height: 100,
             child: Card(
+              elevation: 0,
               child: GridView.count(
                 padding: const EdgeInsets.symmetric(
                   vertical: 10.0,
