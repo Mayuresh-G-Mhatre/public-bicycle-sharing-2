@@ -38,8 +38,10 @@ dependencies:
   multiavatar: ^0.1.5
   otp_text_field: ^1.1.3
   salomon_bottom_bar: ^3.3.1
+  share_plus: ^6.3.0
   shared_preferences: ^2.0.15
   sidebarx: ^0.14.0
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
