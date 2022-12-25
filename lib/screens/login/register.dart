@@ -56,16 +56,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   children: [
                     _nameField(),
-                    SizedBox(height: height * 0.01),
+                    SizedBox(height: height * 0.02),
                     _emailField(),
-                    SizedBox(height: height * 0.01),
+                    SizedBox(height: height * 0.02),
                     _phoneNumberField(),
                     SizedBox(height: height * 0.04),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(
-                          width * 0.28,
-                          height * 0.06,
+                          width * 0.26,
+                          height * 0.05,
                         ),
                       ),
                       onPressed:
