@@ -15,6 +15,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late double width;
+  late double height;
   late Timer _timer;
   // shared pref //
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
@@ -39,6 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () async {
         if (await sprefs.contains('phone_number')) {
@@ -56,20 +60,22 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Container(
           alignment: Alignment.center,
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 300,
-                width: 300,
+                height: height * 0.4,
+                width: width * 6,
                 child: Lottie.asset('assets/bicycle_anim.json'),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: height * 0.1),
               Row(
                 // mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(width: (MediaQuery.of(context).size.width) / 2.4),
+                  SizedBox(width: width * 0.1),
+                  // box to stop prefix We from going to center
+                  SizedBox(width: width * 0.3),
                   Text(
                     splashPrefixText,
                     style: const TextStyle(
@@ -87,11 +93,19 @@ class _SplashScreenState extends State<SplashScreen> {
                       repeatForever: false,
                       totalRepeatCount: 0,
                       pause: const Duration(milliseconds: 0),
-                      onFinished: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
+                      onFinished: () async {
+                        if (await sprefs.contains('phone_number')) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DefaultHomeScreen()));
+                        } else {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()));
+                        }
                       },
                       animatedTexts: [
                         RotateAnimatedText('LearN'),
