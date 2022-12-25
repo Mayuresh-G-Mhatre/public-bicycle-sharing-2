@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReferScreen extends StatefulWidget {
   const ReferScreen({super.key});
@@ -91,16 +91,16 @@ class _ReferScreenState extends State<ReferScreen> {
                             vertical: 1,
                           ),
                           child: ElevatedButton.icon(
-                            onPressed: () {},
-                            // onPressed: () async {
-                            //   const url = 'https://wa.me/';
-                            //   final uri = Uri.parse('$url?text=$message');
-                            //   if (await canLaunchUrl(uri)) {
-                            //     await launchUrl(uri);
-                            //   } else {
-                            //     throw 'Could not launch $uri';
-                            //   }
-                            // },
+                            // onPressed: () {},
+                            onPressed: () async {
+                              const url = 'https://wa.me/';
+                              final uri = Uri.parse('$url?text=$message');
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri);
+                              } else {
+                                throw 'Could not launch $uri';
+                              }
+                            },
                             icon: const Icon(
                               Icons.whatsapp,
                               size: 15,
