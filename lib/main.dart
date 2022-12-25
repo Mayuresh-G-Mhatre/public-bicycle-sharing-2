@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue, // hex - #2196F3
       ),
       home: const SplashScreen(),
-      // home: const LoginScreen(), // for testing
+      // home: const RegistrationScreen(phoneNumber: '1234567890'), // for testing
     );
   }
 }

@@ -15,6 +15,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
 
+  late double width;
+  late double height;
+
   final _formKey = GlobalKey<FormState>();
   String defaultAvatar = 'assets/avatars/1.png';
   final _emailRegex = RegExp(
@@ -35,6 +38,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     _phoneNumber = widget.phoneNumber; // shared prefs //
     return Scaffold(
       body: SafeArea(
@@ -43,20 +48,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 60.0),
+              SizedBox(height: height * 0.05),
               _avatarBox(),
-              const SizedBox(height: 30.0),
+              SizedBox(height: height * 0.04),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
                     _nameField(),
-                    const SizedBox(height: 12.0),
+                    SizedBox(height: height * 0.01),
                     _emailField(),
-                    const SizedBox(height: 12.0),
+                    SizedBox(height: height * 0.01),
                     _phoneNumberField(),
-                    const SizedBox(height: 30.0),
+                    SizedBox(height: height * 0.04),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(
+                          width * 0.28,
+                          height * 0.06,
+                        ),
+                      ),
                       onPressed:
                           (_nameErrorText == null && _emailErrorText == null)
                               ? () async {
@@ -73,7 +84,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     // logic to store avatar index, name, email and phone number in firestore database //
 
                                     // shared pref //
-                                    await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
+                                    await sprefs
+                                        .setAvatarIndex(_sharedPrefAvatarInd);
                                     await sprefs.setPhoneNumber(_phoneNumber);
                                     await sprefs.setName(_name);
                                     await sprefs.setEmail(_email);
@@ -98,16 +110,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
-          radius: 50,
+          radius: width * 0.15,
           backgroundImage: AssetImage(defaultAvatar),
         ),
         const SizedBox(width: 10.0),
-
         Expanded(
           child: SizedBox(
-            // width: MediaQuery.of(context).size.width / 2,
-            width: 200,
-            height: 100,
+            width: width * 0.6,
+            height: height * 0.14,
             child: Card(
               elevation: 0,
               child: GridView.count(
@@ -128,7 +138,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       });
                     },
                     child: CircleAvatar(
-                      radius: 20,
+                      radius: width * 0.19,
                       backgroundImage: AssetImage('assets/avatars/$index.png'),
                     ),
                   );
@@ -137,40 +147,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
         )
-
-        // Expanded(
-        //   child: SizedBox(
-        //     width: 400,
-        //     height: 90,
-        //     child: Card(
-        //       child: GridView.builder(
-        //         padding: EdgeInsets.symmetric(
-        //           vertical: 10.0,
-        //           horizontal: 5.0,
-        //         ),
-        //         scrollDirection: Axis.vertical,
-        //         itemCount: _imageUrls.length,
-        //         itemBuilder: (context, index) {
-        //           return IconButton(
-        //             icon: CircleAvatar(
-        //               radius: 20.0,
-        //               backgroundImage: AssetImage(_imageUrls[index]),
-        //             ),
-        //             onPressed: () {
-        //               print(
-        //                   'Pressed on image no: ${_imageUrls[index]}');
-        //             },
-        //           );
-        //         },
-        //         gridDelegate:
-        //             SliverGridDelegateWithFixedCrossAxisCount(
-        //           crossAxisCount: 5,
-        //           crossAxisSpacing: 3.0,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
