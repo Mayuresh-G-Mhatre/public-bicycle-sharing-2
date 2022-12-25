@@ -23,6 +23,16 @@ class _SplashScreenState extends State<SplashScreen> {
   // shared pref //
   String splashPrefixText = 'We';
 
+  void loginOrHome() async {
+    if (await sprefs.contains('phone_number')) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const DefaultHomeScreen()));
+    } else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,17 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onTap: () async {
-        if (await sprefs.contains('phone_number')) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const DefaultHomeScreen()));
-        } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()));
-        }
-      },
+      onTap: loginOrHome,
       child: Scaffold(
         backgroundColor: Colors.blueAccent,
         body: Container(
@@ -93,20 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       repeatForever: false,
                       totalRepeatCount: 0,
                       pause: const Duration(milliseconds: 0),
-                      onFinished: () async {
-                        if (await sprefs.contains('phone_number')) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DefaultHomeScreen()));
-                        } else {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        }
-                      },
+                      onFinished: loginOrHome,
                       animatedTexts: [
                         RotateAnimatedText('LearN'),
                         RotateAnimatedText('PlaN'),
