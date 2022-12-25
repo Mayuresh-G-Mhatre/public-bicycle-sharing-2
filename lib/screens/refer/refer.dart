@@ -9,27 +9,35 @@ class ReferScreen extends StatefulWidget {
 }
 
 class _ReferScreenState extends State<ReferScreen> {
+  late double width;
+  late double height;
   String message =
       'Hey! I am gifting you \u{20B9}20 for your first WePedL ride. Enjoy!\nhttps://wepedl.page.link/CYAfu341CWybskBR9';
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Refer'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Image(
-            width: 250,
-            height: 250,
-            image: AssetImage('assets/refer.png'),
+          Center(
+            child: SizedBox(
+              width: width * 0.8,
+              height: height * 0.4,
+              child: const Image(
+                image: AssetImage('assets/refer.png'),
+              ),
+            ),
           ),
-          // const SizedBox(height: 5.0),
-          Container(
-            padding: const EdgeInsets.all(15.0),
-            width: MediaQuery.of(context).size.width - 10,
-            height: MediaQuery.of(context).size.height / 2.5,
+          SizedBox(
+            // color: Colors.red,
+            width: width * 0.9,
+            height: height * 0.35,
             child: Card(
               color: Colors.blue[100],
               child: Column(
@@ -38,7 +46,7 @@ class _ReferScreenState extends State<ReferScreen> {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 5,
+                      height: height * 0.2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // ignore: prefer_const_literals_to_create_immutables
@@ -56,14 +64,14 @@ class _ReferScreenState extends State<ReferScreen> {
                             style: TextStyle(fontSize: 12.0),
                           ),
                           const Text(
-                            '\u{2022} They get \u{20B9}20 in their wallet',
+                            '\u{2022} They get \u{20B9}20 in their wallet.',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10.0,
                             ),
                           ),
                           const Text(
-                            '\u{2022} You get \u{20B9}50 in your wallet when they take the first ride',
+                            '\u{2022} You get \u{20B9}50 in your wallet when they take the first ride.',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10.0,
@@ -80,7 +88,7 @@ class _ReferScreenState extends State<ReferScreen> {
                         'Share link via',
                         style: TextStyle(fontSize: 12.0),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width / 15),
+                      SizedBox(width: width * 0.4),
                       Container(
                         height: 30,
                         width: 30,
