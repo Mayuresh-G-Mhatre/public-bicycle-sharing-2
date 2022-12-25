@@ -24,6 +24,9 @@ class _OtpScreenState extends State<OtpScreen> {
   int _seconds = 60;
   late Timer _timer;
 
+  late double width;
+  late double height;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +46,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -72,8 +77,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 controller: otpController,
                 length: 4,
                 width: MediaQuery.of(context).size.width,
-                textFieldAlignment: MainAxisAlignment.spaceAround,
-                fieldWidth: 35,
+                spaceBetween: 5.0,
+                textFieldAlignment: MainAxisAlignment.center,
+                fieldWidth: width * 0.08,
                 fieldStyle: FieldStyle.box,
                 outlineBorderRadius: 10,
                 style: const TextStyle(fontSize: 15),
