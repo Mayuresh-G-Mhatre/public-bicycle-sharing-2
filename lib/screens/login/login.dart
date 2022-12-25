@@ -16,6 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _phoneController;
   FocusNode inputNode = FocusNode();
   bool isButtonEnabled = false;
+  late double width;
+  late double height;
 
   void openKeyboard() {
     FocusScope.of(context).requestFocus(inputNode);
@@ -46,28 +48,36 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.red,
       body: SafeArea(
-        child: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              const SizedBox(height: 20.0),
               const Padding(
-                padding: EdgeInsets.fromLTRB(0, 50, 0, 10),
-                child: SizedBox(
-                  height: 18.0,
-                  child: Text(
-                    'Welcome!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 8.0,
+                ),
+                child: Text(
+                  'Welcome!',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const Image(
-                image: AssetImage('assets/bicycle.png'),
+              const SizedBox(height: 20.0),
+              SizedBox(
+                height: height * 0.4,
+                width: width * 0.8,
+                child: const Image(
+                  image: AssetImage('assets/bicycle.png'),
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -84,7 +94,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: 'Phone Number',
                     counterText: '',
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.phone_outlined),
+                    prefixIcon: SizedBox(
+                      child: Icon(Icons.phone_outlined),
+                    ),
                     prefixText: '+91 ',
                     prefixStyle: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -93,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: isButtonEnabled
                     ? () async {
@@ -102,14 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           isButtonEnabled = false;
                         });
                         Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => OtpScreen(
-                                phoneNumber: _phoneController.text,
-                              ),
+                          MaterialPageRoute(
+                            builder: (context) => OtpScreen(
+                              phoneNumber: _phoneController.text,
                             ),
-                          );
-                          await sprefs.setPhoneNumber(
-                              _phoneController.text); // shared prefs //
+                          ),
+                        );
+                        await sprefs.setPhoneNumber(
+                            _phoneController.text); // shared prefs //
                       }
                     : null,
                 child: const Text('Send OTP'),
