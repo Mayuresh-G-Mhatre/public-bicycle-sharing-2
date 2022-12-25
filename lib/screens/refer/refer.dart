@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReferScreen extends StatefulWidget {
   const ReferScreen({super.key});
@@ -11,7 +10,7 @@ class ReferScreen extends StatefulWidget {
 
 class _ReferScreenState extends State<ReferScreen> {
   String message =
-      'Hey%21%20I%20am%20gifting%20you%20%E2%82%B920%20for%20your%20first%20WePedL%20ride.%20Enjoy%21%20https%3A%2F%2Fwepedl.page.link%2FCYAfu341CWybskBR9';
+      'Hey! I am gifting you \u{20B9}20 for your first WePedL ride. Enjoy!\nhttps://wepedl.page.link/CYAfu341CWybskBR9';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,35 +81,6 @@ class _ReferScreenState extends State<ReferScreen> {
                         style: TextStyle(fontSize: 12.0),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width / 15),
-                      SizedBox(
-                        width: 100,
-                        height: 27,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 0,
-                            vertical: 1,
-                          ),
-                          child: ElevatedButton.icon(
-                            // onPressed: () {},
-                            onPressed: () async {
-                              const url = 'https://wa.me/';
-                              final uri = Uri.parse('$url?text=$message');
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri);
-                              } else {
-                                throw 'Could not launch $uri';
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.whatsapp,
-                              size: 15,
-                            ),
-                            label: const Text('WhatsApp',
-                                style: TextStyle(fontSize: 10.2)),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8.0),
                       Container(
                         height: 30,
                         width: 30,

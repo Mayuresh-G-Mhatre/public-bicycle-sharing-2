@@ -7,9 +7,9 @@ class SharedPrefGetsNSets {
     prefs.setString('email', email);
   }
 
-  Future<void> setPhoneNumber(String mobileNumber) async {
+  Future<void> setPhoneNumber(String phoneNumber) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('mobile_number', mobileNumber);
+    prefs.setString('phone_number', phoneNumber);
   }
 
   Future<void> setName(String name) async {
@@ -30,7 +30,7 @@ class SharedPrefGetsNSets {
 
   Future<String?> getPhoneNumber() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('mobile_number');
+    return prefs.getString('phone_number');
   }
 
   Future<String?> getName() async {
@@ -41,5 +41,11 @@ class SharedPrefGetsNSets {
   Future<int?> getAvatarIndex() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('avatar_index') ?? 1;
+  }
+
+  // contains //
+  Future<bool> contains(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey(key);
   }
 }

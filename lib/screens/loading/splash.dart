@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,12 +15,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late Timer _timer;
+  // shared pref //
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  // shared pref //
   String splashPrefixText = 'We';
 
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 12600), () {
+    _timer = Timer(const Duration(milliseconds: 12600), () {
       setState(() {
         splashPrefixText = '';
       });
@@ -26,11 +32,24 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      onTap: () async {
+        if (await sprefs.contains('phone_number')) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const DefaultHomeScreen()));
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+        }
       },
       child: Scaffold(
         backgroundColor: Colors.blueAccent,
@@ -96,8 +115,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-// to do
-// splash screen doesn't show on app start. first there is a blank animation.
-// animation moves up and down with the rotated texts
-// postfix words list keeps repeating 3 times
