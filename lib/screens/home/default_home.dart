@@ -64,15 +64,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
   // shared prefs //
 
-  // int avatarDefaultOrNot() async {
-  //   if (await sprefs.contains('avatar_index')) {
-  //     return _avatarIndex;
-  //   } else {
-  //     Navigator.pushReplacement(context,
-  //         MaterialPageRoute(builder: (context) => const LoginScreen()));
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();

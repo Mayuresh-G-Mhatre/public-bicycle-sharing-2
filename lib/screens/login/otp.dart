@@ -24,6 +24,9 @@ class _OtpScreenState extends State<OtpScreen> {
   int _seconds = 60;
   late Timer _timer;
 
+  final RegExp repeatedNumbersRegex =
+      RegExp(r'^(1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10})$');
+
   late double width;
   late double height;
 
@@ -133,7 +136,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         // simulate firebase //
                         // check if phone number exists in firestore and if doesn't then route to registration screen //
                         // else route to home screen //
-                        if (widget.phoneNumber == '0000000000') {
+                        if (!repeatedNumbersRegex
+                            .hasMatch(widget.phoneNumber)) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => RegistrationScreen(

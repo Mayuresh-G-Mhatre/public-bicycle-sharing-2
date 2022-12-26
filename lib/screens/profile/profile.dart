@@ -88,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getAvatarIndex();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     // _phoneNumber = widget.phoneNumber; // shared prefs //

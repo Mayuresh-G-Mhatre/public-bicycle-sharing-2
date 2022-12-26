@@ -42,8 +42,8 @@ Run the application
 There will be two branches:
         
     1. main - store locally using shared preferences
-        ~ Use any random digits for phone number and otp to login.
-        ~ Use phone number '0000000000' and random digits otp to register.
+        ~ Use any random digits for phone number and otp to register.
+        ~ Use repetitive phone number like '0000000000' or '1111111111', etc and random digits otp to login.
     2. firebase - firebase integration
         ~ Work in progress
 
