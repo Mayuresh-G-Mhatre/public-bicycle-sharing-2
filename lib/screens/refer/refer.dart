@@ -36,7 +36,7 @@ class _ReferScreenState extends State<ReferScreen> {
           ),
           SizedBox(
             width: width * 0.9,
-            height: height * 0.3,
+            height: height * 0.28,
             child: Card(
               color: Colors.blue[100],
               child: Column(
@@ -56,7 +56,7 @@ class _ReferScreenState extends State<ReferScreen> {
                               'Refer WePedL to a friend & get \u{20B9}50 in wallet',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
+                                fontSize: 20.0,
                               ),
                             ),
                           ),
@@ -65,7 +65,7 @@ class _ReferScreenState extends State<ReferScreen> {
                             fit: BoxFit.scaleDown,
                             child: Text(
                               'When a friend signs up on the WePedL app using your link:',
-                              style: TextStyle(fontSize: 14.0),
+                              style: TextStyle(fontSize: 16.0),
                             ),
                           ),
                           const FittedBox(
@@ -74,7 +74,7 @@ class _ReferScreenState extends State<ReferScreen> {
                               '\u{2022} They get \u{20B9}20 in their wallet.',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
+                                fontSize: 14.0,
                               ),
                             ),
                           ),
@@ -84,7 +84,7 @@ class _ReferScreenState extends State<ReferScreen> {
                               '\u{2022} You get \u{20B9}50 in your wallet when they take the first ride.',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
+                                fontSize: 14.0,
                               ),
                             ),
                           ),
@@ -99,13 +99,13 @@ class _ReferScreenState extends State<ReferScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           'Share link via',
-                          style: TextStyle(fontSize: 14.0),
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       ),
                       SizedBox(width: width * 0.3),
                       Container(
-                        height: 30,
-                        width: 30,
+                        height: 40,
+                        width: 40,
                         // padding: const EdgeInsets.all(8),
                         // margin: const EdgeInsets.only(top: 2),
                         decoration: BoxDecoration(
@@ -118,7 +118,7 @@ class _ReferScreenState extends State<ReferScreen> {
                           },
                           icon: const Icon(
                             Icons.share,
-                            size: 15,
+                            size: 17,
                           ),
                         ),
                       )
