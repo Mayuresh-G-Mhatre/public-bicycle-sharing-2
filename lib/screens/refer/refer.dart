@@ -35,9 +35,8 @@ class _ReferScreenState extends State<ReferScreen> {
             ),
           ),
           SizedBox(
-            // color: Colors.red,
             width: width * 0.9,
-            height: height * 0.35,
+            height: height * 0.3,
             child: Card(
               color: Colors.blue[100],
               child: Column(
@@ -46,35 +45,47 @@ class _ReferScreenState extends State<ReferScreen> {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: SizedBox(
-                      height: height * 0.2,
+                      height: height * 0.15,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
-                          const Text(
-                            'Refer WePedL to a friend & get \u{20B9}50 in wallet',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
+                          const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'Refer WePedL to a friend & get \u{20B9}50 in wallet',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20.0),
-                          const Text(
-                            'When a friend signs up on the WePedL app using your link:',
-                            style: TextStyle(fontSize: 12.0),
-                          ),
-                          const Text(
-                            '\u{2022} They get \u{20B9}20 in their wallet.',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
+                          const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'When a friend signs up on the WePedL app using your link:',
+                              style: TextStyle(fontSize: 14.0),
                             ),
                           ),
-                          const Text(
-                            '\u{2022} You get \u{20B9}50 in your wallet when they take the first ride.',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
+                          const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              '\u{2022} They get \u{20B9}20 in their wallet.',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ),
+                          const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              '\u{2022} You get \u{20B9}50 in your wallet when they take the first ride.',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.0,
+                              ),
                             ),
                           ),
                         ],
@@ -84,11 +95,14 @@ class _ReferScreenState extends State<ReferScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Share link via',
-                        style: TextStyle(fontSize: 12.0),
+                      const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'Share link via',
+                          style: TextStyle(fontSize: 14.0),
+                        ),
                       ),
-                      SizedBox(width: width * 0.4),
+                      SizedBox(width: width * 0.3),
                       Container(
                         height: 30,
                         width: 30,
