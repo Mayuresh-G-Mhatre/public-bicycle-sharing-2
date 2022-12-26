@@ -64,6 +64,15 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
   // shared prefs //
 
+  // int avatarDefaultOrNot() async {
+  //   if (await sprefs.contains('avatar_index')) {
+  //     return _avatarIndex;
+  //   } else {
+  //     Navigator.pushReplacement(context,
+  //         MaterialPageRoute(builder: (context) => const LoginScreen()));
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +84,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getAvatarIndex();
+    getName();
     return Scaffold(
       appBar: AppBar(
         title: const Text('WePedL'),
@@ -107,7 +118,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                   children: [
                     CircleAvatar(
                       radius: 45,
-                      backgroundImage: AssetImage(defaultAvatar),
+                      backgroundImage:
+                          AssetImage('assets/avatars/$_avatarIndex.png'),
                     ),
                     const SizedBox(width: 10.0),
                     Expanded(

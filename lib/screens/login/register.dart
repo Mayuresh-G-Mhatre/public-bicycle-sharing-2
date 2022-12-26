@@ -22,8 +22,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String defaultAvatar = 'assets/avatars/1.png';
   final _emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
-  late String? _nameErrorText = '';
-  late String? _emailErrorText = '';
+  late String? _nameErrorText = null;
+  late String? _emailErrorText = null;
   int _sharedPrefAvatarInd = 1; // shared prefs //
   late String _name;
   late String _email;
