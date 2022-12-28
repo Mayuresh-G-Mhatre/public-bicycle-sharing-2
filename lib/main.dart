@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue, // hex - #2196F3
       ),
       home: const SplashScreen(),
-      // home: const ReferScreen(), // for testing
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }
