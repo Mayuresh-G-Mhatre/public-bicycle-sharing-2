@@ -1,6 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -10,6 +10,41 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  // shared pref //
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  // shared pref //
+
+  late bool _paid;
+  late int _amount;
+  int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // shared pref //
+    getDepositStatus();
+    getWalletAmount();
+    // shared pref //
+  }
+
+  // shared pref //
+  Future<void> getDepositStatus() async {
+    bool? paid = await sprefs.getDepositStatus();
+    setState(() {
+      _paid = paid!;
+    });
+  }
+  // shared pref //
+
+  // shared pref //
+  Future<void> getWalletAmount() async {
+    int? amount = await sprefs.getWalletAmount();
+    setState(() {
+      _amount = amount!;
+    });
+  }
+  // shared pref //
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,24 +52,20 @@ class _WalletScreenState extends State<WalletScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(25, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
               child: Row(
-                children: [
-                  const Text(
-                    'My',
+                children: const [
+                  Text(
+                    'Wallet',
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Text(
-                    ' cards',
-                    style: TextStyle(fontSize: 25),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             Container(
               width: 300,
               padding: const EdgeInsets.all(25),
@@ -56,15 +87,15 @@ class _WalletScreenState extends State<WalletScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
-                          '\u{20B9}3444',
-                          style: TextStyle(
+                        Text(
+                          '\u{20B9}$_amount',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 24,
                           ),
                         ),
                         const Text(
-                          'balance',
+                          'Balance',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.white,
@@ -75,20 +106,34 @@ class _WalletScreenState extends State<WalletScreen> {
                     Column(
                       children: [
                         const Text(
-                          'refundable deposite',
+                          'Refundable Deposit',
                         ),
                         const Text(
-                          '\u{20B9}240.00',
+                          '\u{20B9}200',
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
-                          onPressed: () {
-                            print('paid');
-                          },
+                          onPressed: _paid
+                              ? null
+                              : () async {
+                                  Fluttertoast.showToast(
+                                    msg: 'Paid Successfully',
+                                    gravity: ToastGravity.BOTTOM,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                  setState(() {
+                                    _paid = true;
+                                  });
+                                  await sprefs.setDepositStatus(_paid);
+                                },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green[400],
+                            backgroundColor: Colors.red[400],
+                            disabledBackgroundColor: Colors.green,
                           ),
-                          child: const Text('paid'),
+                          child: Text(_paid ? 'Paid' : 'Pay Now'),
                         ),
                       ],
                     ),
@@ -120,9 +165,9 @@ class _WalletScreenState extends State<WalletScreen> {
                               padding: const EdgeInsets.fromLTRB(8, 7, 7, 7),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'â‚¹   All Transactions',
+                                children: const [
+                                  Text(
+                                    'All Transactions',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
@@ -139,7 +184,6 @@ class _WalletScreenState extends State<WalletScreen> {
                                   padding:
                                       const EdgeInsets.fromLTRB(8, 7, 7, 7),
                                   child: ElevatedButton(
-                                    child: const Text('>'),
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
                                       shape: const RoundedRectangleBorder(
@@ -149,6 +193,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                       shadowColor: Colors.grey,
                                       elevation: 5,
                                     ),
+                                    child: const Text('>'),
                                   ),
                                 ),
                               ],
@@ -166,19 +211,21 @@ class _WalletScreenState extends State<WalletScreen> {
                   height: 40,
                   width: 250,
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Add money',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
+                    onPressed: () async {
+                      await showPaymentDialog(context);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       shadowColor: Colors.grey,
                       elevation: 5,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                    ),
+                    child: const Text(
+                      'Add money',
+                      style: TextStyle(
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -189,5 +236,72 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> showPaymentDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                title: const Text('Pay Wall'),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {
+                        setState(() {
+                          _counter--;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 10.0),
+                    Text(_counter.toString()),
+                    const SizedBox(width: 10.0),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        setState(() {
+                          _counter++;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      setState(() {
+                        _counter = 0;
+                      });
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await sprefs.setWalletAmount(_amount + _counter);
+                      setState(() {
+                        _amount = _amount + _counter;
+                        _counter = 0;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Pay'),
+                  ),
+                ],
+              ),
+            );
+          });
+        }).whenComplete(() {
+      setState(() {});
+    });
   }
 }

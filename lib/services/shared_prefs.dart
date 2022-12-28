@@ -22,6 +22,16 @@ class SharedPrefGetsNSets {
     prefs.setInt('avatar_index', avatarIndex);
   }
 
+  Future<void> setDepositStatus(bool paid) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('deposit_paid', paid);
+  }
+
+  Future<void> setWalletAmount(int amount) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('wallet_amount', amount);
+  }
+
   // getters //
   Future<String?> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
@@ -41,6 +51,16 @@ class SharedPrefGetsNSets {
   Future<int?> getAvatarIndex() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('avatar_index') ?? 1;
+  }
+
+  Future<bool?> getDepositStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('deposit_paid') ?? false;
+  }
+
+  Future<int?> getWalletAmount() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('wallet_amount') ?? 0;
   }
 
   // contains //
