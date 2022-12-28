@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -167,6 +168,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _tfReadOnly = true;
                             _tfEnabled = false;
                           });
+
+                          Fluttertoast.showToast(
+                            msg: 'Saved',
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+
                           // shared pref //
                           await sprefs.setAvatarIndex(_avatarIndex);
                           await sprefs.setPhoneNumber(_phoneNumber);

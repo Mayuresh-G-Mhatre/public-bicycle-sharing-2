@@ -53,37 +53,40 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                 ),
               ),
             ),
-            Accordion(
-              children: [
-                AccordionSection(
-                  header: const Text('How to use?'),
-                  content: const Text(
-                      '1. Topup your wallet\n2. Scan QR Code to unlock.\n3. Start Ride.\n4. Go to nearby station, scan QR Code and end ride.'),
-                  // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                  headerBackgroundColor: Colors.blue[200],
-                  headerBackgroundColorOpened: Colors.grey,
-                ),
-                AccordionSection(
-                  header: const Text('What if lost internet connectivity?'),
-                  content: const Text(
-                      'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.'),
-                  // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                  headerBackgroundColor: Colors.blue[200],
-                  headerBackgroundColorOpened: Colors.grey,
-                ),
-                AccordionSection(
-                  header:
-                      const Text('How to I get refund of security deposit?'),
-                  content: const Text(
-                      'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via customer care or email.'),
-                  // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                  headerBackgroundColor: Colors.blue[200],
-                  headerBackgroundColorOpened: Colors.grey,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Accordion(
+                children: [
+                  AccordionSection(
+                    header: const Text('How to use?'),
+                    content: const Text(
+                        '1. Top-Up your wallet\n2. Scan QR Code to unlock.\n3. Start Ride.\n4. Go to nearby station, scan QR Code and end ride.'),
+                    // headerPadding: EdgeInsets.symmetric(horizontal: 20),
+                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColorOpened: Colors.grey,
+                  ),
+                  AccordionSection(
+                    header: const Text('What if lost internet connectivity?'),
+                    content: const Text(
+                        'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.'),
+                    // headerPadding: EdgeInsets.symmetric(horizontal: 20),
+                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColorOpened: Colors.grey,
+                  ),
+                  AccordionSection(
+                    header:
+                        const Text('How to I get refund of security deposit?'),
+                    content: const Text(
+                        'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via customer care or email.'),
+                    // headerPadding: EdgeInsets.symmetric(horizontal: 20),
+                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColorOpened: Colors.grey,
+                  ),
+                ],
+              ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
                   height: 70,
@@ -109,7 +112,10 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                     ),
                     onPressed: () async {
                       String email = 'wepedlcare@gmail.com';
-                      Uri emailUrl = Uri.parse('mailto:$email');
+                      Uri emailUrl = Uri(
+                        scheme: 'mailto',
+                        path: email,
+                      );
 
                       if (await canLaunchUrl(emailUrl)) {
                         await launchUrl(emailUrl);

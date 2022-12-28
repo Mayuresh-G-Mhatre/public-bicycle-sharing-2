@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/screens/loading/splash.dart';
 
 void main() => runApp(const MyApp());
@@ -15,8 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue, // hex - #2196F3
       ),
-      // home: const SplashScreen(),
-      home: const DefaultHomeScreen(), // for testing
+      home: const SplashScreen(),
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }

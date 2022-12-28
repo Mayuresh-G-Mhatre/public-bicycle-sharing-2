@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:public_bicycle_sharing/screens/wallet/transactions.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -16,7 +17,11 @@ class _WalletScreenState extends State<WalletScreen> {
 
   late bool _paid;
   late int _amount;
-  int _counter = 0;
+
+  late double width;
+  late double height;
+
+  TextEditingController amountController = TextEditingController();
 
   @override
   void initState() {
@@ -47,190 +52,186 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
-              child: Row(
-                children: const [
-                  Text(
-                    'Wallet',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 15,
+              ),
+              child: Text(
+                'Wallet',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            const SizedBox(height: 40),
-            Container(
-              width: 300,
-              padding: const EdgeInsets.all(25),
-              decoration: BoxDecoration(
-                  color: Colors.blue[300],
-                  borderRadius: BorderRadius.circular(17),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade400,
-                      offset: const Offset(0, 6),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    )
-                  ]),
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '\u{20B9}$_amount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                        ),
-                        const Text(
-                          'Balance',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          'Refundable Deposit',
-                        ),
-                        const Text(
-                          '\u{20B9}200',
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: _paid
-                              ? null
-                              : () async {
-                                  Fluttertoast.showToast(
-                                    msg: 'Paid Successfully',
-                                    gravity: ToastGravity.BOTTOM,
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
-                                  setState(() {
-                                    _paid = true;
-                                  });
-                                  await sprefs.setDepositStatus(_paid);
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red[400],
-                            disabledBackgroundColor: Colors.green,
-                          ),
-                          child: Text(_paid ? 'Paid' : 'Pay Now'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ]),
-            ),
             const SizedBox(height: 30),
-            Column(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          width: 0.3,
-                          color: Colors.black,
-                        ),
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 7, 7, 7),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'All Transactions',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
+            Center(
+              child: Container(
+                width: width * 0.9,
+                height: height * 0.22,
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.09,
+                  vertical: height * 0.05,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.blue[100],
+                    borderRadius: BorderRadius.circular(17),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        offset: const Offset(0, 6),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      )
+                    ]),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '\u{20B9}$_amount',
+                            style: const TextStyle(
+                              fontSize: 24,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8, 7, 7, 7),
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(39))),
-                                      backgroundColor: Colors.blue,
-                                      shadowColor: Colors.grey,
-                                      elevation: 5,
-                                    ),
-                                    child: const Text('>'),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ]),
-                    ),
-                  ],
-                ),
-              ],
+                          ),
+                          const Text(
+                            'Balance',
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          const Text(
+                            'Refundable Deposit',
+                          ),
+                          const Text(
+                            '\u{20B9}200',
+                          ),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: _paid
+                                ? null
+                                : () async {
+                                    Fluttertoast.showToast(
+                                      msg: 'Paid Successfully',
+                                      gravity: ToastGravity.BOTTOM,
+                                      toastLength: Toast.LENGTH_LONG,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    setState(() {
+                                      _paid = true;
+                                    });
+                                    await sprefs.setDepositStatus(_paid);
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red[400],
+                              disabledBackgroundColor: Colors.green,
+                            ),
+                            child: Text(_paid ? 'Paid' : 'Pay Now'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
             ),
             const SizedBox(height: 30),
-            Column(
-              children: [
-                Container(
-                  height: 40,
-                  width: 250,
+            Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 5,
+                ),
+                height: 50,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    width: 0.3,
+                    color: Colors.black,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'All Transactions',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => TransactionsScreen(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(39),
+                          ),
+                        ),
+                        backgroundColor: Colors.blue,
+                        shadowColor: Colors.grey,
+                        elevation: 5,
+                      ),
+                      child: const Text('>'),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 15,
+                ),
+                child: SizedBox(
+                  height: height * 0.06,
+                  width: width * 0.45,
                   child: ElevatedButton(
                     onPressed: () async {
                       await showPaymentDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shadowColor: Colors.grey,
-                      elevation: 5,
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50),
+                        ),
                       ),
                     ),
                     child: const Text(
                       'Add money',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -250,48 +251,47 @@ class _WalletScreenState extends State<WalletScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                title: const Text('Pay Wall'),
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {
-                        setState(() {
-                          _counter--;
-                        });
-                      },
+                title: const Text('Enter Amount'),
+                content: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 60),
+                  child: TextField(
+                    controller: amountController,
+                    maxLength: 3,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.currency_rupee,
+                      ),
                     ),
-                    const SizedBox(width: 10.0),
-                    Text(_counter.toString()),
-                    const SizedBox(width: 10.0),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          _counter++;
-                        });
-                      },
-                    ),
-                  ],
+                  ),
                 ),
                 actions: [
                   ElevatedButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      setState(() {
-                        _counter = 0;
-                      });
                     },
                     child: const Text('Cancel'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await sprefs.setWalletAmount(_amount + _counter);
+                      await sprefs.setWalletAmount(
+                          _amount + int.parse(amountController.text));
                       setState(() {
-                        _amount = _amount + _counter;
-                        _counter = 0;
+                        _amount = _amount + int.parse(amountController.text);
                       });
+
+                      amountController.clear();
+
+                      Fluttertoast.showToast(
+                        msg: 'Top-Up Successfull',
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                       Navigator.of(context).pop();
                     },
                     child: const Text('Pay'),

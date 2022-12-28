@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/screens/help/get_help.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
@@ -161,6 +162,14 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
+                      Fluttertoast.showToast(
+                                      msg: 'Changed Avatar',
+                                      gravity: ToastGravity.BOTTOM,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
                       await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
                     },
                     child: const Text('Done'),
@@ -271,6 +280,14 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                   // shared prefs //
                   logoutSharedPrefs();
                   // shared prefs //
+                  Fluttertoast.showToast(
+                            msg: 'Logged Out',
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const LoginScreen(),

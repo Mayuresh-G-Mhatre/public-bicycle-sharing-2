@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
@@ -149,6 +150,14 @@ class _OtpScreenState extends State<OtpScreen> {
                             MaterialPageRoute(
                               builder: (context) => const DefaultHomeScreen(),
                             ),
+                          );
+                          Fluttertoast.showToast(
+                            msg: 'Login Successfull',
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
                           );
                         }
                       });

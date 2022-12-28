@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
@@ -82,6 +83,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     );
                                     // logic to store avatar index, name, email and phone number in firestore database //
+
+                                    Fluttertoast.showToast(
+                                      msg: 'Registration Successfull',
+                                      gravity: ToastGravity.BOTTOM,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
 
                                     // shared pref //
                                     await sprefs
