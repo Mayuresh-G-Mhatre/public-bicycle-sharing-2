@@ -22,6 +22,7 @@ class _WalletScreenState extends State<WalletScreen> {
   late double height;
 
   TextEditingController amountController = TextEditingController();
+  TextEditingController depositController = TextEditingController(text: '200');
 
   @override
   void initState() {
@@ -114,7 +115,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       Column(
                         children: [
                           const Text(
-                            'Refundable Deposit',
+                            'Security Deposit',
                           ),
                           const Text(
                             '\u{20B9}200',
@@ -124,18 +125,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             onPressed: _paid
                                 ? null
                                 : () async {
-                                    Fluttertoast.showToast(
-                                      msg: 'Paid Successfully',
-                                      gravity: ToastGravity.BOTTOM,
-                                      toastLength: Toast.LENGTH_LONG,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0,
-                                    );
-                                    setState(() {
-                                      _paid = true;
-                                    });
-                                    await sprefs.setDepositStatus(_paid);
+                                    await showDepositPaymentDialog(context);
                                   },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red[400],
@@ -213,9 +203,20 @@ class _WalletScreenState extends State<WalletScreen> {
                   height: height * 0.06,
                   width: width * 0.45,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      await showPaymentDialog(context);
-                    },
+                    onPressed: _paid
+                        ? () async {
+                            await showPaymentDialog(context);
+                          }
+                        : () {
+                            Fluttertoast.showToast(
+                              msg: 'Pay Security Depsoit First',
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_LONG,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -239,6 +240,70 @@ class _WalletScreenState extends State<WalletScreen> {
     );
   }
 
+  Future<void> showDepositPaymentDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                title: const Text('Pay Now'),
+                content: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 70),
+                  child: TextField(
+                    enabled: false,
+                    readOnly: true,
+                    controller: depositController,
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.currency_rupee,
+                      ),
+                    ),
+                  ),
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Fluttertoast.showToast(
+                        msg: 'Paid Successfully',
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_LONG,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                      setState(() {
+                        _paid = true;
+                      });
+                      await sprefs.setDepositStatus(_paid);
+
+                      if (!mounted) return;
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Pay'),
+                  ),
+                ],
+              ),
+            );
+          });
+        }).whenComplete(() {
+      setState(() {});
+    });
+  }
+
   Future<void> showPaymentDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -256,6 +321,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 60),
                   child: TextField(
                     controller: amountController,
+                    autofocus: true,
                     maxLength: 3,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(

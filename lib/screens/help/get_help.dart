@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GetHelpScreen extends StatefulWidget {
@@ -77,7 +76,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                     header:
                         const Text('How to I get refund of security deposit?'),
                     content: const Text(
-                        'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via customer care or email.'),
+                        'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via email or customer care.'),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
                     headerBackgroundColor: Colors.blue[200],
                     headerBackgroundColorOpened: Colors.grey,
@@ -105,7 +104,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                           size: 25,
                         ),
                         Text(
-                          'Mail',
+                          'E-Mail',
                           style: TextStyle(fontSize: 10),
                         ),
                       ],
