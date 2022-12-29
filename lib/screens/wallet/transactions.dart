@@ -50,9 +50,9 @@ class TransactionsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 2.5),
+                    const SizedBox(height: 2.5),
                     Text(
-                      '${dateTime[index]}',
+                      dateTime[index],
                       style: const TextStyle(
                         fontSize: 12,
                       ),
@@ -64,7 +64,7 @@ class TransactionsScreen extends StatelessWidget {
                   children: [
                     Text(
                       '\u{20B9}${amountList[index]}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
