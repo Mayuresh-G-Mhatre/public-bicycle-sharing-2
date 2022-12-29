@@ -4,7 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/screens/login/login.dart';
+import 'package:public_bicycle_sharing/screens/intro/get_started.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,13 +23,13 @@ class _SplashScreenState extends State<SplashScreen> {
   // shared pref //
   String splashPrefixText = 'We';
 
-  void loginOrHome() async {
+  void onboardingOrHome() async {
     if (await sprefs.contains('phone_number')) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const DefaultHomeScreen()));
     } else {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()));
+          MaterialPageRoute(builder: (context) => const GetStartedScreen()));
     }
   }
 
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onTap: loginOrHome,
+      onTap: onboardingOrHome,
       child: Scaffold(
         backgroundColor: Colors.blueAccent,
         body: Container(
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       repeatForever: false,
                       totalRepeatCount: 0,
                       pause: const Duration(milliseconds: 0),
-                      onFinished: loginOrHome,
+                      onFinished: onboardingOrHome,
                       animatedTexts: [
                         RotateAnimatedText('LearN'),
                         RotateAnimatedText('PlaN'),
