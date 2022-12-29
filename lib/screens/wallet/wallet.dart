@@ -209,7 +209,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           }
                         : () {
                             Fluttertoast.showToast(
-                              msg: 'Pay Security Depsoit First',
+                              msg: 'Pay Security Deposit First',
                               gravity: ToastGravity.BOTTOM,
                               toastLength: Toast.LENGTH_LONG,
                               backgroundColor: Colors.black,
