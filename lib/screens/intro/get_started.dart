@@ -51,15 +51,15 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               // ),
             ),
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: height * 0.08),
           Center(
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => OnBoardingScreen(),
-                          ),
-                        );
+                  MaterialPageRoute(
+                    builder: (context) => const OnBoardingScreen(),
+                  ),
+                );
               },
               child: const Text('Enable Location'),
             ),

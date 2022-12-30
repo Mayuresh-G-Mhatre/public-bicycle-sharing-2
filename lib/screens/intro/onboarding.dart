@@ -87,6 +87,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        curve: Curves.fastLinearToSlowEaseIn,
+        dotsDecorator: const DotsDecorator(
+          size: Size(10.0, 10.0),
+          color: Color(0xFFBDBDBD),
+          activeSize: Size(22.0, 10.0),
+          activeShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          ),
+        ),
+        dotsContainerDecorator: const ShapeDecoration(
+          color: Colors.black87,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ),
+        ),
         showNextButton: true,
         showSkipButton: true,
         onDone: () {
