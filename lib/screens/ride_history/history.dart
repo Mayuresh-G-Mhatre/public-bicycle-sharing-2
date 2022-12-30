@@ -87,50 +87,31 @@ class _HistoryScreenState extends State<HistoryScreen> {
         itemCount: 20,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Icon(Icons.pedal_bike),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Bicycle ${plateNumber[index]}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 2.5),
-                          Text(
-                            dateTime[index],
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '\u{20B9}${amountList[index]}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            dense: true,
+            leading: const Icon(
+              Icons.pedal_bike,
+              size: 32,
+              color: Colors.blue,
+            ),
+            title: Text(
+              'Bicycle ${plateNumber[index]}',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+              dateTime[index],
+              style: const TextStyle(
+                fontSize: 12,
+              ),
+            ),
+            trailing: Text(
+              '\u{20B9}${amountList[index]}',
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           );
         },

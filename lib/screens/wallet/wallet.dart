@@ -83,16 +83,17 @@ class _WalletScreenState extends State<WalletScreen> {
                   vertical: height * 0.05,
                 ),
                 decoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    borderRadius: BorderRadius.circular(17),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade400,
-                        offset: const Offset(0, 6),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                      )
-                    ]),
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(17),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.shade400,
+                  //     offset: const Offset(0, 6),
+                  //     blurRadius: 10,
+                  //     spreadRadius: 2,
+                  //   )
+                  // ],
+                ),
                 child: Column(children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,7 +151,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 height: 50,
                 width: 300,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.blueGrey[600],
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
                     width: 0.3,
@@ -163,7 +164,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     const Text(
                       'All Transactions',
                       style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),

@@ -12,6 +12,7 @@ class GetHelpScreen extends StatefulWidget {
 class _GetHelpScreenState extends State<GetHelpScreen> {
   late double width;
   late double height;
+  TextStyle contentStyle = const TextStyle(color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
@@ -58,27 +59,33 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                 children: [
                   AccordionSection(
                     header: const Text('How to use?'),
-                    content: const Text(
-                        '1. Top-Up your wallet\n2. Scan QR Code to unlock.\n3. Start Ride.\n4. Go to nearby station, scan QR Code and end ride.'),
+                    content: Text(
+                      '1. Top-Up your wallet\n2. Scan QR Code to unlock.\n3. Start Ride.\n4. Go to nearby station, scan QR Code and end ride.',
+                      style: contentStyle,
+                    ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColor: Colors.blueAccent,
                     headerBackgroundColorOpened: Colors.grey,
                   ),
                   AccordionSection(
                     header: const Text('What if lost internet connectivity?'),
-                    content: const Text(
-                        'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.'),
+                    content: Text(
+                      'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.',
+                      style: contentStyle,
+                    ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColor: Colors.blueAccent,
                     headerBackgroundColorOpened: Colors.grey,
                   ),
                   AccordionSection(
                     header:
                         const Text('How to I get refund of security deposit?'),
-                    content: const Text(
-                        'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via email or customer care.'),
+                    content: Text(
+                      'Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via email or customer care.',
+                      style: contentStyle,
+                    ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
-                    headerBackgroundColor: Colors.blue[200],
+                    headerBackgroundColor: Colors.blueAccent,
                     headerBackgroundColorOpened: Colors.grey,
                   ),
                 ],

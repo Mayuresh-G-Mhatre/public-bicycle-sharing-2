@@ -38,7 +38,7 @@ class _ReferScreenState extends State<ReferScreen> {
             width: width * 0.9,
             height: height * 0.28,
             child: Card(
-              color: Colors.blue[100],
+              color: Colors.blueAccent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -109,7 +109,7 @@ class _ReferScreenState extends State<ReferScreen> {
                         // padding: const EdgeInsets.all(8),
                         // margin: const EdgeInsets.only(top: 2),
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Colors.green,
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: IconButton(
