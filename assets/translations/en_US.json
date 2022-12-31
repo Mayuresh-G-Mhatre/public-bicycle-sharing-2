@@ -1,0 +1,13 @@
+{
+    "get_help_heading": "Need Help?",
+    "faq": "F.A.Q",
+    "get_help_q1": "How to use?",
+    "get_help_a1": "1. Top-Up your wallet\n2. Scan QR Code to unlock.\n3. Start Ride.\n4. Go to nearby station, scan QR Code and end ride.",
+    "get_help_q2": "What if lost internet connectivity?",
+    "get_help_a2": "Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.",
+    "get_help_q3": "How to I get refund of security deposit?",
+    "get_help_a3": "Go to Settings and you will find an option to delete account. After deleting, refund will be credited to your account in 3-4 working days. If no refund has been recieved, contact us via email or customer care.",
+    "email": "E-Mail",
+    "contact": "Contact",
+    "appbar": "WePedL"
+}

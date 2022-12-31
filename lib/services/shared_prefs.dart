@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefGetsNSets {
@@ -32,6 +33,21 @@ class SharedPrefGetsNSets {
     prefs.setInt('wallet_amount', amount);
   }
 
+  Future<void> setThemeColor(String color) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('theme_color', color);
+  }
+
+  Future<void> setDarkThemeStatus(bool isDark) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('dark_theme_status', isDark);
+  }
+
+  Future<void> setLanguage(String language) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('language', language);
+  }
+
   // getters //
   Future<String?> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
@@ -61,6 +77,21 @@ class SharedPrefGetsNSets {
   Future<int?> getWalletAmount() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('wallet_amount') ?? 0;
+  }
+
+  Future<String?> getThemeColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('theme_color') ?? 'blue';
+  }
+
+  Future<bool?> getDarkThemeStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('dark_theme_status') ?? false;
+  }
+
+  Future<String?> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('language') ?? 'English';
   }
 
   // contains //

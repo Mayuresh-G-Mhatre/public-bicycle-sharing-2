@@ -35,11 +35,20 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
               ),
             ),
             Center(
-              child: SizedBox(
-                width: width * 0.8,
-                height: height * 0.3,
-                child: const Image(
-                  image: AssetImage('assets/help.png'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  width: width * 0.8,
+                  height: height * 0.3,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/help.png'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
                 ),
               ),
             ),

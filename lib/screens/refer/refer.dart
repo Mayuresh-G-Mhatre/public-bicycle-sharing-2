@@ -26,11 +26,20 @@ class _ReferScreenState extends State<ReferScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-            child: SizedBox(
-              width: width * 0.8,
-              height: height * 0.4,
-              child: const Image(
-                image: AssetImage('assets/refer.png'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: Container(
+                width: width * 0.8,
+                height: height * 0.3,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/refer.png'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
               ),
             ),
           ),
@@ -39,6 +48,8 @@ class _ReferScreenState extends State<ReferScreen> {
             height: height * 0.28,
             child: Card(
               color: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

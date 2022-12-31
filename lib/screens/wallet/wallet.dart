@@ -73,7 +73,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Center(
               child: Container(
                 width: width * 0.9,
@@ -152,7 +152,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 width: 300,
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[600],
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(25),
                   border: Border.all(
                     width: 0.3,
                     color: Colors.black,
@@ -187,7 +187,11 @@ class _WalletScreenState extends State<WalletScreen> {
                         shadowColor: Colors.grey,
                         elevation: 5,
                       ),
-                      child: const Text('>'),
+                      child: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.black,
+                        size: 15,
+                      ),
                     )
                   ],
                 ),
@@ -359,6 +363,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         textColor: Colors.white,
                         fontSize: 16.0,
                       );
+                      if (!mounted) return;
                       Navigator.of(context).pop();
                     },
                     child: const Text('Pay'),
