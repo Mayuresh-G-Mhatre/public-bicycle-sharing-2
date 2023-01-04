@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    getAvatarIndex();
+    // getAvatarIndex();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     // _phoneNumber = widget.phoneNumber; // shared prefs //
@@ -239,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               return GestureDetector(
                                 onTap: () {
                                   // Handle image tap
-                                  // print('clicked image no: $index');
+                                  print('clicked image no: $index');
                                   setState(() {
                                     defaultAvatar = 'assets/avatars/$index.png';
                                     _avatarIndex = index;

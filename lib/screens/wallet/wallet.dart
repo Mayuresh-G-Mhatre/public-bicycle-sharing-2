@@ -132,7 +132,10 @@ class _WalletScreenState extends State<WalletScreen> {
                               backgroundColor: Colors.red[400],
                               disabledBackgroundColor: Colors.green,
                             ),
-                            child: Text(_paid ? 'Paid' : 'Pay Now'),
+                            child: Text(
+                              _paid ? 'Paid' : 'Pay Now',
+                              style: const TextStyle(color: Colors.white),
+                            ),
                           ),
                         ],
                       ),

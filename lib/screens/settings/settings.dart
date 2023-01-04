@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/screens/login/login.dart';
 import 'package:public_bicycle_sharing/screens/settings/config.dart';
+import 'package:public_bicycle_sharing/screens/settings/tc_pp.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,38 +107,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
               await showLanguageDialog(context);
             },
           ),
-          const ListTile(
-            dense: true,
-            leading: Icon(
-              Icons.text_snippet,
-              color: Colors.blue,
-              size: 28,
-            ),
-            title: Text(
-              'Terms & Conditions',
-              style: TextStyle(fontSize: 14),
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, size: 15),
-            // onTap: () async {
-            //   await showTnCDialog(context);
-            // },
-          ),
-          const ListTile(
-            dense: true,
-            leading: Icon(
-              Icons.safety_check,
-              color: Colors.blue,
-              size: 28,
-            ),
-            title: Text(
-              'Privacy Policy',
-              style: TextStyle(fontSize: 14),
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, size: 15),
-            // onTap: () async {
-            //   await showPrivacyPolicyDialog(context);
-            // },
-          ),
+          ListTile(
+              dense: true,
+              leading: const Icon(
+                Icons.text_snippet,
+                color: Colors.blue,
+                size: 28,
+              ),
+              title: const Text(
+                'Terms & Conditions',
+                style: TextStyle(fontSize: 14),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TCScreen(),
+                  ),
+                );
+              }
+              // onTap: () async {
+              //   await showTnCDialog(context);
+              // },
+              ),
+          ListTile(
+              dense: true,
+              leading: const Icon(
+                Icons.safety_check,
+                color: Colors.blue,
+                size: 28,
+              ),
+              title: const Text(
+                'Privacy Policy',
+                style: TextStyle(fontSize: 14),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PPScreen(),
+                  ),
+                );
+              }
+              // onTap: () async {
+              //   await showPrivacyPolicyDialog(context);
+              // },
+              ),
           const ListTile(
             dense: true,
             leading: Icon(
@@ -175,6 +192,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  void showUnderDevelopmentToast() {
+    Fluttertoast.showToast(
+      msg:
+          "This feature is currently under development. Please check back later.",
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
+  void showLanguageChangedToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
   Future<void> showThemeDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -196,11 +236,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         InkWell(
+                          customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
                             setState(() {
                               _themeColor = 'blue';
                             });
                             await sprefs.setThemeColor(_themeColor);
+                            showUnderDevelopmentToast();
                           },
                           child: const CircleAvatar(
                             radius: 15,
@@ -208,11 +251,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         InkWell(
+                          customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
                             setState(() {
                               _themeColor = 'purple';
                             });
                             await sprefs.setThemeColor(_themeColor);
+                            showUnderDevelopmentToast();
                           },
                           child: const CircleAvatar(
                             radius: 15,
@@ -220,11 +266,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         InkWell(
+                          customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
                             setState(() {
                               _themeColor = 'orange';
                             });
                             await sprefs.setThemeColor(_themeColor);
+                            showUnderDevelopmentToast();
                           },
                           child: const CircleAvatar(
                             radius: 15,
@@ -232,11 +281,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         InkWell(
+                          customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
                             setState(() {
                               _themeColor = 'teal';
                             });
                             await sprefs.setThemeColor(_themeColor);
+                            showUnderDevelopmentToast();
                           },
                           child: const CircleAvatar(
                             radius: 15,
@@ -244,11 +296,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         InkWell(
+                          customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
                             setState(() {
                               _themeColor = 'brown';
                             });
                             await sprefs.setThemeColor(_themeColor);
+                            showUnderDevelopmentToast();
                           },
                           child: const CircleAvatar(
                             radius: 15,
@@ -258,23 +313,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Dark Theme'),
-                        Switch(
-                          activeColor: Colors.blue,
-                          value: _isDarkTheme,
-                          onChanged: (value) async {
-                            currentTheme.switchTheme();
-                            setState(() {
-                              _isDarkTheme = value;
-                            });
-                            await sprefs.setDarkThemeStatus(_isDarkTheme);
-                          },
-                        ),
-                      ],
-                    ),
+                    SwitchListTile(
+                      title: const Text('Dark Theme'),
+                      activeColor: Colors.blue,
+                      value: _isDarkTheme,
+                      onChanged: (value) async {
+                        currentTheme.switchTheme();
+                        setState(() {
+                          _isDarkTheme = value;
+                        });
+                        await sprefs.setDarkThemeStatus(_isDarkTheme);
+                      },
+                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     const Text('Dark Theme'),
+                    //     Switch(
+                    //       activeColor: Colors.blue,
+                    //       value: _isDarkTheme,
+                    //       onChanged: (value) async {
+                    //         currentTheme.switchTheme();
+                    //         setState(() {
+                    //           _isDarkTheme = value;
+                    //         });
+                    //         await sprefs.setDarkThemeStatus(_isDarkTheme);
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
                 // actions: [
@@ -343,14 +410,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           _language = value.toString();
                         });
-                        Fluttertoast.showToast(
-                          msg: 'Language Changed',
-                          gravity: ToastGravity.BOTTOM,
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        showLanguageChangedToast('Language Changed');
                         await sprefs.setLanguage(_language);
                         if (!mounted) return;
                         Navigator.of(context).pop();
@@ -364,14 +424,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           _language = value.toString();
                         });
-                        Fluttertoast.showToast(
-                          msg: 'Language Changed',
-                          gravity: ToastGravity.BOTTOM,
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        showLanguageChangedToast('भाषा बदली गई');
                         await sprefs.setLanguage(_language);
                         if (!mounted) return;
                         Navigator.of(context).pop();
@@ -385,14 +438,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           _language = value.toString();
                         });
-                        Fluttertoast.showToast(
-                          msg: 'Language Changed',
-                          gravity: ToastGravity.BOTTOM,
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        showLanguageChangedToast('भाषा बदलली');
                         await sprefs.setLanguage(_language);
                         if (!mounted) return;
                         Navigator.of(context).pop();

@@ -1,0 +1,144 @@
+Privacy Policy
+This Privacy Policy (â€œPrivacy Policyâ€) governs your use of websites, mobile applications and technology operated by WePedL Bikes Pvt. Ltd.
+
+We, WePedL Bikes Pvt. Ltd., would like WePedL users to know that we will collect and use your personal information. The policies below are applicable to data and information collected when you use any of the following:
+
+ WePedL Bikes Pvt. Ltd. network of websites, including s3.ap-south-1.amazonaws.com/www.WePedL.bike (including any versions optimized for viewing on a wireless or tablet device)
+ All email newsletters published or distributed by WePedL Bikes Pvt. Ltd.
+ All apps published by WePedL Bikes Pvt. Ltd., including the â€œWePedLâ€ app
+ Any other services made available by WePedL Bikes Pvt. Ltd. (â€œServiceâ€)
+ All other interactive features and communications provided by WePedL Bikes Pvt. Ltd. (â€œAppâ€), however accessed and/or used that are operated by us made available by us, or produced and maintained by us, and our related companies (collectively â€œWePedLâ€ or â€œweâ€, â€œusâ€, or â€œourâ€)
+We have established this privacy policy (â€œPrivacy Policyâ€) to ensure that you understand what kinds of personal information we may gather during your use of this App, why we gather your information, how we use that information, when we might disclose your personal information, and how can you manage your personal information.
+
+Please note that the practices described in this Privacy Policy apply to information gathered online through our App and websites, and by our customer service personnel. It does not apply to information that you share with organizations to which we may link or who may link to us, or information that we may receive about you from other organizations.
+
+By using our App, you accept the practices described in our Privacy Policy. If you do not agree to the terms of this Privacy Policy, please do not use the App. We reserve the right to revise the terms of our Privacy Policy from time to time without notice. Your continued use of our App following the changes to these terms will mean you accept those changes. If we intend to apply the changes to this Privacy Policy retroactively or to personal information already in our possession, we will notify you of the modifications or amendments.
+
+This Privacy Policy is incorporated in our User Agreement, which is accessible at s3.ap-south-1.amazonaws.com/www.WePedL.bike, unless otherwise defined in this Privacy Policy.
+
+If you have any questions about this Privacy Policy or donâ€™t see your concerns addressed here, you could contact us by email at wepedlcare@gmail.com.
+
+Information Collection and Use
+We may request you to provide personally identifiable information for a better experience while using our Service. This may include but not be limited to location, name, and address. We collect two basic types of information from you: personal information; and non-personal information. The information that you share with us will be retained by us and used as explained in this privacy policy.
+
+The app uses Third Party services for user KYC via Aadhaar Number that may collect information used to identify you.
+
+Personal Information
+You may browse the App without submitting any personal information. However, there are a number of features and Services that can be accessed only on submission of the required personal information. The most common ways in which we may collect your personal information are listed below.
+
+When you register for an account on the WePedL App
+When you use WePedL App to refer to your friends
+On submission of payment information for adding money to your WePedL wallet
+App related communications, e.g. Aadhaar Number provided for KYC
+Profile information (personal and non-personal) provided by you in the WePedL App User Profile
+When you share your ride details on your social media authorized by you
+When you participate in WePedL ratings, surveys, or promotions
+When you sign up to receive alerts or information via email, text or instant messages from WePedL
+When you request for assistance, customer service or support
+When you submit data or information on the App where it is permitted
+When you knowingly volunteer personal information anywhere on the App
+Log Data
+When you use our Service and if there is an error in the App, we collect data and information (through third party products) on your phone, called Log Data. This Log Data may include information such as your device Internet Protocol (IP) address of your server, device name, operating system version, the app configuration while you are using our service, the time and date when you use our service, the duration, and other statistics.
+
+The device information about the computer, browser, mobile device or any other device that you use to access the App. This information may include the IP address, geolocation, unique device identifiers, type of browser, language, and other transactional information.
+
+When you use the App, a third party server or we might collect information about your use of the App, including GPS routes and status of GPS chips.
+
+Device information about the WePedL, including time stamps and battery status.
+
+Additional â€œtraffic dataâ€ and log files such as time of access, date of access, software crash reports, session identification number, access times, and referring App addresses.
+
+Other information regarding your use of the App.
+
+Collection of Your Source IP Address/Location Information.
+
+Information Collected from Other Sources
+We might collect information about you, which we may receive from other sources or from our offline interactions with you. Such information that will enable us to verify, update information contained in our records and to better customize the App for you. We may also collect Personal Information from credit reporting agencies to, for example, determine your creditworthiness, credit score, and credit usage, in accordance with applicable laws.
+
+Third Party Personal Information Collected Through Refer-A-Friend Feature
+We may conduct a referral/promotion service to introduce people you know to our Apps and Service. If you choose to refer someone to our App and Service or a discount on the App and Service, we will ask you for your contactâ€™s name and email address. We will automatically send your contact a one-time email invitation to visit our App. We collect and retain this information for the purpose of sending this one-time email and tracking the success of our referral program. Your contact may contact us at wepedlcare@gmail.com to request that we remove this information from our database.
+
+Childrenâ€™s Privacy
+Our Services do not address anyone under the age of 13 years. We do not knowingly collect personal information from children under 13 years. In the case we realize that a child under 13 years has provided us with personal information, we immediately delete this from our servers. If you are a parent or a guardian and are aware that your child has provided us with personal information, please contact us so that we will be able to take necessary actions.
+
+Cookies
+Cookies are files with small amount of data that is commonly used as anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your device internal memory. This Service does not use these â€œcookiesâ€ explicitly. However, the app may use third party code and libraries that use â€œcookiesâ€ to collection information and to improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some features of this Service.
+
+We use cookies for other purposes as below:
+
+We use cookies to remind us who you are and to find your account information in our database when you access a Service so you do not need to log in at every visit. This helps us to provide you with services tailored to your particular needs and interests. A cookie is created when you register for a Service.
+We use cookies to determine the browser you use so the Apps can be designed to work efficiently with the most common versions of different browsers
+We use cookies in conjunction with sending you e-mail newsletters
+Advertisers that place ads on the App may use cookies
+We use cookies to generate analytics regarding our App
+We use cookies to determine user traffic. Your browser is given a unique cookie that helps us determine whether yours is a repeat visit or a first visit
+How Do We Use Your Information?
+We use the information we receive from you to help us personalize services and improve your experience on the App. We may use your Personal and Non-Personal Information in the following ways:
+
+General Uses
+To process your registration
+To provide the WePedL Service to you at your request
+To track the WePedL bike you use
+To upload your content to our App at your request
+To permit you to update, edit, and manage your content on our App
+To communicate with you about your account or transactions with us (including service related announcements) and send you information about features and enhancements on our App
+To update you about changes to our policies
+To communicate with you about your comment to a blog post
+To personalize content and experiences on our App, including providing you reports, recommendations and feedback based on your preferences
+To disclose anonymized Personal Information to disclose statistics and analytics and other details regarding the use of our App
+To enhance or improve our products, services and operations
+To update the App on your device automatically
+To detect, examine, and restrict activities that may violate our policies or be illegal
+To perform analyses of users of the App: statistical, demographic, and marketing
+With Whom is Your Information Shared?
+Except as disclosed in this Privacy Policy, we do not disclose your Personal Information to any companies not part of WePedL or its parent, subsidiaries or related entities. In no event will we sell or rent your Personal Information as part of a customer list or similar transaction.
+
+Third-Party Agents
+We have third party agents, subsidiaries, affiliates and partners that perform functions on our behalf. These functions may include hosting, billing, push notifications, storage, bandwidth, content management tools, analytics, customer service, fraud protection, etc. These entities have access to your Personal Information needed to perform their functions and are contractually obligated to maintain the confidentiality and security of that Personal Information. They are restricted from using, selling, distributing or altering this data in any way other than to provide the requested services to the App.
+
+Emergency Situations
+We may have to use or disclose Personal Information if required to do so by law or in a situation where such action is necessary to (a) conform to applicable law or comply with legal process served on us or the App; (b) protect and defend our rights or property, the App or our users, and (c) act under emergency circumstances to protect our personal safety and that of our affiliates, agents, or the users of the App or the public. This includes exchanging information with other companies and organizations for fraud protection.
+
+What Steps Are Taken to Keep Personal Information Secure?
+We are concerned about the security of your Personal Information. We practice great care in providing secure transmission of your information from your device to our servers. Your Personal Information collected by our App is stored in secure operating environments that are not available to the public. Our security procedures may require us to request proof of identity before we disclose your Personal Information to you. However, please be advised that while we try our best to safeguard your Personal Information, transmission of data over the Internet or any other public network cannot be guaranteed to be 100% secure.
+
+How Can WePedL Transfer Your Personal Information?
+Your information collected through the App may be stored and processed in India where WePedL, its Affiliates, Clients, or service providers maintain facilities. Wherever your personal information is transferred, stored, or processed by WePedL, WePedL will take reasonable steps to safeguard the privacy of your personal information. By registering for and using the App you consent to the transfer of your information to any other country in which WePedL, its Clients, Affiliates or service providers maintain facilities and the use and disclosure of information about you as described in this Privacy Policy.
+
+How Long Do We Keep Your Information?
+Following deactivation or termination of your account, WePedL, its Affiliates, Clients, or its service providers may retain information (including your profile information) and user Content for a commercially reasonable time for backup, archival, and/or audit purposes. If you have any questions about deactivation or termination of your account, please contact us directly at wepedlcare@gmail.com.
+
+What Happens When I Link to or From Another App?
+This App may contain links to third party Apps/Offers. Please note that the practices described in this Privacy Policy for WePedL do not apply to the information gathered through other Apps. We are not responsible for the actions and privacy policies of third party Apps.
+
+Governing Law
+This App is published in India. We try to protect the Personal Information of all users of our App and we try to comply with local data protection and consumer rights laws to the extent they may apply to the Services. Our App is located and targeted to Indian citizens and our policies are directed at compliance with those laws. If you are unsure whether the practices of this privacy policy are applicable to the local privacy laws where you are located, you should not submit your Personal Information to WePedL.
+
+Assignment
+We may change our ownership or corporate WePedL while providing the App. We may also sell certain assets associated with the App. As a result, please be aware that in such events we may transfer some or all of your information to a WePedL acquiring all or part of our assets or to another WePedL with which we have merged. Under such circumstances we would expect the acquiring party to follow the practices described in this Privacy Policy. However, we cannot promise that an acquiring WePedL or the merged WePedL will have the same privacy practices or treat your information the same as described in this Privacy Policy.
+
+Changes to This Policy
+We may add new services and features to our App as we develop it. If these additions affect our Privacy Policy, this document will be updated appropriately. We will make those changes prominently so that you will always know what information we gather, how we might use that information and whether we will disclose it to anyone. However, we recommend that you read this Privacy Policy each time you use our App in case you missed our notice of changes to the Privacy Policy. We will make sure not to change our policies and practices to make them less protective of Personal Information we have previously collected from you without your express consent.
+
+What Are Your Choices and How Do You Opt-Out?
+Although you may not be able to opt-out of all data collection when you visit our Apps, you do have a choice to limit the collection, use and sharing of your personally identifiable information.
+
+Collection of Personal Information
+All personally identifiable information is provided on a voluntary basis. If you do not want WePedL to collect such information, you should not submit it to the App. However, not submitting certain information may affect your ability to access some content and use some of the functions of the App.
+
+Emails and Other Communications
+You may alter the preference of the type of communications you receive from us, including opting out of promotional communications. You can do this at any time by updating the communication preferences indicated in your account profile through the App.
+
+Please note that by doing so you may not be able to access certain products and services, and we may continue to send non-promotional communications such as staffing confirmations, surveys, and other information about your use of the Service. If you refer others to us using our email functionality, please note that they may choose not to receive any promotional emails from us in the future by following the opt-out instructions in the email invitation.
+
+Tracking
+You may choose to limit some tracking mechanisms on the App that collect information. Many web browsers automatically accept cookies. In most cases you can modify your browser's setting to decline cookies if you prefer. You choose to decline cookies on our App, but certain features of the App, including the App itself, may not function properly or remain accessible to you. In addition, you may also render some web beacons unusable by rejecting or removing their associated cookies. Note that if you remove cookies, you may remove opt-out cookies that affect your advertising preferences. For more details on your ability to opt out, see Use of Cookies and Other Tracking Technologies above.
+
+Please note that while you may opt out of online behavioral advertising and other targeted advertising served by participating companies through App you may still see other types of advertising on the App, it just may not be as relevant or targeted to your interests.
+
+Reviewing and Changing Your Information
+You can review and change the information in your WePedL account by logging into your account and editing your profile. Please note that we may not be able to delete your Personal Information without also deleting your user account. To access any records containing information about you, we may request you to provide us with your Personal Information to verify your identity. Please be advised that you will not be permitted to examine the Personal Information of any other person or entity. We may decline your request to change or delete Personal Information if we believe doing so would violate any law or legal requirement, or cause the information to be incorrect.
+
+If you have any questions about this Privacy Policy, please contact us by email at wepedlcare@gmail.com.
+
+Copyright (c) 2017 WePedL Bikes Pvt Ltd

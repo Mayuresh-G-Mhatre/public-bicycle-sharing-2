@@ -46,8 +46,7 @@ class _MyAppState extends State<MyApp> {
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-        .copyWith(secondary: Colors.blue),
+    primaryColor: Colors.blue,
     // floatingActionButtonTheme:
     //     const FloatingActionButtonThemeData(backgroundColor: Colors.blue),
   );
@@ -55,8 +54,7 @@ class _MyAppState extends State<MyApp> {
   final ThemeData _darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-        .copyWith(secondary: Colors.blue),
+    primaryColor: Colors.blue,
     // floatingActionButtonTheme:
     //     const FloatingActionButtonThemeData(backgroundColor: Colors.blue),
   );
