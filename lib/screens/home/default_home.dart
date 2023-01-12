@@ -163,13 +163,13 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                     onPressed: () async {
                       Navigator.of(context).pop();
                       Fluttertoast.showToast(
-                                      msg: 'Changed Avatar',
-                                      gravity: ToastGravity.BOTTOM,
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0,
-                                    );
+                        msg: 'Changed Avatar',
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                       await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
                     },
                     child: const Text('Done'),
@@ -281,13 +281,13 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                   logoutSharedPrefs();
                   // shared prefs //
                   Fluttertoast.showToast(
-                            msg: 'Logged Out',
-                            gravity: ToastGravity.BOTTOM,
-                            toastLength: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                    msg: 'Logged Out',
+                    gravity: ToastGravity.BOTTOM,
+                    toastLength: Toast.LENGTH_SHORT,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const LoginScreen(),
