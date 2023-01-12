@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/screens/loading/splash.dart';
 import 'package:public_bicycle_sharing/screens/settings/config.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: OnBoardingScreen(), // for testing
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }
