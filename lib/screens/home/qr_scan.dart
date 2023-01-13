@@ -30,7 +30,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   Widget flashButton() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      // padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: Colors.white24,
