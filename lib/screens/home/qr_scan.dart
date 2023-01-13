@@ -36,6 +36,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         color: Colors.white24,
       ),
       child: IconButton(
+        iconSize: 35,
         icon: _isFlashOn
             ? const Icon(
                 Icons.flash_off,
