@@ -13,6 +13,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? barcode;
   QRViewController? controller;
+  bool _isFlashOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         alignment: Alignment.center,
         children: <Widget>[
           buildQrView(context),
-          Positioned(bottom: 60, child: flashButton())
+          Positioned(bottom: 150, child: flashButton())
         ],
       ),
     );
@@ -35,14 +36,11 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         color: Colors.white24,
       ),
       child: IconButton(
-        icon: FutureBuilder<bool?>(builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            return Icon(snapshot.data! ? Icons.flash_on : Icons.flash_off);
-          } else {
-            return Container();
-          }
-        }),
+        icon: _isFlashOn
+            ? const Icon(Icons.flash_on)
+            : const Icon(Icons.flash_off),
         onPressed: () async {
+          _isFlashOn = !_isFlashOn;
           await controller?.toggleFlash();
           setState(() {});
         },
@@ -59,7 +57,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         borderRadius: 10,
         borderLength: 20,
         borderWidth: 10,
-        cutOutSize: MediaQuery.of(context).size.width * 0.8,
+        cutOutSize: MediaQuery.of(context).size.width * 0.6,
       ),
     );
   }
