@@ -22,7 +22,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         alignment: Alignment.center,
         children: <Widget>[
           buildQrView(context),
-          Positioned(bottom: 150, child: flashButton())
+          Positioned(bottom: 160, child: flashButton())
         ],
       ),
     );
@@ -30,15 +30,21 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   Widget flashButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: Colors.white24,
       ),
       child: IconButton(
         icon: _isFlashOn
-            ? const Icon(Icons.flash_on)
-            : const Icon(Icons.flash_off),
+            ? const Icon(
+                Icons.flash_off,
+                color: Colors.blue,
+              )
+            : const Icon(
+                Icons.flash_on,
+                color: Colors.blue,
+              ),
         onPressed: () async {
           _isFlashOn = !_isFlashOn;
           await controller?.toggleFlash();
