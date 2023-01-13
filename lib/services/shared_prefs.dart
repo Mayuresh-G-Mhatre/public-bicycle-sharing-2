@@ -48,6 +48,11 @@ class SharedPrefGetsNSets {
     prefs.setString('language', language);
   }
 
+  Future<void> setBicycleNumber(String bicycleNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('bicycle_number', bicycleNumber);
+  }
+
   // getters //
   Future<String?> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
@@ -92,6 +97,11 @@ class SharedPrefGetsNSets {
   Future<String?> getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('language') ?? 'English';
+  }
+
+  Future<String?> getBicycleNumber() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('bicycle_number');
   }
 
   // contains //
