@@ -146,7 +146,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                           );
                         } else {
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => const DefaultHomeScreen(),
                             ),

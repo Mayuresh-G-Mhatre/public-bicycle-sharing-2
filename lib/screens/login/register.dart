@@ -75,7 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   if (_formKey.currentState!.validate() &&
                                       _nameErrorText == null &&
                                       _emailErrorText == null) {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>

@@ -100,6 +100,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         this.barcode = barcode;
       });
       if (isValid(barcode.code!)) {
+        controller.dispose();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => StartRideScreen(bicycleNumber: barcode.code!),
@@ -170,9 +171,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                       await sprefs
                           .setBicycleNumber(bicycleNumberController.text);
 
-                      print(_enteredBicycleNumber);
+                      // print(_enteredBicycleNumber);
 
                       if (_enteredBicycleNumber != null) {
+                        controller?.dispose();
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => StartRideScreen(
@@ -196,7 +198,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller!.dispose();
     super.dispose();
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
 
 class TCScreen extends StatelessWidget {
   const TCScreen({super.key});
 
   Future<String> loadTermsNConditions() async {
-    final TCfile = File('assets/TC.txt');
-    return await TCfile.readAsString();
+    return rootBundle.loadString('assets/TC.txt');
   }
 
   @override
@@ -36,8 +36,7 @@ class PPScreen extends StatelessWidget {
   const PPScreen({super.key});
 
   Future<String> loadPrivacyPolicy() async {
-    final PPfile = File('assets/PP.txt');
-    return await PPfile.readAsString();
+    return rootBundle.loadString('assets/PP.txt');
   }
 
   @override
