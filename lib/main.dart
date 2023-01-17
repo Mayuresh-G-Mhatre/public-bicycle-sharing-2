@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
+import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 import 'package:public_bicycle_sharing/screens/loading/splash.dart';
 import 'package:public_bicycle_sharing/screens/settings/config.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
+    primaryColor: Colors.blue,  // #2196F3
     // floatingActionButtonTheme:
     //     const FloatingActionButtonThemeData(backgroundColor: Colors.blue),
   );
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: const DefaultHomeScreen(), // for testing
+      // home: const QRScannerScreen(), // for testing
     );
   }
 }
