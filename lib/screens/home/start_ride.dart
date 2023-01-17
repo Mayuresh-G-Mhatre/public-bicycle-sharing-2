@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:slide_to_act/slide_to_act.dart';
+import 'package:public_bicycle_sharing/screens/home/in_ride.dart';
+import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class StartRideScreen extends StatefulWidget {
   final String bicycleNumber;
@@ -17,6 +18,7 @@ class _StartRideScreenState extends State<StartRideScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -41,36 +43,69 @@ class _StartRideScreenState extends State<StartRideScreen> {
             ),
           ),
           const SizedBox(height: 10),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Container(
+                width: width * 0.6,
+                height: height * 0.3,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/start_ride.png'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text('Rules:', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(
+              children: [
+                const SizedBox(height: 5),
+                const Text('Rules:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
                     '  1. Should be above age 14.\n  2. End ride only at WePedL Zone.\n  3. Follow traffic rules.'),
+                const SizedBox(height: 20),
+                ListTile(
+                  leading: const Icon(
+                    Icons.warning_amber_rounded,
+                    size: 40,
+                  ),
+                  title: const Text(
+                      'Violation of these rules will incur a penalty or a permanent ban from using the WePedL services',
+                      style: TextStyle(fontSize: 14)),
+                  iconColor: Colors.red,
+                  tileColor: Colors.red[100],
+                ),
               ],
             ),
           ),
-          SizedBox(height: height * 0.60),
+          SizedBox(height: height * 0.09),
           Center(
-            child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new),
-                iconSize: 30),
-          ),
-          const SizedBox(height: 5),
-          SlideAction(
-            onSubmit: () {},
-            innerColor: Colors.white,
-            outerColor: Colors.blue,
-            elevation: 5,
-            text: 'Slide to Unlock',
-            sliderButtonIcon: const Icon(Icons.lock_outline),
-            submittedIcon: const Icon(Icons.lock_open),
-            sliderRotate: false,
+            child: ConfirmationSlider(
+              width: width * 0.85,
+              height: 50,
+              onConfirmation: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        InRideScreen(bicycleNumber: widget.bicycleNumber),
+                  ),
+                );
+              },
+              sliderButtonContent: const Icon(Icons.lock_open_outlined),
+              text: 'Slide to start ride',
+              textStyle: const TextStyle(color: Colors.white),
+              backgroundColor: Colors.blue,
+              backgroundColorEnd: Colors.green,
+              foregroundColor: Colors.white,
+            ),
           ),
         ],
       ),
