@@ -139,18 +139,18 @@ class _OtpScreenState extends State<OtpScreen> {
                         // else route to home screen //
                         if (!repeatedNumbersRegex
                             .hasMatch(widget.phoneNumber)) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => RegistrationScreen(
-                                  phoneNumber: widget.phoneNumber),
-                            ),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => RegistrationScreen(
+                                    phoneNumber: widget.phoneNumber),
+                              ),
+                              (route) => false);
                         } else {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const DefaultHomeScreen(),
-                            ),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const DefaultHomeScreen(),
+                              ),
+                              (route) => false);
                           Fluttertoast.showToast(
                             msg: 'Login Successfull',
                             gravity: ToastGravity.BOTTOM,

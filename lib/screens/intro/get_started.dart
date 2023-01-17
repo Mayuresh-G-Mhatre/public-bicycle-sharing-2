@@ -55,7 +55,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const OnBoardingScreen(),
                   ),
