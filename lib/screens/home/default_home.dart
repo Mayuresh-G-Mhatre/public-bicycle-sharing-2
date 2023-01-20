@@ -9,9 +9,9 @@ import 'package:public_bicycle_sharing/screens/ride_history/history.dart';
 import 'package:public_bicycle_sharing/screens/settings/settings.dart';
 import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class DefaultHomeScreen extends StatefulWidget {
   const DefaultHomeScreen({super.key});
@@ -28,7 +28,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   String defaultAvatar = 'assets/avatars/1.png'; // maybe useless
   int _sharedPrefAvatarInd = 1; // shared prefs //
 
-  int _selectedIndex = 0;
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
   late int _avatarIndex;
   late String _name;
 
@@ -38,6 +39,31 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     const GetHelpScreen(),
     const ProfileScreen(),
   ];
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        inactiveIcon: const Icon(Icons.home_outlined),
+        icon: const Icon(Icons.home),
+        title: "Home",
+      ),
+      PersistentBottomNavBarItem(
+        inactiveIcon: const Icon(Icons.account_balance_wallet_outlined),
+        icon: const Icon(Icons.account_balance_wallet),
+        title: "Wallet",
+      ),
+      PersistentBottomNavBarItem(
+        inactiveIcon: const Icon(Icons.help_center_outlined),
+        icon: const Icon(Icons.help_center),
+        title: "Get Help",
+      ),
+      PersistentBottomNavBarItem(
+        inactiveIcon: const Icon(Icons.person_outlined),
+        icon: const Icon(Icons.person),
+        title: "Profile",
+      ),
+    ];
+  }
 
   // shared pref //
   Future<void> getAvatarIndex() async {
@@ -84,10 +110,14 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
         centerTitle: true,
       ),
       drawer: _sideBar(),
-      bottomNavigationBar: _bottomBar(),
+      // bottomNavigationBar: _bottomBar(),
       // logic for routing navigation bar tabs
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
+      body: PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _pages,
+        items: _navBarsItems(),
+        navBarStyle: NavBarStyle.style9,
       ),
     );
   }
@@ -311,39 +341,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
           );
         },
       ),
-    );
-  }
-
-  Widget _bottomBar() {
-    return SalomonBottomBar(
-      currentIndex: _selectedIndex,
-      onTap: (i) => setState(() => _selectedIndex = i),
-      items: [
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.home_outlined),
-          title: const Text("Home"),
-          selectedColor: Colors.blue,
-          activeIcon: const Icon(Icons.home),
-        ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.account_balance_wallet_outlined),
-          title: const Text("Wallet"),
-          selectedColor: Colors.blue,
-          activeIcon: const Icon(Icons.account_balance_wallet),
-        ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.help_center_outlined),
-          title: const Text("Get Help"),
-          selectedColor: Colors.blue,
-          activeIcon: const Icon(Icons.help_center),
-        ),
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.person_outlined),
-          title: const Text("Profile"),
-          selectedColor: Colors.blue,
-          activeIcon: const Icon(Icons.person),
-        ),
-      ],
     );
   }
 }

@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: const QRScannerScreen(), // for testing
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }
