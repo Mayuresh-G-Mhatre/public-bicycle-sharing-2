@@ -22,7 +22,7 @@ class _InRideScreenState extends State<InRideScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: height * 0.5),
+            SizedBox(height: height * 0.6),
             SizedBox(
               width: width * 0.4,
               height: height * 0.1,
