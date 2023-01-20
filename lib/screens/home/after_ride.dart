@@ -11,7 +11,7 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Nice'),
+      body: Center(child: Text('Thanks for riding')),
     );
   }
 }

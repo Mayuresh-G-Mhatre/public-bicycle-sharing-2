@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 
 class HomeScreen extends StatefulWidget {

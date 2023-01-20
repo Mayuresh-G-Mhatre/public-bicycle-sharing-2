@@ -27,15 +27,13 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   @override
   Widget build(BuildContext context) {
     controller?.resumeCamera();
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          buildQrView(context),
-          Positioned(bottom: 230, child: flashButton()),
-          Positioned(bottom: 170, child: enterBicycleNumberButton()),
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        buildQrView(context),
+        Positioned(bottom: 190, child: flashButton()),
+        Positioned(bottom: 130, child: enterBicycleNumberButton()),
+      ],
     );
   }
 
@@ -176,7 +174,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
                       if (_enteredBicycleNumber != null) {
                         controller?.dispose();
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => StartRideScreen(
                                 bicycleNumber: _enteredBicycleNumber),

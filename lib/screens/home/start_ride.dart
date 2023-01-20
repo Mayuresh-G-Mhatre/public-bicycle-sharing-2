@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:public_bicycle_sharing/screens/home/in_ride.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
@@ -18,7 +19,6 @@ class _StartRideScreenState extends State<StartRideScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,

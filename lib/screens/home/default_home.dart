@@ -110,14 +110,14 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
         centerTitle: true,
       ),
       drawer: _sideBar(),
-      // bottomNavigationBar: _bottomBar(),
-      // logic for routing navigation bar tabs
       body: PersistentTabView(
         context,
         controller: _controller,
         screens: _pages,
         items: _navBarsItems(),
         navBarStyle: NavBarStyle.style9,
+        navBarHeight: 65,
+        confineInSafeArea: true,
       ),
     );
   }
