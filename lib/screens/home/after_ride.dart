@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
+import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:intl/intl.dart';
 
 class AfterRideScreen extends StatefulWidget {
