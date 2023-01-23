@@ -79,8 +79,8 @@ class _MyAppState extends State<MyApp> {
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
-      // home: const SplashScreen(),
-      home: const DefaultHomeScreen(), // for testing
+      home: const SplashScreen(),
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }
