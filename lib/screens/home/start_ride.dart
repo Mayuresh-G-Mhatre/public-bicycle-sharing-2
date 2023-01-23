@@ -34,10 +34,7 @@ class _StartRideScreenState extends State<StartRideScreen> {
             child: Row(
               children: const [
                 Text('Ride charges: '),
-                Text('\u{20B9}10 first 30 min ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('then '),
-                Text('\u{20B9}5/30 min',
+                Text('\u{20B9}5 / 30 min ',
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),

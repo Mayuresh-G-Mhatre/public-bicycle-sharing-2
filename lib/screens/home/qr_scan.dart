@@ -31,8 +31,8 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
       alignment: Alignment.center,
       children: <Widget>[
         buildQrView(context),
-        Positioned(bottom: 190, child: flashButton()),
-        Positioned(bottom: 130, child: enterBicycleNumberButton()),
+        Positioned(bottom: 160, child: flashButton()),
+        Positioned(bottom: 100, child: enterBicycleNumberButton()),
       ],
     );
   }

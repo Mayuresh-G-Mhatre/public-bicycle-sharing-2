@@ -27,6 +27,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   String defaultAvatar = 'assets/avatars/1.png'; // maybe useless
   int _sharedPrefAvatarInd = 1; // shared prefs //
+  late bool _isDark;
 
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
@@ -91,12 +92,21 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
   // shared prefs //
 
+  // shared pref //
+  Future<void> getDarkThemeStatus() async {
+    bool? isDark = await sprefs.getDarkThemeStatus();
+    setState(() {
+      _isDark = isDark!;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     // shared pref //
     getAvatarIndex();
     getName();
+    getDarkThemeStatus();
     // shared pref //
   }
 
@@ -104,6 +114,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   Widget build(BuildContext context) {
     getAvatarIndex();
     getName();
+    getDarkThemeStatus();
     return Scaffold(
       appBar: AppBar(
         title: const Text('WePedL'),
@@ -118,6 +129,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
         navBarStyle: NavBarStyle.style9,
         navBarHeight: 65,
         confineInSafeArea: true,
+        backgroundColor: _isDark ? const Color(0xFF212121) : Colors.white,
       ),
     );
   }
