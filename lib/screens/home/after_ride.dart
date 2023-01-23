@@ -115,7 +115,7 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                          builder: (context) => const DefaultHomeScreen(),
+                          builder: (context) => const HomeScreen(),
                         ),
                         (route) => false);
                   },
