@@ -27,7 +27,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   String defaultAvatar = 'assets/avatars/1.png'; // maybe useless
   int _sharedPrefAvatarInd = 1; // shared prefs //
-  late bool _isDark;
+  late bool _isDark = false;
 
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
