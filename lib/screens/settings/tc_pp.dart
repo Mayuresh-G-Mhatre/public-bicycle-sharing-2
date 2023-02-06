@@ -15,16 +15,19 @@ class TCScreen extends StatelessWidget {
       appBar: AppBar(),
       body: SafeArea(
         child: Center(
-          child: FutureBuilder(
-            future: loadTermsNConditions(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SingleChildScrollView(
-                    child: Text(snapshot.data ?? 'Error'));
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: FutureBuilder(
+              future: loadTermsNConditions(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                      child: Text(snapshot.data ?? 'Error'));
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -45,16 +48,19 @@ class PPScreen extends StatelessWidget {
       appBar: AppBar(),
       body: SafeArea(
         child: Center(
-          child: FutureBuilder(
-            future: loadPrivacyPolicy(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SingleChildScrollView(
-                    child: Text(snapshot.data ?? 'Error'));
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: FutureBuilder(
+              future: loadPrivacyPolicy(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                      child: Text(snapshot.data ?? 'Error'));
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           ),
         ),
       ),
