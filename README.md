@@ -44,6 +44,8 @@ There will be two branches:
     1. main - store locally using shared preferences
         ~ Use any random digits for phone number and otp to register.
         ~ Use repetitive phone number like '0000000000' or '1111111111', etc and random digits otp to login.
+        ~ Use qr code samples stored in screenshots/samples for simulating lock/unlock.
+        ~ Valid bicycle numbers are in range 00000 to 99999 with PEDL prefix (Eg. PEDL12345, PEDL55555, etc). 
     2. firebase - firebase integration
         ~ Work in progress
 
