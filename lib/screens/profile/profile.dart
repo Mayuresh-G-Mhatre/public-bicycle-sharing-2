@@ -21,12 +21,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String defaultAvatar = 'assets/avatars/1.png';
   final _emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
-  late String? _nameErrorText = null;
-  late String? _emailErrorText = null;
-  late int _avatarIndex; // shared prefs //
-  late String _phoneNumber; // shared prefs //
-  late String _name;
-  late String _email;
+  String? _nameErrorText;
+  String? _emailErrorText;
+  int _avatarIndex = 1; // shared prefs //
+  String? _phoneNumber; // shared prefs //
+  String? _name;
+  String? _email;
   bool nameError = false;
   bool emailError = false;
   String editOrSave = 'Edit';
@@ -95,103 +95,106 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // _phoneNumber = widget.phoneNumber; // shared prefs //
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: height * 0.03),
-              SizedBox(
-                height: 150,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: GestureDetector(
-                        onTap: () async {
-                          if (editOrSave != 'Edit') {
-                            await showAvatarPicker(context);
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: height * 0.03),
+                SizedBox(
+                  height: 150,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            if (editOrSave != 'Edit') {
+                              await showAvatarPicker(context);
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage: AssetImage(
+                                'assets/avatars/$_avatarIndex.png'), // shared prefs //
+                          ),
+                        ),
+                      ),
+                      // get name from firestore database and set here //
+                    ],
+                  ),
+                ),
+                editOrSave == 'Edit'
+                    ? const SizedBox(height: 2.0)
+                    : const Text(
+                        'Tap to choose',
+                        style: TextStyle(fontSize: 12.0),
+                      ),
+                SizedBox(height: height * 0.01),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _nameField(),
+                      SizedBox(height: height * 0.02),
+                      _emailField(),
+                      SizedBox(height: height * 0.02),
+                      _phoneNumberField(),
+                      SizedBox(height: height * 0.04),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: Size(
+                            width * 0.26,
+                            height * 0.05,
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate() &&
+                              _nameErrorText == null &&
+                              _emailErrorText == null &&
+                              editOrSave == 'Edit') {
+                            setState(() {
+                              editOrSave = 'Save';
+                              _tfReadOnly = false;
+                              _tfEnabled = true;
+                            });
+                          }
+
+                          // logic to store avatar index, name, email and phone number in firestore database //
+
+                          else {
+                            setState(() {
+                              editOrSave = 'Edit';
+                              _tfReadOnly = true;
+                              _tfEnabled = false;
+                            });
+
+                            Fluttertoast.showToast(
+                              msg: 'Saved',
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_SHORT,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+
+                            // shared pref //
+                            await sprefs.setAvatarIndex(_avatarIndex);
+                            await sprefs.setPhoneNumber(_phoneNumber!);
+                            await sprefs.setName(_name!);
+                            await sprefs.setEmail(_email!);
+                            //shared pref //
                           }
                         },
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundImage: AssetImage(
-                              'assets/avatars/$_avatarIndex.png'), // shared prefs //
-                        ),
+                        child: Text(editOrSave),
                       ),
-                    ),
-                    // get name from firestore database and set here //
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              editOrSave == 'Edit'
-                  ? const SizedBox(height: 2.0)
-                  : const Text(
-                      'Tap to choose',
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-              SizedBox(height: height * 0.01),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    _nameField(),
-                    SizedBox(height: height * 0.02),
-                    _emailField(),
-                    SizedBox(height: height * 0.02),
-                    _phoneNumberField(),
-                    SizedBox(height: height * 0.04),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(
-                          width * 0.26,
-                          height * 0.05,
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate() &&
-                            _nameErrorText == null &&
-                            _emailErrorText == null &&
-                            editOrSave == 'Edit') {
-                          setState(() {
-                            editOrSave = 'Save';
-                            _tfReadOnly = false;
-                            _tfEnabled = true;
-                          });
-                        }
-
-                        // logic to store avatar index, name, email and phone number in firestore database //
-
-                        else {
-                          setState(() {
-                            editOrSave = 'Edit';
-                            _tfReadOnly = true;
-                            _tfEnabled = false;
-                          });
-
-                          Fluttertoast.showToast(
-                            msg: 'Saved',
-                            gravity: ToastGravity.BOTTOM,
-                            toastLength: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-
-                          // shared pref //
-                          await sprefs.setAvatarIndex(_avatarIndex);
-                          await sprefs.setPhoneNumber(_phoneNumber);
-                          await sprefs.setName(_name);
-                          await sprefs.setEmail(_email);
-                          //shared pref //
-                        }
-                      },
-                      child: Text(editOrSave),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -298,9 +301,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onChanged: (value) {
           setState(() {
             _name = value;
-            if (_name.isEmpty) {
+            if (_name!.isEmpty) {
               _nameErrorText = 'Name is required';
-            } else if (_name.length < 3) {
+            } else if (_name!.length < 3) {
               _nameErrorText = 'Name must be at least 3 characters';
             } else {
               _nameErrorText = null;
@@ -330,9 +333,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onChanged: (value) {
           setState(() {
             _email = value;
-            if (_email.isEmpty) {
+            if (_email!.isEmpty) {
               _emailErrorText = 'Email is required';
-            } else if (!_emailRegex.hasMatch(_email)) {
+            } else if (!_emailRegex.hasMatch(_email!)) {
               _emailErrorText = 'Enter a valid email';
             } else {
               _emailErrorText = null;

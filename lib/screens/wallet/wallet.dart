@@ -15,8 +15,8 @@ class _WalletScreenState extends State<WalletScreen> {
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
 
-  late bool _paid;
-  late int _amount;
+  late bool _paid = false;
+  late int _amount = 0;
 
   late double width;
   late double height;
@@ -77,7 +77,7 @@ class _WalletScreenState extends State<WalletScreen> {
             Center(
               child: Container(
                 width: width * 0.9,
-                height: height * 0.22,
+                height: height * 0.25,
                 padding: EdgeInsets.symmetric(
                   horizontal: width * 0.09,
                   vertical: height * 0.05,
