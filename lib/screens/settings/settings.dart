@@ -5,6 +5,7 @@ import 'package:public_bicycle_sharing/screens/settings/config.dart';
 import 'package:public_bicycle_sharing/screens/settings/tc_pp.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../provider/theme.data.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -239,9 +240,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           customBorder: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),
                           onTap: () async {
-                            setState(() {
-                              _themeColor = 'blue';
-                            });
+                            if (ThemeProvider().themeMode == ThemeMode.light) {
+                              ThemeProvider().setThemeMode(ThemeMode.dark);
+                            } else {
+                              ThemeProvider().setThemeMode(ThemeMode.light);
+                            }
+
+                            // setState(() {
+                            //   _themeColor = 'blue';
+                            // });
                             await sprefs.setThemeColor(_themeColor);
                             showUnderDevelopmentToast();
                           },
