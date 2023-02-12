@@ -16,11 +16,13 @@ class _InRideScreenState extends State<InRideScreen> {
   late double height;
 
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+  late int rideFare;
   late var displayTime;
 
   @override
   void initState() {
     super.initState();
+    // _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
     _stopWatchTimer.onStartTimer();
   }
 
@@ -104,7 +106,7 @@ class _InRideScreenState extends State<InRideScreen> {
                                     milliSecond: false);
                                 return Text(displayTime);
                               }),
-                          Text('On ride'),
+                          const Text('On ride'),
                         ],
                       ),
                     ],
@@ -119,10 +121,26 @@ class _InRideScreenState extends State<InRideScreen> {
                 height: 50,
                 onConfirmation: () {
                   // print(displayTime);
+                  Duration duration = Duration(
+                      hours: int.parse(displayTime.split(':')[0]),
+                      minutes: int.parse(displayTime.split(':')[1]),
+                      seconds: int.parse(displayTime.split(':')[2]));
+
+                  int minutess = duration.inMinutes;
+                  // if ride started only 2 minutes ago and user wants to cancel due to some problem then dont take any fare
+                  if (minutess <= 2) {
+                    rideFare = 0;
+                  } else {
+                    // rideFare = (minutes * 0.167).round(); // 5rs every 30min
+                    rideFare = (minutess * 0.668).round(); // 20rs every 30min (for testing purpose)
+                  }
+                  // print(duration);
+                  // print(minutes * 0.167);
                   _stopWatchTimer.onStopTimer();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => AfterRideScreen(endRideTime: displayTime),
+                      builder: (context) => AfterRideScreen(
+                          endRideTime: displayTime, rideFare: rideFare),
                     ),
                   );
                 },

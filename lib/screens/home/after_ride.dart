@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:public_bicycle_sharing/screens/home/home.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:intl/intl.dart';
 
 class AfterRideScreen extends StatefulWidget {
   var endRideTime;
-  AfterRideScreen({super.key, required this.endRideTime});
+  int rideFare;
+  AfterRideScreen(
+      {super.key, required this.endRideTime, required this.rideFare});
   @override
   State<AfterRideScreen> createState() => _AfterRideScreenState();
 }
@@ -14,6 +17,30 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
   String _selectedOption = '';
   String _feedback = '';
   double _emojiRating = 0;
+
+  // shared pref //
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  // shared pref //
+
+  late int _amount;
+
+  @override
+  void initState() {
+    super.initState();
+    // shared pref //
+    getWalletAmount();
+    // shared pref //
+  }
+
+  // shared pref //
+  Future<void> getWalletAmount() async {
+    int? amount = await sprefs.getWalletAmount();
+    setState(() {
+      _amount = amount!;
+    });
+  }
+  // shared pref //
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,10 +68,10 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                 ),
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Ride Fare: '),
-                    Text('\u{20B9}5',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  children: [
+                    const Text('Ride Fare: '),
+                    Text('\u{20B9}${widget.rideFare}',
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -116,7 +143,9 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                 buildFeedbackForm(),
                 const SizedBox(height: 40.0),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await sprefs.setWalletAmount(_amount - widget.rideFare);
+                    if (!mounted) return;
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const HomeScreen(),
