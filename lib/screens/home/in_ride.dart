@@ -58,24 +58,30 @@ class _InRideScreenState extends State<InRideScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Center(
-              child: ConfirmationSlider(
-                width: width * 0.85,
-                height: 50,
-                onConfirmation: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const AfterRideScreen(),
-                    ),
-                  );
-                },
-                sliderButtonContent: const Icon(Icons.lock_outline),
-                text: 'Slide to end ride',
-                textStyle: const TextStyle(color: Colors.white),
-                backgroundColor: Colors.blue,
-                backgroundColorEnd: Colors.red,
-                foregroundColor: Colors.white,
+            const SizedBox(height: 10),
+            SizedBox(
+              height: height * 0.28,
+              child: Positioned(
+                bottom: 150,
+                child: Center(
+                  child: ConfirmationSlider(
+                    width: width * 0.85,
+                    height: 50,
+                    onConfirmation: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const AfterRideScreen(),
+                        ),
+                      );
+                    },
+                    sliderButtonContent: const Icon(Icons.lock_outline),
+                    text: 'Slide to end ride',
+                    textStyle: const TextStyle(color: Colors.white),
+                    backgroundColor: Colors.blue,
+                    backgroundColorEnd: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
               ),
             ),
           ],
