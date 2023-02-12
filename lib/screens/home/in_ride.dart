@@ -24,7 +24,7 @@ class _InRideScreenState extends State<InRideScreen> {
           children: [
             SizedBox(height: height * 0.6),
             SizedBox(
-              width: 150,
+              width: 170,
               height: 70,
               child: Card(
                 color: Colors.blue,
