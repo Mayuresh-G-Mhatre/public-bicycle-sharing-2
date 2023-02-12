@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
-    primaryColor: Colors.blue,  // #2196F3
+    primaryColor: Colors.blue, // #2196F3
     // floatingActionButtonTheme:
     //     const FloatingActionButtonThemeData(backgroundColor: Colors.blue),
   );
@@ -79,8 +79,8 @@ class _MyAppState extends State<MyApp> {
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
-      // home: const SplashScreen(),
-      home: const DefaultHomeScreen(), // for testing
+      home: const SplashScreen(),
+      // home: const DefaultHomeScreen(), // for testing
     );
   }
 }
