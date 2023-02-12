@@ -325,59 +325,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         await sprefs.setDarkThemeStatus(_isDarkTheme);
                       },
                     )
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     const Text('Dark Theme'),
-                    //     Switch(
-                    //       activeColor: Colors.blue,
-                    //       value: _isDarkTheme,
-                    //       onChanged: (value) async {
-                    //         currentTheme.switchTheme();
-                    //         setState(() {
-                    //           _isDarkTheme = value;
-                    //         });
-                    //         await sprefs.setDarkThemeStatus(_isDarkTheme);
-                    //       },
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
-                // actions: [
-                //   ElevatedButton(
-                //     onPressed: () async {
-                //       setState(() {
-                //         _themeColor = _themeColor;
-                //         _isDarkTheme = !_isDarkTheme;
-                //       });
-                //        currentTheme.switchTheme();
-
-                //       if (!mounted) return;
-                //       Navigator.of(context).pop();
-                //     },
-                //     child: const Text('Cancel'),
-                //   ),
-                //   ElevatedButton(
-                //     onPressed: () async {
-                //       Fluttertoast.showToast(
-                //         msg: 'Changed Theme',
-                //         gravity: ToastGravity.BOTTOM,
-                //         toastLength: Toast.LENGTH_LONG,
-                //         backgroundColor: Colors.black,
-                //         textColor: Colors.white,
-                //         fontSize: 16.0,
-                //       );
-
-                //       await sprefs.setThemeColor(_themeColor);
-                //       await sprefs.setDarkThemeStatus(_isDarkTheme);
-
-                //       if (!mounted) return;
-                //       Navigator.of(context).pop();
-                //     },
-                //     child: const Text('Set'),
-                //   ),
-                // ],
               ),
             );
           });
@@ -478,8 +427,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
+                        // backgroundColor: Colors.red,
+                        ),
                     onPressed: () async {
                       logoutSharedPrefs();
                       // shared prefs //
@@ -497,7 +446,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       );
                     },
-                    child: const Text('Delete'),
+                    child: const Text(
+                      'Delete',
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ),
                 ],
               ),

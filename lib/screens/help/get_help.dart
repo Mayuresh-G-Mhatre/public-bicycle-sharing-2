@@ -74,17 +74,17 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                     ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
                     headerBackgroundColor: Colors.blueAccent,
-                    headerBackgroundColorOpened: Colors.grey,
+                    headerBackgroundColorOpened: Colors.lightBlue[200],
                   ),
                   AccordionSection(
                     header: const Text('What if lost internet connectivity?'),
                     content: Text(
-                      'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, legal action will be taken.',
+                      'Incase you lost internet connection or phone powers off during ride, you will have to return the bicycle to station within 15 minutes. It will lock itself after 15 minutes and if not returned to station, strict action will be taken.',
                       style: contentStyle,
                     ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
                     headerBackgroundColor: Colors.blueAccent,
-                    headerBackgroundColorOpened: Colors.grey,
+                    headerBackgroundColorOpened: Colors.lightBlue[200],
                   ),
                   AccordionSection(
                     header:
@@ -95,7 +95,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                     ),
                     // headerPadding: EdgeInsets.symmetric(horizontal: 20),
                     headerBackgroundColor: Colors.blueAccent,
-                    headerBackgroundColorOpened: Colors.grey,
+                    headerBackgroundColorOpened: Colors.lightBlue[200],
                   ),
                 ],
               ),

@@ -154,7 +154,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 height: 50,
                 width: 300,
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey[600],
+                  color: Colors.lightBlue[100],
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(
                     width: 0.3,

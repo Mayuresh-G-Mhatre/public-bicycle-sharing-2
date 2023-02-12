@@ -24,8 +24,8 @@ class _InRideScreenState extends State<InRideScreen> {
           children: [
             SizedBox(height: height * 0.6),
             SizedBox(
-              width: width * 0.4,
-              height: height * 0.1,
+              width: 150,
+              height: 70,
               child: Card(
                 color: Colors.blue,
                 shape: RoundedRectangleBorder(
