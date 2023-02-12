@@ -46,6 +46,7 @@ class _InRideScreenState extends State<InRideScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 20),
             SizedBox(
               width: 170,
               height: 70,
