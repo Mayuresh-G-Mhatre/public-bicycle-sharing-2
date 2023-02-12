@@ -32,7 +32,7 @@ class _InRideScreenState extends State<InRideScreen> {
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Container(
                     width: width * 0.9,
-                    height: height * 0.7,
+                    height: height * 0.6,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/placeholder_map.jpg'),
