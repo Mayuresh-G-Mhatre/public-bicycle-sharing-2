@@ -84,30 +84,24 @@ class _StartRideScreenState extends State<StartRideScreen> {
             ),
           ),
           SizedBox(height: height * 0.09),
-          SizedBox(
-            height: height * 0.28,
-            child: Positioned(
-              bottom: 150,
-              child: Center(
-                child: ConfirmationSlider(
-                  width: width * 0.85,
-                  height: 50,
-                  onConfirmation: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            InRideScreen(bicycleNumber: widget.bicycleNumber),
-                      ),
-                    );
-                  },
-                  sliderButtonContent: const Icon(Icons.lock_open_outlined),
-                  text: 'Slide to start ride',
-                  textStyle: const TextStyle(color: Colors.white),
-                  backgroundColor: Colors.blue,
-                  backgroundColorEnd: Colors.green,
-                  foregroundColor: Colors.white,
-                ),
-              ),
+          Center(
+            child: ConfirmationSlider(
+              width: width * 0.85,
+              height: 50,
+              onConfirmation: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        InRideScreen(bicycleNumber: widget.bicycleNumber),
+                  ),
+                );
+              },
+              sliderButtonContent: const Icon(Icons.lock_open_outlined),
+              text: 'Slide to start ride',
+              textStyle: const TextStyle(color: Colors.white),
+              backgroundColor: Colors.blue,
+              backgroundColorEnd: Colors.green,
+              foregroundColor: Colors.white,
             ),
           ),
         ],

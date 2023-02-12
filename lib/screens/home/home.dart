@@ -18,6 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _paid = false;
   int _amount = 0;
 
+  late double width;
+  late double height;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     getDepositStatus();
     getWalletAmount();
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
@@ -61,8 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             : () {
-                showPayFirstToast(
-                    _paid ? 'Wallet should have minimum \u{20B9}10' : 'Please pay security deposit first!');
+                showPayFirstToast(_paid
+                    ? 'Wallet should have minimum \u{20B9}10'
+                    : 'Please pay security deposit first!');
                 // print('pay first');
                 // print(_paid);
                 // print(_amount.toString());
@@ -70,8 +76,27 @@ class _HomeScreenState extends State<HomeScreen> {
         label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
       ),
-      body: const Center(
-        child: Text('Home Screen'),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Container(
+              width: width * 0.9,
+              height: height * 0.7,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/placeholder_map.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
