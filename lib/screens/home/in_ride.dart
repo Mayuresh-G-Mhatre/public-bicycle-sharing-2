@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/home/after_ride.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class InRideScreen extends StatefulWidget {
   String bicycleNumber;
@@ -13,6 +14,21 @@ class InRideScreen extends StatefulWidget {
 class _InRideScreenState extends State<InRideScreen> {
   late double width;
   late double height;
+
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+  late var displayTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _stopWatchTimer.onStartTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _stopWatchTimer.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +74,7 @@ class _InRideScreenState extends State<InRideScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
                         children: [
@@ -66,14 +83,27 @@ class _InRideScreenState extends State<InRideScreen> {
                         ],
                       ),
                       Column(
-                        children: const [
-                          Text('.'),
-                          Text('.'),
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 2,
+                            color: Colors.black,
+                          ),
                         ],
                       ),
                       Column(
-                        children: const [
-                          Text('00:00:00'),
+                        children: [
+                          StreamBuilder<int>(
+                              stream: _stopWatchTimer.rawTime,
+                              initialData: _stopWatchTimer.rawTime.value,
+                              builder: (context, snapshot) {
+                                final value = snapshot.data;
+                                displayTime = StopWatchTimer.getDisplayTime(
+                                    value!,
+                                    hours: true,
+                                    milliSecond: false);
+                                return Text(displayTime);
+                              }),
                           Text('On ride'),
                         ],
                       ),
@@ -88,9 +118,11 @@ class _InRideScreenState extends State<InRideScreen> {
                 width: width * 0.85,
                 height: 50,
                 onConfirmation: () {
+                  // print(displayTime);
+                  _stopWatchTimer.onStopTimer();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const AfterRideScreen(),
+                      builder: (context) => AfterRideScreen(endRideTime: displayTime),
                     ),
                   );
                 },

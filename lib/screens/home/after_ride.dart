@@ -4,7 +4,8 @@ import 'package:public_bicycle_sharing/screens/home/home.dart';
 import 'package:intl/intl.dart';
 
 class AfterRideScreen extends StatefulWidget {
-  const AfterRideScreen({super.key});
+  var endRideTime;
+  AfterRideScreen({super.key, required this.endRideTime});
   @override
   State<AfterRideScreen> createState() => _AfterRideScreenState();
 }
@@ -32,9 +33,10 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                 const SizedBox(height: 20),
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Ride Time: '),
-                    Text('28 min', style: TextStyle(fontWeight: FontWeight.bold)),
+                  children: [
+                    const Text('Ride Time: '),
+                    Text(widget.endRideTime,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
                 Row(
@@ -72,8 +74,9 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                       case 1:
                         return Icon(
                           Icons.sentiment_dissatisfied,
-                          color:
-                              _emojiRating == 2 ? Colors.redAccent : Colors.grey,
+                          color: _emojiRating == 2
+                              ? Colors.redAccent
+                              : Colors.grey,
                         );
                       case 2:
                         return Icon(
@@ -83,8 +86,9 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                       case 3:
                         return Icon(
                           Icons.sentiment_satisfied,
-                          color:
-                              _emojiRating == 4 ? Colors.lightGreen : Colors.grey,
+                          color: _emojiRating == 4
+                              ? Colors.lightGreen
+                              : Colors.grey,
                         );
                       case 4:
                         return Icon(
