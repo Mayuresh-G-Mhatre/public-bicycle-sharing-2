@@ -55,6 +55,7 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    getWalletAmount();
     return Scaffold(
       body: SafeArea(
         child: Column(
