@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             : () {
                 showPayFirstToast(
-                    _paid ? 'Add money to wallet' : 'pay security deposit');
+                    _paid ? 'Wallet should have minimum \u{20B9}10' : 'Please pay security deposit first!');
                 // print('pay first');
                 // print(_paid);
                 // print(_amount.toString());
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void showPayFirstToast(String depositOrMoney) {
     Fluttertoast.showToast(
-      msg: 'Please $depositOrMoney first!',
+      msg: depositOrMoney,
       gravity: ToastGravity.BOTTOM,
       toastLength: Toast.LENGTH_SHORT,
       backgroundColor: Colors.black,
