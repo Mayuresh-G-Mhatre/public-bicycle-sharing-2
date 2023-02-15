@@ -268,7 +268,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
           );
         },
         controller: SidebarXController(
-          selectedIndex: 0,
+          selectedIndex: 4,
           extended: true,
         ),
         items: [
@@ -304,6 +304,11 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                 ),
               );
             },
+          ),
+          SidebarXItem(
+            iconWidget: const Icon(Icons.settings, color: Colors.transparent),
+            label: '',
+            onTap: () {},
           ),
         ],
         footerBuilder: (context, extended) {

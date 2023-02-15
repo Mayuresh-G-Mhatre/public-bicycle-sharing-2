@@ -87,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   maxLength: 10,
                   // auto focus and open keyboard
+                  autofocus: true,
                   focusNode: inputNode,
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
