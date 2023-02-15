@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:public_bicycle_sharing/screens/intro/onboarding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});
@@ -11,6 +12,15 @@ class GetStartedScreen extends StatefulWidget {
 class _GetStartedScreenState extends State<GetStartedScreen> {
   late double width;
   late double height;
+
+  void askLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      await Geolocator.requestPermission();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +65,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
           Center(
             child: ElevatedButton(
               onPressed: () {
+                askLocationPermission();
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const OnBoardingScreen(),
