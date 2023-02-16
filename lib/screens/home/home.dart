@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -85,17 +86,40 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: OSMFlutter(
           controller: controller,
-          markerOption: MarkerOption(
-            defaultMarker: const MarkerIcon(
-              icon: Icon(
-                Icons.person_pin_circle,
-                color: Colors.blue,
-                size: 56,
-              ),
+          // markerOption: MarkerOption(
+          //   defaultMarker: const MarkerIcon(
+          //     icon: Icon(
+          //       Icons.person_pin_circle,
+          //       color: Colors.blue,
+          //       size: 56,
+          //     ),
+          //   ),
+          // ),
+          trackMyPosition: true,
+          mapIsLoading: Center(
+            child: SizedBox(
+                  height: height * 0.2,
+                  width: width * 1,
+                  child: Lottie.asset('assets/bicycle_anim.json'),
+                ),
+          ),
+          initZoom: 8,
+          userLocationMarker: UserLocationMaker(
+            directionArrowMarker: const MarkerIcon(
+                icon: Icon(
+                    Icons.keyboard_double_arrow_right_rounded,
+                    color: Colors.blue,
+                    size: 40,
+                ),
+            ), 
+            personMarker: const MarkerIcon(
+                icon: Icon(
+                    Icons.person_pin_circle_rounded,
+                    color: Colors.blue,
+                    size: 40,
+                ),
             ),
           ),
-          trackMyPosition: true,
-          mapIsLoading: const CircularProgressIndicator(),
         ),
       ),
     );
