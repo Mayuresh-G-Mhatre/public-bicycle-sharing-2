@@ -98,28 +98,45 @@ class _HomeScreenState extends State<HomeScreen> {
           trackMyPosition: true,
           mapIsLoading: Center(
             child: SizedBox(
-                  height: height * 0.2,
-                  width: width * 1,
-                  child: Lottie.asset('assets/bicycle_anim.json'),
-                ),
-          ),
-          initZoom: 8,
-          userLocationMarker: UserLocationMaker(
-            directionArrowMarker: const MarkerIcon(
-                icon: Icon(
-                    Icons.keyboard_double_arrow_right_rounded,
-                    color: Colors.blue,
-                    size: 40,
-                ),
-            ), 
-            personMarker: const MarkerIcon(
-                icon: Icon(
-                    Icons.person_pin_circle_rounded,
-                    color: Colors.blue,
-                    size: 40,
-                ),
+              height: height * 0.15,
+              width: width * 0.8,
+              child: Lottie.asset('assets/bicycle_anim.json'),
             ),
           ),
+          initZoom: 2,
+          userLocationMarker: UserLocationMaker(
+            directionArrowMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.double_arrow_rounded,
+                color: Colors.blue,
+                size: 60,
+              ),
+            ),
+            personMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.person_pin_circle_rounded,
+                color: Colors.blue,
+                size: 60,
+              ),
+            ),
+          ),
+          staticPoints: [
+            StaticPositionGeoPoint(
+              "WesternCollegeStand",
+              const MarkerIcon(
+                icon: Icon(
+                  Icons.pedal_bike_rounded,
+                  color: Colors.blue,
+                  size: 60,
+                ),
+              ),
+              <GeoPoint>[
+                GeoPoint(latitude: 19.060058, longitude: 73.013382),
+                GeoPoint(latitude: 19.056809, longitude: 73.016851),
+                GeoPoint(latitude: 19.065725, longitude: 73.010752),
+              ],
+            )
+          ],
         ),
       ),
     );
