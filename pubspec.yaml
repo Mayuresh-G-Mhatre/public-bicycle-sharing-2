@@ -34,6 +34,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_osm_plugin: ^0.42.0
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^1.1.6
   fluttertoast: ^8.1.2

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late double width;
   late double height;
 
+  late MapController controller;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     getDepositStatus();
     getWalletAmount();
     // shared pref //
+
+    controller = MapController(initMapWithUserPosition: true);
   }
 
   // shared pref //
@@ -76,27 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
         label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Container(
-              width: width * 0.9,
-              height: height * 0.7,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/placeholder_map.jpg'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: OSMFlutter(
+          controller: controller,
+          markerOption: MarkerOption(
+            defaultMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.person_pin_circle,
+                color: Colors.blue,
+                size: 56,
               ),
             ),
           ),
-        ],
+          trackMyPosition: true,
+          mapIsLoading: const CircularProgressIndicator(),
+        ),
       ),
     );
   }
