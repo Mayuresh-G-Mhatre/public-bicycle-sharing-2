@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/after_ride.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -19,11 +21,15 @@ class _InRideScreenState extends State<InRideScreen> {
   late int rideFare;
   late var displayTime;
 
+  late MapController mapController;
+
   @override
   void initState() {
     super.initState();
     // _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
     _stopWatchTimer.onStartTimer();
+
+      mapController = MapController(initMapWithUserPosition: true);
   }
 
   @override
@@ -37,121 +43,148 @@ class _InRideScreenState extends State<InRideScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ConfirmationSlider(
+        width: width * 0.85,
+        height: 50,
+        onConfirmation: () {
+          // print(displayTime);
+          Duration duration = Duration(
+              hours: int.parse(displayTime.split(':')[0]),
+              minutes: int.parse(displayTime.split(':')[1]),
+              seconds: int.parse(displayTime.split(':')[2]));
+
+          int minutess = duration.inMinutes;
+          // if ride started only 2 minutes ago and user wants to cancel due to some problem then dont take any fare
+          if (minutess <= 2) {
+            rideFare = 0;
+          } else {
+            // rideFare = (minutes * 0.167).round(); // 5rs every 30min
+            rideFare = (minutess * 0.668)
+                .round(); // 20rs every 30min (for testing purpose)
+          }
+          // print(duration);
+          // print(minutes * 0.167);
+          _stopWatchTimer.onStopTimer();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) =>
+                  AfterRideScreen(endRideTime: displayTime, rideFare: rideFare),
+            ),
+          );
+        },
+        sliderButtonContent: const Icon(Icons.lock_outline),
+        text: 'Slide to end ride',
+        textStyle: const TextStyle(color: Colors.white),
+        backgroundColor: Colors.blue,
+        backgroundColorEnd: Colors.red,
+        foregroundColor: Colors.white,
+      ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
             // SizedBox(height: height * 0.6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 30),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: Container(
-                    width: width * 0.9,
-                    height: height * 0.6,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/placeholder_map.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: OSMFlutter(
+                controller: mapController,
+                markerOption: MarkerOption(
+                  defaultMarker: const MarkerIcon(
+                    icon: Icon(
+                      Icons.pedal_bike_outlined,
+                      color: Colors.blue,
+                      size: 60,
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 22),
-            SizedBox(
-              width: 170,
-              height: 70,
-              child: Card(
-                color: Colors.blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          const Icon(Icons.pedal_bike, size: 20),
-                          Text(widget.bicycleNumber),
-                        ],
+                trackMyPosition: true,
+                mapIsLoading: Center(
+                  child: SizedBox(
+                    height: height * 0.15,
+                    width: width * 0.8,
+                    child: Lottie.asset('assets/bicycle_anim.json'),
+                  ),
+                ),
+                initZoom: 16,
+                staticPoints: [
+                  StaticPositionGeoPoint(
+                    "bicycleStands",
+                    const MarkerIcon(
+                      icon: Icon(
+                        Icons.pedal_bike_rounded,
+                        color: Colors.blue,
+                        size: 60,
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 2,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          StreamBuilder<int>(
-                              stream: _stopWatchTimer.rawTime,
-                              initialData: _stopWatchTimer.rawTime.value,
-                              builder: (context, snapshot) {
-                                final value = snapshot.data;
-                                displayTime = StopWatchTimer.getDisplayTime(
-                                    value!,
-                                    hours: true,
-                                    milliSecond: false);
-                                return Text(displayTime);
-                              }),
-                          const Text('On ride'),
-                        ],
-                      ),
+                    ),
+                    <GeoPoint>[
+                      GeoPoint(latitude: 19.060058, longitude: 73.013382),
+                      GeoPoint(latitude: 19.060086, longitude: 73.013468),
+                      GeoPoint(latitude: 19.060093, longitude: 73.013493),
+                      GeoPoint(latitude: 19.056817, longitude: 73.016936),
+                      GeoPoint(latitude: 19.056811, longitude: 73.016937),
+                      GeoPoint(latitude: 19.065815, longitude: 73.010743),
+                      GeoPoint(latitude: 19.065725, longitude: 73.010752),
+                      GeoPoint(latitude: 19.065751, longitude: 73.010804),
+                      GeoPoint(latitude: 19.065759, longitude: 73.010836),
                     ],
+                  )
+                ],
+              ),
+            ),
+            // const SizedBox(height: 22),
+            Positioned(
+              bottom: 100,
+              child: SizedBox(
+                width: 170,
+                height: 70,
+                child: Card(
+                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            const Icon(Icons.pedal_bike, size: 20),
+                            Text(widget.bicycleNumber),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 2,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            StreamBuilder<int>(
+                                stream: _stopWatchTimer.rawTime,
+                                initialData: _stopWatchTimer.rawTime.value,
+                                builder: (context, snapshot) {
+                                  final value = snapshot.data;
+                                  displayTime = StopWatchTimer.getDisplayTime(
+                                      value!,
+                                      hours: true,
+                                      milliSecond: false);
+                                  return Text(displayTime);
+                                }),
+                            const Text('On ride'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 18),
-            Center(
-              child: ConfirmationSlider(
-                width: width * 0.85,
-                height: 50,
-                onConfirmation: () {
-                  // print(displayTime);
-                  Duration duration = Duration(
-                      hours: int.parse(displayTime.split(':')[0]),
-                      minutes: int.parse(displayTime.split(':')[1]),
-                      seconds: int.parse(displayTime.split(':')[2]));
-
-                  int minutess = duration.inMinutes;
-                  // if ride started only 2 minutes ago and user wants to cancel due to some problem then dont take any fare
-                  if (minutess <= 2) {
-                    rideFare = 0;
-                  } else {
-                    // rideFare = (minutes * 0.167).round(); // 5rs every 30min
-                    rideFare = (minutess * 0.668).round(); // 20rs every 30min (for testing purpose)
-                  }
-                  // print(duration);
-                  // print(minutes * 0.167);
-                  _stopWatchTimer.onStopTimer();
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => AfterRideScreen(
-                          endRideTime: displayTime, rideFare: rideFare),
-                    ),
-                  );
-                },
-                sliderButtonContent: const Icon(Icons.lock_outline),
-                text: 'Slide to end ride',
-                textStyle: const TextStyle(color: Colors.white),
-                backgroundColor: Colors.blue,
-                backgroundColorEnd: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-            ),
+            // const SizedBox(height: 18),
           ],
         ),
       ),

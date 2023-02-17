@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late double width;
   late double height;
 
-  late MapController controller;
+  late MapController mapController;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getWalletAmount();
     // shared pref //
 
-    controller = MapController(initMapWithUserPosition: true);
+    mapController = MapController(initMapWithUserPosition: true);
   }
 
   // shared pref //
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: OSMFlutter(
-          controller: controller,
+          controller: mapController,
           // markerOption: MarkerOption(
           //   defaultMarker: const MarkerIcon(
           //     icon: Icon(
