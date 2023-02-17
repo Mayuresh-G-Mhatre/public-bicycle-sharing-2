@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/default_home.dart';
 import 'package:public_bicycle_sharing/screens/intro/get_started.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+import 'package:location/location.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +21,12 @@ class _SplashScreenState extends State<SplashScreen> {
   // shared pref //
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
+
+  Location location = Location();
+
   String splashPrefixText = 'We';
+
+  late bool isLocationEnabled;
 
   void onboardingOrHome() async {
     if (await sprefs.contains('phone_number')) {
@@ -33,6 +38,18 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void enableLocationService() async {
+    if (await sprefs.contains('phone_number')) {
+      isLocationEnabled = await location.serviceEnabled();
+      if (!isLocationEnabled) {
+        isLocationEnabled = await location.requestService();
+        if (!isLocationEnabled) {
+          return;
+        }
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
         splashPrefixText = '';
       });
     });
+    // if user is logged in then only ask for location on splash screen
+    enableLocationService();
   }
 
   @override

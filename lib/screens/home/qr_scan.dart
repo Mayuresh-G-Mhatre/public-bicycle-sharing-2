@@ -26,7 +26,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    controller?.resumeCamera();
+    // controller?.resumeCamera();
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
@@ -99,7 +99,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         this.barcode = barcode;
       });
       if (isValid(barcode.code!)) {
-        controller.pauseCamera();
+        controller.stopCamera();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => StartRideScreen(bicycleNumber: barcode.code!),

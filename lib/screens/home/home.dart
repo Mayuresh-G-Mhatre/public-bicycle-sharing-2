@@ -82,68 +82,88 @@ class _HomeScreenState extends State<HomeScreen> {
         label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: OSMFlutter(
-          controller: mapController,
-          // markerOption: MarkerOption(
-          //   defaultMarker: const MarkerIcon(
-          //     icon: Icon(
-          //       Icons.person_pin_circle,
-          //       color: Colors.blue,
-          //       size: 56,
-          //     ),
-          //   ),
-          // ),
-          trackMyPosition: true,
-          mapIsLoading: Center(
-            child: SizedBox(
-              height: height * 0.15,
-              width: width * 0.8,
-              child: Lottie.asset('assets/bicycle_anim.json'),
-            ),
-          ),
-          initZoom: 16,
-          // userLocationMarker: UserLocationMaker(
-          //   directionArrowMarker: const MarkerIcon(
-          //     icon: Icon(
-          //       Icons.double_arrow_rounded,
-          //       color: Colors.blue,
-          //       size: 60,
-          //     ),
-          //   ),
-          //   personMarker: const MarkerIcon(
-          //     icon: Icon(
-          //       Icons.person_pin_circle_rounded,
-          //       color: Colors.blue,
-          //       size: 60,
-          //     ),
-          //   ),
-          // ),
-          staticPoints: [
-            StaticPositionGeoPoint(
-              "bicycleStands",
-              const MarkerIcon(
-                icon: Icon(
-                  Icons.pedal_bike_rounded,
-                  color: Colors.blue,
-                  size: 60,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: OSMFlutter(
+              controller: mapController,
+              // markerOption: MarkerOption(
+              //   defaultMarker: const MarkerIcon(
+              //     icon: Icon(
+              //       Icons.person_pin_circle,
+              //       color: Colors.blue,
+              //       size: 56,
+              //     ),
+              //   ),
+              // ),
+              trackMyPosition: true,
+              mapIsLoading: Center(
+                child: SizedBox(
+                  height: height * 0.15,
+                  width: width * 0.8,
+                  child: Lottie.asset('assets/bicycle_anim.json'),
                 ),
               ),
-              <GeoPoint>[
-                GeoPoint(latitude: 19.060058, longitude: 73.013382),
-                GeoPoint(latitude: 19.060086, longitude: 73.013468),
-                GeoPoint(latitude: 19.060093, longitude: 73.013493),
-                GeoPoint(latitude: 19.056817, longitude: 73.016936),
-                GeoPoint(latitude: 19.056811, longitude: 73.016937),
-                GeoPoint(latitude: 19.065815, longitude: 73.010743),
-                GeoPoint(latitude: 19.065725, longitude: 73.010752),
-                GeoPoint(latitude: 19.065751, longitude: 73.010804),
-                GeoPoint(latitude: 19.065759, longitude: 73.010836),
+              initZoom: 20,
+              // userLocationMarker: UserLocationMaker(
+              //   directionArrowMarker: const MarkerIcon(
+              //     icon: Icon(
+              //       Icons.double_arrow_rounded,
+              //       color: Colors.blue,
+              //       size: 60,
+              //     ),
+              //   ),
+              //   personMarker: const MarkerIcon(
+              //     icon: Icon(
+              //       Icons.person_pin_circle_rounded,
+              //       color: Colors.blue,
+              //       size: 60,
+              //     ),
+              //   ),
+              // ),
+              staticPoints: [
+                StaticPositionGeoPoint(
+                  "bicycleStands",
+                  const MarkerIcon(
+                    icon: Icon(
+                      Icons.pedal_bike_rounded,
+                      color: Colors.blue,
+                      size: 60,
+                    ),
+                  ),
+                  <GeoPoint>[
+                    GeoPoint(latitude: 19.060058, longitude: 73.013382),
+                    GeoPoint(latitude: 19.060086, longitude: 73.013468),
+                    GeoPoint(latitude: 19.060093, longitude: 73.013493),
+                    GeoPoint(latitude: 19.056817, longitude: 73.016936),
+                    GeoPoint(latitude: 19.056811, longitude: 73.016943),
+                    GeoPoint(latitude: 19.065815, longitude: 73.010743),
+                    GeoPoint(latitude: 19.065725, longitude: 73.010752),
+                    GeoPoint(latitude: 19.065751, longitude: 73.010804),
+                    GeoPoint(latitude: 19.065759, longitude: 73.010836),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          Positioned(
+            bottom: 60,
+            right: 15,
+            child: CircleAvatar(
+              backgroundColor: Colors.blue,
+              radius: 25,
+              child: IconButton(
+                onPressed: () async {
+                  await mapController.currentLocation();
+                },
+                color: Colors.white,
+                iconSize: 22,
+                icon: const Icon(Icons.my_location),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

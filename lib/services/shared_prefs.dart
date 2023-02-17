@@ -1,8 +1,7 @@
-import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefGetsNSets {
-// setters //
+  // setters //
   Future<void> setEmail(String email) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('email', email);

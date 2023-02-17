@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // getAvatarIndex();
+    // getAvatarIndex();  // this fixes the side bar profile pic bug but causes another in profile avatar while selecting
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     // _phoneNumber = widget.phoneNumber; // shared prefs //

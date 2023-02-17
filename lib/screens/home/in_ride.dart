@@ -121,7 +121,7 @@ class _InRideScreenState extends State<InRideScreen> {
                       GeoPoint(latitude: 19.060086, longitude: 73.013468),
                       GeoPoint(latitude: 19.060093, longitude: 73.013493),
                       GeoPoint(latitude: 19.056817, longitude: 73.016936),
-                      GeoPoint(latitude: 19.056811, longitude: 73.016937),
+                      GeoPoint(latitude: 19.056811, longitude: 73.016943),
                       GeoPoint(latitude: 19.065815, longitude: 73.010743),
                       GeoPoint(latitude: 19.065725, longitude: 73.010752),
                       GeoPoint(latitude: 19.065751, longitude: 73.010804),
@@ -131,9 +131,25 @@ class _InRideScreenState extends State<InRideScreen> {
                 ],
               ),
             ),
-            // const SizedBox(height: 22),
+            Positioned(
+              bottom: 60,
+              right: 15,
+              child: CircleAvatar(
+                backgroundColor: Colors.blue,
+                radius: 25,
+                child: IconButton(
+                  onPressed: () async {
+                    await mapController.currentLocation();
+                  },
+                  color: Colors.white,
+                  iconSize: 22,
+                  icon: const Icon(Icons.my_location),
+                ),
+              ),
+            ),
             Positioned(
               bottom: 100,
+              left: (width / 2) - 20,
               child: SizedBox(
                 width: 170,
                 height: 70,
@@ -184,7 +200,6 @@ class _InRideScreenState extends State<InRideScreen> {
                 ),
               ),
             ),
-            // const SizedBox(height: 18),
           ],
         ),
       ),
