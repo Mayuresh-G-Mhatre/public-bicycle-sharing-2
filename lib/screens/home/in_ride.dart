@@ -88,10 +88,17 @@ class _InRideScreenState extends State<InRideScreen> {
               child: OSMFlutter(
                 controller: mapController,
                 userLocationMarker: UserLocationMaker(
-                  personMarker:
-                      const MarkerIcon(icon: Icon(Icons.pedal_bike_rounded)),
+                  personMarker: const MarkerIcon(
+                      icon: Icon(
+                    Icons.pedal_bike_rounded,
+                    color: Colors.green,
+                    size: 50,
+                  )),
                   directionArrowMarker: const MarkerIcon(
-                      icon: Icon(Icons.keyboard_double_arrow_up_rounded)),
+                      icon: Icon(
+                    Icons.keyboard_double_arrow_up_rounded,
+                    size: 50,
+                  )),
                 ),
                 trackMyPosition: true,
                 mapIsLoading: Center(

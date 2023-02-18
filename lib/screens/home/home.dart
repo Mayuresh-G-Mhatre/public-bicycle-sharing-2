@@ -88,15 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: OSMFlutter(
               controller: mapController,
-              // markerOption: MarkerOption(
-              //   defaultMarker: const MarkerIcon(
-              //     icon: Icon(
-              //       Icons.person_pin_circle,
-              //       color: Colors.blue,
-              //       size: 56,
-              //     ),
-              //   ),
-              // ),
               trackMyPosition: true,
               mapIsLoading: Center(
                 child: SizedBox(
@@ -106,22 +97,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               initZoom: 20,
-              // userLocationMarker: UserLocationMaker(
-              //   directionArrowMarker: const MarkerIcon(
-              //     icon: Icon(
-              //       Icons.double_arrow_rounded,
-              //       color: Colors.blue,
-              //       size: 60,
-              //     ),
-              //   ),
-              //   personMarker: const MarkerIcon(
-              //     icon: Icon(
-              //       Icons.person_pin_circle_rounded,
-              //       color: Colors.blue,
-              //       size: 60,
-              //     ),
-              //   ),
-              // ),
+              userLocationMarker: UserLocationMaker(
+                personMarker: const MarkerIcon(
+                    icon: Icon(
+                  Icons.person_pin_circle_rounded,
+                  color: Colors.green,
+                  size: 50,
+                )),
+                directionArrowMarker: const MarkerIcon(
+                    icon: Icon(
+                  Icons.keyboard_double_arrow_up_rounded,
+                  size: 50,
+                )),
+              ),
               staticPoints: [
                 StaticPositionGeoPoint(
                   "bicycleStands",
@@ -129,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(
                       Icons.pedal_bike_rounded,
                       color: Colors.blue,
-                      size: 60,
+                      size: 50,
                     ),
                   ),
                   <GeoPoint>[
