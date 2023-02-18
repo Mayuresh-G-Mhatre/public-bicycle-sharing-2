@@ -29,7 +29,7 @@ class _InRideScreenState extends State<InRideScreen> {
     // _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
     _stopWatchTimer.onStartTimer();
 
-      mapController = MapController(initMapWithUserPosition: true);
+    mapController = MapController(initMapWithUserPosition: true);
   }
 
   @override
@@ -83,7 +83,6 @@ class _InRideScreenState extends State<InRideScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // SizedBox(height: height * 0.6),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: OSMFlutter(
@@ -105,7 +104,7 @@ class _InRideScreenState extends State<InRideScreen> {
                     child: Lottie.asset('assets/bicycle_anim.json'),
                   ),
                 ),
-                initZoom: 16,
+                initZoom: 20,
                 staticPoints: [
                   StaticPositionGeoPoint(
                     "bicycleStands",
@@ -149,7 +148,7 @@ class _InRideScreenState extends State<InRideScreen> {
             ),
             Positioned(
               bottom: 100,
-              left: (width / 2) - 20,
+              left: (width / 2) - 80,
               child: SizedBox(
                 width: 170,
                 height: 70,

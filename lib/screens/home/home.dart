@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:location/location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late MapController mapController;
 
+  Location location = Location();
+  late bool isLocationEnabled;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
     getWalletAmount();
     // shared pref //
 
+    enableLocationService();
+
     mapController = MapController(initMapWithUserPosition: true);
+  }
+
+  void enableLocationService() async {
+    isLocationEnabled = await location.serviceEnabled();
+    if (!isLocationEnabled) {
+      isLocationEnabled = await location.requestService();
+      if (!isLocationEnabled) {
+        return;
+      }
+    }
   }
 
   // shared pref //

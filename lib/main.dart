@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: const DefaultHomeScreen(), // for testing
+      // home: InRideScreen(bicycleNumber: '12345'), // for testing
     );
   }
 }
