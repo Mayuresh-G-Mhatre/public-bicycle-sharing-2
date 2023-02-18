@@ -92,12 +92,12 @@ class _InRideScreenState extends State<InRideScreen> {
                       icon: Icon(
                     Icons.pedal_bike_rounded,
                     color: Colors.green,
-                    size: 50,
+                    size: 60,
                   )),
                   directionArrowMarker: const MarkerIcon(
                       icon: Icon(
                     Icons.keyboard_double_arrow_up_rounded,
-                    size: 50,
+                    size: 60,
                   )),
                 ),
                 trackMyPosition: true,

@@ -102,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(
                   Icons.person_pin_circle_rounded,
                   color: Colors.green,
-                  size: 50,
+                  size: 60,
                 )),
                 directionArrowMarker: const MarkerIcon(
                     icon: Icon(
                   Icons.keyboard_double_arrow_up_rounded,
-                  size: 50,
+                  size: 60,
                 )),
               ),
               staticPoints: [
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(
                       Icons.pedal_bike_rounded,
                       color: Colors.blue,
-                      size: 50,
+                      size: 60,
                     ),
                   ),
                   <GeoPoint>[
