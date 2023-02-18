@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
 import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:location/location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,9 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late MapController mapController;
 
-  Location location = Location();
-  late bool isLocationEnabled;
-
   @override
   void initState() {
     super.initState();
@@ -37,19 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getWalletAmount();
     // shared pref //
 
-    enableLocationService();
-
     mapController = MapController(initMapWithUserPosition: true);
-  }
-
-  void enableLocationService() async {
-    isLocationEnabled = await location.serviceEnabled();
-    if (!isLocationEnabled) {
-      isLocationEnabled = await location.requestService();
-      if (!isLocationEnabled) {
-        return;
-      }
-    }
   }
 
   // shared pref //
@@ -153,8 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GeoPoint(latitude: 19.060086, longitude: 73.013468),
                     GeoPoint(latitude: 19.060093, longitude: 73.013493),
                     GeoPoint(latitude: 19.056817, longitude: 73.016936),
-                    GeoPoint(latitude: 19.056811, longitude: 73.016943),
-                    GeoPoint(latitude: 19.065815, longitude: 73.010743),
+                    GeoPoint(latitude: 19.056811, longitude: 73.016952),
+                    GeoPoint(latitude: 19.065815, longitude: 73.010961),
                     GeoPoint(latitude: 19.065725, longitude: 73.010752),
                     GeoPoint(latitude: 19.065751, longitude: 73.010804),
                     GeoPoint(latitude: 19.065759, longitude: 73.010836),
