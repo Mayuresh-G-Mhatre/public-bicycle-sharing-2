@@ -87,14 +87,11 @@ class _InRideScreenState extends State<InRideScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: OSMFlutter(
                 controller: mapController,
-                markerOption: MarkerOption(
-                  defaultMarker: const MarkerIcon(
-                    icon: Icon(
-                      Icons.pedal_bike_outlined,
-                      color: Colors.blue,
-                      size: 60,
-                    ),
-                  ),
+                userLocationMarker: UserLocationMaker(
+                  personMarker:
+                      const MarkerIcon(icon: Icon(Icons.pedal_bike_rounded)),
+                  directionArrowMarker: const MarkerIcon(
+                      icon: Icon(Icons.keyboard_double_arrow_up_rounded)),
                 ),
                 trackMyPosition: true,
                 mapIsLoading: Center(
@@ -131,7 +128,7 @@ class _InRideScreenState extends State<InRideScreen> {
               ),
             ),
             Positioned(
-              bottom: 60,
+              bottom: 80,
               right: 15,
               child: CircleAvatar(
                 backgroundColor: Colors.blue,
