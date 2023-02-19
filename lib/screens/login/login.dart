@@ -132,9 +132,15 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: _phoneController,
           onChanged: (value) {
             if (value.startsWith('+91')) {
-              _phoneController.text = value.substring(3);
+              setState(() {
+                _phoneController.text = value.substring(3);
+              });
             }
           },
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(10),
+          ],
           keyboardType: TextInputType.phone,
           decoration: const InputDecoration(
             labelText: 'Phone Number',
