@@ -118,10 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
       child: PhoneFieldHint(
-
         inputFormatters: [
-        FilteringTextInputFormatter.deny(RegExp(r'^\+91\s*'))
-      ],
+          FilteringTextInputFormatter.deny(RegExp(r'^\+91\s*'))
+        ],
         autoFocus: true,
         controller: _phoneController,
         focusNode: inputNode,
@@ -131,6 +130,13 @@ class _LoginScreenState extends State<LoginScreen> {
           autofocus: true,
           focusNode: inputNode,
           controller: _phoneController,
+          onChanged: (value) {
+            if (_phoneController.text.length == 13) {
+              setState(() {
+                _phoneController.text = _phoneController.text[3];
+              });
+            }
+          },
           keyboardType: TextInputType.phone,
           decoration: const InputDecoration(
             labelText: 'Phone Number',
@@ -150,4 +156,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

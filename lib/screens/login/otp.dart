@@ -73,9 +73,9 @@ class _OtpScreenState extends State<OtpScreen> {
     const errorColor = Colors.red;
     const fillColor = Color.fromRGBO(222, 231, 240, .57);
     final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 60,
-      textStyle: const TextStyle(fontSize: 22, color: Color.fromRGBO(30, 60, 87, 1),),
+      width: 46,
+      height: 50,
+      textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1),),
       decoration: BoxDecoration(
         color: fillColor,
         borderRadius: BorderRadius.circular(8),
@@ -89,9 +89,9 @@ class _OtpScreenState extends State<OtpScreen> {
             const SizedBox(height: 200),
             const Text(
               'OTP Verification',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -104,7 +104,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 22.0),
             SizedBox(
               height: 50,
               child: Pinput(
@@ -161,8 +161,8 @@ class _OtpScreenState extends State<OtpScreen> {
                 focusNode: otpFocusNode,
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: defaultPinTheme.copyWith(
-                  height: 44,
-                  width: 48,
+                  height: 58,
+                  width: 54,
                   decoration: defaultPinTheme.decoration!.copyWith(
                     border: Border.all(color: borderColor),
                   ),
@@ -195,19 +195,19 @@ class _OtpScreenState extends State<OtpScreen> {
             //     },
             //   ),
             // ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 12.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   "Didn't recieve any code?",
-                  style: TextStyle(fontSize: 12.0),
+                  style: TextStyle(fontSize: 16.0),
                 ),
                 _seconds > 0
                     ? Text(
                         ' Resend in ${_seconds}s',
                         style: const TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),
                       )
@@ -221,12 +221,12 @@ class _OtpScreenState extends State<OtpScreen> {
                         },
                         child: const Text(
                           'Resend Code',
-                          style: TextStyle(fontSize: 12.0),
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       )
               ],
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 12.0),
             ElevatedButton(
               onPressed: otpFilled
                   ? () {
