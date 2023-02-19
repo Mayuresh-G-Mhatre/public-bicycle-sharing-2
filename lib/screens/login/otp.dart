@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/screens/login/register.dart';
+
+import '../home/default_home.dart';
+import 'register.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;

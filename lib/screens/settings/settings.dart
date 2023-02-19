@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:public_bicycle_sharing/screens/login/login.dart';
-import 'package:public_bicycle_sharing/screens/settings/config.dart';
-import 'package:public_bicycle_sharing/screens/settings/tc_pp.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../login/login.dart';
+import 'config.dart';
+import 'tc_pp.dart';
+import '../../services/shared_prefs.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:lottie/lottie.dart';
-import 'package:public_bicycle_sharing/screens/home/after_ride.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import 'after_ride.dart';
 
 class InRideScreen extends StatefulWidget {
   String bicycleNumber;

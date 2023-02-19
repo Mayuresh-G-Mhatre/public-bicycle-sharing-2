@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/login/otp.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import 'otp.dart';
+import '../../services/shared_prefs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

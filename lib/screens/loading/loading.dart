@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/login/login.dart';
+
+import '../login/login.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});

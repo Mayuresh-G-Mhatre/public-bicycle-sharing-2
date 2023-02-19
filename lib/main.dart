@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/screens/home/in_ride.dart';
-import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
-import 'package:public_bicycle_sharing/screens/loading/splash.dart';
-import 'package:public_bicycle_sharing/screens/settings/config.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import 'screens/home/default_home.dart';
+import 'screens/home/in_ride.dart';
+import 'screens/home/qr_scan.dart';
+import 'screens/loading/splash.dart';
+import 'screens/settings/config.dart';
+import 'services/shared_prefs.dart';
+import 'screens/login/login.dart';
 
 void main() => runApp(const MyApp());
 
@@ -81,7 +83,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: InRideScreen(bicycleNumber: '12345'), // for testing
+      // home: LoginScreen(), // for testing
     );
   }
 }

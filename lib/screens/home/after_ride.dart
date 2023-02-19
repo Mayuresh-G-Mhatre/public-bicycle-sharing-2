@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:public_bicycle_sharing/screens/home/home.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:intl/intl.dart';
+
+import 'home.dart';
+import '../../services/shared_prefs.dart';
 
 class AfterRideScreen extends StatefulWidget {
   var endRideTime;

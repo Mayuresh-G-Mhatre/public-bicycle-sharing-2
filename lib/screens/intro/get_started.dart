@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/intro/onboarding.dart';
 import 'package:geolocator/geolocator.dart';
+
+import 'onboarding.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});

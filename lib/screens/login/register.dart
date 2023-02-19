@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import '../home/default_home.dart';
+import '../../services/shared_prefs.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String phoneNumber;
