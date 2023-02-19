@@ -84,6 +84,10 @@ class _InRideScreenState extends State<InRideScreen> {
       body: SafeArea(
         child: Stack(
           children: [
+            // container for testing purpose
+            // Container(
+            // color: Colors.red,
+          // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: OSMFlutter(

@@ -85,6 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(
         children: [
+          // container for testing purpose 
+          // Container(
+          //   color: Colors.red,
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: OSMFlutter(

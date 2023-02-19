@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import 'otp.dart';
 import '../../services/shared_prefs.dart';
@@ -83,30 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child: TextField(
-                  maxLength: 10,
-                  // auto focus and open keyboard
-                  autofocus: true,
-                  focusNode: inputNode,
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    counterText: '',
-                    border: OutlineInputBorder(),
-                    prefixIcon: SizedBox(
-                      child: Icon(Icons.phone_outlined),
-                    ),
-                    prefixText: '+91 ',
-                    prefixStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-              ),
+              phoneNumberField(),
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: isButtonEnabled
@@ -129,6 +107,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Text('Send OTP'),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget phoneNumberField() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+      child: PhoneFieldHint(
+        autoFocus: true,
+        controller: _phoneController,
+        focusNode: inputNode,
+        child: TextField(
+          maxLength: 10,
+          // auto focus and open keyboard
+          autofocus: true,
+          focusNode: inputNode,
+          controller: _phoneController,
+          keyboardType: TextInputType.phone,
+          decoration: const InputDecoration(
+            labelText: 'Phone Number',
+            counterText: '',
+            border: OutlineInputBorder(),
+            prefixIcon: SizedBox(
+              child: Icon(Icons.phone_outlined),
+            ),
+            prefixText: '+91 ',
+            prefixStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+            ),
           ),
         ),
       ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+import 'package:pinput/pinput.dart';
 
 import '../home/default_home.dart';
 import 'register.dart';
@@ -20,7 +22,12 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  late OtpFieldController otpController = OtpFieldController();
+  // late OtpFieldController otpController = OtpFieldController();
+
+  TextEditingController otpController = TextEditingController();
+  FocusNode otpFocusNode = FocusNode();
+  bool showError = false;
+
   bool otpFilled = false;
   int _seconds = 60;
   late Timer _timer;
@@ -49,9 +56,31 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   @override
+  void dispose() {
+    otpController.dispose();
+    otpFocusNode.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
+    const length = 6;
+    const borderColor = Color.fromARGB(255, 114, 178, 238);
+    const errorColor = Colors.red;
+    const fillColor = Color.fromRGBO(222, 231, 240, .57);
+    final defaultPinTheme = PinTheme(
+      width: 36,
+      height: 40,
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.transparent),
+      ),
+    );
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -75,26 +104,96 @@ class _OtpScreenState extends State<OtpScreen> {
               ],
             ),
             const SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
-              child: OTPTextField(
-                controller: otpController,
-                length: 4,
-                width: MediaQuery.of(context).size.width,
-                spaceBetween: 5.0,
-                textFieldAlignment: MainAxisAlignment.center,
-                fieldWidth: width * 0.09,
-                fieldStyle: FieldStyle.box,
-                outlineBorderRadius: 10,
-                style: const TextStyle(fontSize: 15),
-                keyboardType: TextInputType.number,
-                onChanged: (otp) {
+            SizedBox(
+              height: 50,
+              child: Pinput(
+                onChanged: (pin) {
+                  // print(pin + ' ' + (pin.length).toString());
                   setState(() {
-                    otpFilled = otp.length == 4;
+                    otpFilled = pin.length == 6;
                   });
                 },
+                onCompleted: (pin) {
+                  // print(pin);
+                  // setState(() {
+                  //   otpFilled = true;
+                  // });
+
+                  setState(() {
+                    // check if otp is correct by qureying firestore database //
+
+                    // simulate firebase //
+                    // check if phone number exists in firestore and if doesn't then route to registration screen //
+                    // else route to home screen //
+                    if (!repeatedNumbersRegex.hasMatch(widget.phoneNumber)) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => RegistrationScreen(
+                                phoneNumber: widget.phoneNumber),
+                          ),
+                          (route) => false);
+                    } else {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const DefaultHomeScreen(),
+                          ),
+                          (route) => false);
+                      Fluttertoast.showToast(
+                        msg: 'Login Successfull',
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+                  });
+                },
+                length: length,
+                controller: otpController,
+                androidSmsAutofillMethod:
+                    AndroidSmsAutofillMethod.smsRetrieverApi,
+                closeKeyboardWhenCompleted: true,
+                errorText: 'Invalid OTP',
+                keyboardType: TextInputType.number,
+                pinAnimationType: PinAnimationType.slide,
+                focusNode: otpFocusNode,
+                defaultPinTheme: defaultPinTheme,
+                focusedPinTheme: defaultPinTheme.copyWith(
+                  height: 44,
+                  width: 48,
+                  decoration: defaultPinTheme.decoration!.copyWith(
+                    border: Border.all(color: borderColor),
+                  ),
+                ),
+                errorPinTheme: defaultPinTheme.copyWith(
+                  decoration: BoxDecoration(
+                    color: errorColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
+            //   child: OTPTextField(
+            //     controller: otpController,
+            //     length: 4,
+            //     width: MediaQuery.of(context).size.width,
+            //     spaceBetween: 5.0,
+            //     textFieldAlignment: MainAxisAlignment.center,
+            //     fieldWidth: width * 0.09,
+            //     fieldStyle: FieldStyle.box,
+            //     outlineBorderRadius: 10,
+            //     style: const TextStyle(fontSize: 15),
+            //     keyboardType: TextInputType.number,
+            //     onChanged: (otp) {
+            //       setState(() {
+            //         otpFilled = otp.length == 4;
+            //       });
+            //     },
+            //   ),
+            // ),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
