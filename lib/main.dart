@@ -48,9 +48,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   final ThemeData _lightTheme = ThemeData(
-    colorScheme: const ColorScheme.dark(
-      primary: Colors.blue,
-    ),
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
@@ -60,9 +57,6 @@ class _MyAppState extends State<MyApp> {
   );
 
   final ThemeData _darkTheme = ThemeData(
-    colorScheme: const ColorScheme.light(
-      primary: Colors.blue,
-    ),
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Colors.blue,

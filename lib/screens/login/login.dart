@@ -131,10 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
           focusNode: inputNode,
           controller: _phoneController,
           onChanged: (value) {
-            if (_phoneController.text.length == 13) {
-              setState(() {
-                _phoneController.text = _phoneController.text[3];
-              });
+            if (value.startsWith('+91')) {
+              _phoneController.text = value.substring(3);
             }
           },
           keyboardType: TextInputType.phone,

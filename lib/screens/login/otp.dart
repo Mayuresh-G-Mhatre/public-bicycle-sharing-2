@@ -201,13 +201,13 @@ class _OtpScreenState extends State<OtpScreen> {
               children: [
                 const Text(
                   "Didn't recieve any code?",
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 14.0),
                 ),
                 _seconds > 0
                     ? Text(
                         ' Resend in ${_seconds}s',
                         style: const TextStyle(
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.bold,
                         ),
                       )
@@ -221,12 +221,12 @@ class _OtpScreenState extends State<OtpScreen> {
                         },
                         child: const Text(
                           'Resend Code',
-                          style: TextStyle(fontSize: 16.0),
+                          style: TextStyle(fontSize: 14.0),
                         ),
                       )
               ],
             ),
-            const SizedBox(height: 12.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: otpFilled
                   ? () {
