@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
       child: PhoneFieldHint(
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          FilteringTextInputFormatter.digitsOnly,
           _PhoneNumberFormatter(),
         ],
         autoFocus: true,
