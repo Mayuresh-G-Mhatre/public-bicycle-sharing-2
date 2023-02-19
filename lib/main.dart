@@ -20,24 +20,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
 
-  late String _themeColor;
+  // late String _themeColor;
   late bool _isDark;
 
-  Map<String, Color> stringToColor = {
-    'blue': Colors.blue,
-    'purple': Colors.purple,
-    'orange': Colors.orange,
-    'teal': Colors.teal,
-    'brown': Colors.brown,
-  };
+  // Map<String, Color> stringToColor = {
+  //   'blue': Colors.blue,
+  //   'purple': Colors.purple,
+  //   'orange': Colors.orange,
+  //   'teal': Colors.teal,
+  //   'brown': Colors.brown,
+  // };
 
-  // shared pref //
-  Future<void> getThemeColor() async {
-    String? themeColor = await sprefs.getThemeColor();
-    setState(() {
-      _themeColor = themeColor!;
-    });
-  }
+  // // shared pref //
+  // Future<void> getThemeColor() async {
+  //   String? themeColor = await sprefs.getThemeColor();
+  //   setState(() {
+  //     _themeColor = themeColor!;
+  //   });
+  // }
 
   // shared pref //
   Future<void> getDarkThemeStatus() async {
@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getThemeColor();
+    // getThemeColor();
     getDarkThemeStatus();
     currentTheme.addListener(() {
       setState(() {});

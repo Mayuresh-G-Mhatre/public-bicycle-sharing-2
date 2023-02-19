@@ -73,8 +73,9 @@ class _OtpScreenState extends State<OtpScreen> {
     const errorColor = Colors.red;
     const fillColor = Color.fromRGBO(222, 231, 240, .57);
     final defaultPinTheme = PinTheme(
-      width: 36,
-      height: 40,
+      width: 56,
+      height: 60,
+      textStyle: const TextStyle(fontSize: 22, color: Color.fromRGBO(30, 60, 87, 1),),
       decoration: BoxDecoration(
         color: fillColor,
         borderRadius: BorderRadius.circular(8),
