@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import 'otp.dart';
@@ -117,6 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
       child: PhoneFieldHint(
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          _PhoneNumberFormatter(),
+        ],
         autoFocus: true,
         controller: _phoneController,
         focusNode: inputNode,
@@ -142,6 +147,24 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String formattedText = newValue.text;
+
+    // Remove the country code if it's present in the auto-detected text
+    if (formattedText.startsWith('+91 ')) {
+      formattedText = formattedText.substring(4);
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
 }
