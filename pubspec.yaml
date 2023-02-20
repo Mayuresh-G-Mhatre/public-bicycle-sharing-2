@@ -45,7 +45,7 @@ dependencies:
   multiavatar: ^0.1.5
   otp_text_field: ^1.1.3
   persistent_bottom_nav_bar_v2: ^4.2.6
-  pinput: ^2.2.30
+  pinput: ^2.2.21
   qr_code_scanner: ^1.0.1
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15

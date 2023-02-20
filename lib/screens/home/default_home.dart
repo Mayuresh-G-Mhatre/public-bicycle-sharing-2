@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:public_bicycle_sharing/screens/help/get_help.dart';
-import 'package:public_bicycle_sharing/screens/home/home.dart';
-import 'package:public_bicycle_sharing/screens/login/login.dart';
-import 'package:public_bicycle_sharing/screens/profile/profile.dart';
-import 'package:public_bicycle_sharing/screens/refer/refer.dart';
-import 'package:public_bicycle_sharing/screens/ride_history/history.dart';
-import 'package:public_bicycle_sharing/screens/settings/settings.dart';
-import 'package:public_bicycle_sharing/screens/wallet/wallet.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+
+import '../help/get_help.dart';
+import 'home.dart';
+import '../login/login.dart';
+import '../profile/profile.dart';
+import '../refer/refer.dart';
+import '../ride_history/history.dart';
+import '../settings/settings.dart';
+import '../wallet/wallet.dart';
+import '../../services/shared_prefs.dart';
 
 class DefaultHomeScreen extends StatefulWidget {
   const DefaultHomeScreen({super.key});

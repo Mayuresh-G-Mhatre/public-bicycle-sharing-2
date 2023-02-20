@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
+import 'package:pinput/pinput.dart';
 
 import '../home/default_home.dart';
 import 'register.dart';
@@ -74,13 +72,17 @@ class _OtpScreenState extends State<OtpScreen> {
     final defaultPinTheme = PinTheme(
       width: 46,
       height: 50,
-      textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1),),
+      textStyle: const TextStyle(
+        fontSize: 20,
+        color: Color.fromRGBO(30, 60, 87, 1),
+      ),
       decoration: BoxDecoration(
         color: fillColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.transparent),
       ),
     );
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -88,9 +90,9 @@ class _OtpScreenState extends State<OtpScreen> {
             const SizedBox(height: 200),
             const Text(
               'OTP Verification',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26.0),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -104,96 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
               ],
             ),
             const SizedBox(height: 22.0),
-            SizedBox(
-              height: 50,
-              child: Pinput(
-                onChanged: (pin) {
-                  // print(pin + ' ' + (pin.length).toString());
-                  setState(() {
-                    otpFilled = pin.length == 6;
-                  });
-                },
-                onCompleted: (pin) {
-                  // print(pin);
-                  // setState(() {
-                  //   otpFilled = true;
-                  // });
-
-                  setState(() {
-                    // check if otp is correct by qureying firestore database //
-
-                    // simulate firebase //
-                    // check if phone number exists in firestore and if doesn't then route to registration screen //
-                    // else route to home screen //
-                    if (!repeatedNumbersRegex.hasMatch(widget.phoneNumber)) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => RegistrationScreen(
-                                phoneNumber: widget.phoneNumber),
-                          ),
-                          (route) => false);
-                    } else {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const DefaultHomeScreen(),
-                          ),
-                          (route) => false);
-                      Fluttertoast.showToast(
-                        msg: 'Login Successfull',
-                        gravity: ToastGravity.BOTTOM,
-                        toastLength: Toast.LENGTH_SHORT,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }
-                  });
-                },
-                length: length,
-                controller: otpController,
-                androidSmsAutofillMethod:
-                    AndroidSmsAutofillMethod.smsRetrieverApi,
-                closeKeyboardWhenCompleted: true,
-                errorText: 'Invalid OTP',
-                keyboardType: TextInputType.number,
-                pinAnimationType: PinAnimationType.slide,
-                focusNode: otpFocusNode,
-                defaultPinTheme: defaultPinTheme,
-                focusedPinTheme: defaultPinTheme.copyWith(
-                  height: 58,
-                  width: 54,
-                  decoration: defaultPinTheme.decoration!.copyWith(
-                    border: Border.all(color: borderColor),
-                  ),
-                ),
-                errorPinTheme: defaultPinTheme.copyWith(
-                  decoration: BoxDecoration(
-                    color: errorColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(90, 0, 90, 0),
-            //   child: OTPTextField(
-            //     controller: otpController,
-            //     length: 4,
-            //     width: MediaQuery.of(context).size.width,
-            //     spaceBetween: 5.0,
-            //     textFieldAlignment: MainAxisAlignment.center,
-            //     fieldWidth: width * 0.09,
-            //     fieldStyle: FieldStyle.box,
-            //     outlineBorderRadius: 10,
-            //     style: const TextStyle(fontSize: 15),
-            //     keyboardType: TextInputType.number,
-            //     onChanged: (otp) {
-            //       setState(() {
-            //         otpFilled = otp.length == 4;
-            //       });
-            //     },
-            //   ),
-            // ),
+            otpField(length, defaultPinTheme, borderColor, errorColor),
             const SizedBox(height: 12.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -265,6 +178,49 @@ class _OtpScreenState extends State<OtpScreen> {
               child: const Text('Verify OTP'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox otpField(int length, PinTheme defaultPinTheme, Color borderColor,
+      MaterialColor errorColor) {
+    return SizedBox(
+      height: 50,
+      child: Pinput(
+        // onChanged: (pin) {
+        //   // print(pin + ' ' + (pin.length).toString());
+        //   setState(() {
+        //     otpFilled = pin.length == 6;
+        //   });
+        // },
+        onCompleted: (pin) {
+          // print(pin);
+          setState(() {
+            otpFilled = true;
+          });
+        },
+        length: length,
+        controller: otpController,
+        androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+        closeKeyboardWhenCompleted: true,
+        errorText: 'Invalid OTP',
+        keyboardType: TextInputType.number,
+        pinAnimationType: PinAnimationType.slide,
+        focusNode: otpFocusNode,
+        defaultPinTheme: defaultPinTheme,
+        focusedPinTheme: defaultPinTheme.copyWith(
+          height: 58,
+          width: 54,
+          decoration: defaultPinTheme.decoration!.copyWith(
+            border: Border.all(color: borderColor),
+          ),
+        ),
+        errorPinTheme: defaultPinTheme.copyWith(
+          decoration: BoxDecoration(
+            color: errorColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       ),
     );

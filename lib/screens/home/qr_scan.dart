@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:public_bicycle_sharing/screens/home/start_ride.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import 'start_ride.dart';
+import '../../services/shared_prefs.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});

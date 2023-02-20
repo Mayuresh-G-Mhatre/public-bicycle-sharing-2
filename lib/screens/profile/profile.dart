@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import '../../services/shared_prefs.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

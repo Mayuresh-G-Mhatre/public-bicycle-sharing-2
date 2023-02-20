@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:public_bicycle_sharing/screens/home/default_home.dart';
-import 'package:public_bicycle_sharing/screens/home/in_ride.dart';
-import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
-import 'package:public_bicycle_sharing/screens/loading/splash.dart';
-import 'package:public_bicycle_sharing/screens/settings/config.dart';
-import 'package:public_bicycle_sharing/services/shared_prefs.dart';
+
+import 'screens/loading/splash.dart';
+import 'screens/settings/config.dart';
+import 'services/shared_prefs.dart';
 
 void main() => runApp(const MyApp());
 
