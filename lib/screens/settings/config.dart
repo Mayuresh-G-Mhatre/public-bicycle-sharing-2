@@ -1,5 +1,4 @@
 library config.globals;
-
-import 'theme.dart';
+import 'package:public_bicycle_sharing/screens/settings/theme.dart';
 
 MyTheme currentTheme = MyTheme();

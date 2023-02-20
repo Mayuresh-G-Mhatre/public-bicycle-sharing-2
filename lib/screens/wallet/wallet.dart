@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:public_bicycle_sharing/screens/wallet/transactions.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'transactions.dart';
-import '../../services/shared_prefs.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});

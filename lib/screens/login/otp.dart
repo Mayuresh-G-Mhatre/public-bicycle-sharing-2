@@ -1,10 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:sms_autofill/sms_autofill.dart';
-import 'package:pinput/pinput.dart';
 
 import '../home/default_home.dart';
 import 'register.dart';

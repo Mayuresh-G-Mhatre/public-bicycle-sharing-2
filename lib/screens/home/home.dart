@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:public_bicycle_sharing/screens/home/qr_scan.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-
-import 'qr_scan.dart';
-import '../../services/shared_prefs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

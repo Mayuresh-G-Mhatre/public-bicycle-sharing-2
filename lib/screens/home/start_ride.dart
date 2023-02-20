@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:public_bicycle_sharing/screens/home/in_ride.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
-
-import 'in_ride.dart';
 
 class StartRideScreen extends StatefulWidget {
   final String bicycleNumber;
