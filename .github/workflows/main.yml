@@ -19,7 +19,7 @@ jobs:
         with:
           flutter-version: '3.3.9'
           channel: 'stable'
-          cache: false
+          cache: true
       - name: Install dependencies
         run: flutter pub get
       - name: Build APK
