@@ -22,12 +22,27 @@ class _LoginScreenState extends State<LoginScreen> {
   late double width;
   late double height;
 
+  bool autoFetchExecuted = false;
+
   void openKeyboard() {
     FocusScope.of(context).requestFocus(inputNode);
   }
 
   String getPhoneNumber(TextEditingController tec) {
     return _phoneController.text;
+  }
+
+  Future<void> _setData() async {
+    String? selectedPhoneNumber = await SmsAutoFill().hint;
+    _phoneController.text = selectedPhoneNumber ?? '';
+    // print(selectedPhoneNumber.toString());
+  }
+
+  void filterData() {
+    if (_phoneController.text.isNotEmpty &&
+        _phoneController.text.startsWith('+91')) {
+      _phoneController.text = _phoneController.text.substring(3);
+    }
   }
 
   @override
@@ -53,6 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
+    if (!autoFetchExecuted) {
+      _setData();
+      autoFetchExecuted = true;
+    }
+
     return Scaffold(
       // backgroundColor: Colors.red,
       body: SafeArea(
@@ -117,43 +138,40 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget phoneNumberField() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-      child: PhoneFieldHint(
-        inputFormatters: [
-          FilteringTextInputFormatter.deny(RegExp(r'^\+91\s*'))
-        ],
-        autoFocus: true,
-        controller: _phoneController,
+      child: TextFormField(
+        maxLength: 10,
+        // auto focus and open keyboard
+        autofocus: true,
         focusNode: inputNode,
-        child: TextField(
-          maxLength: 10,
-          // auto focus and open keyboard
-          autofocus: true,
-          focusNode: inputNode,
-          controller: _phoneController,
-          onChanged: (value) {
-            if (value.startsWith('+91')) {
-              setState(() {
-                _phoneController.text = value.substring(3);
-              });
-            }
-          },
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(10),
-          ],
-          keyboardType: TextInputType.phone,
-          decoration: const InputDecoration(
-            labelText: 'Phone Number',
-            counterText: '',
-            border: OutlineInputBorder(),
-            prefixIcon: SizedBox(
-              child: Icon(Icons.phone_outlined),
-            ),
-            prefixText: '+91 ',
-            prefixStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0,
-            ),
+        controller: _phoneController,
+        // onChanged: (value) {
+        //   if (value.startsWith('+91')) {
+        //     setState(() {
+        //       _phoneController.text = value.substring(3);
+        //     });
+        //   }
+        // },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (_) {
+          filterData();
+          return null;
+        },
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(10),
+        ],
+        keyboardType: TextInputType.phone,
+        decoration: const InputDecoration(
+          labelText: 'Phone Number',
+          counterText: '',
+          border: OutlineInputBorder(),
+          prefixIcon: SizedBox(
+            child: Icon(Icons.phone_outlined),
+          ),
+          prefixText: '+91 ',
+          prefixStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
         ),
       ),
