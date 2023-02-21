@@ -25,6 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
   late double height;
 
   late MapController mapController;
+  List<GeoPoint> geoPoints = [
+    GeoPoint(latitude: 19.102158, longitude: 73.001905), // vashi
+    GeoPoint(latitude: 19.004508, longitude: 73.031284), // seawoods
+  ];
 
   @override
   void initState() {
@@ -34,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
     getWalletAmount();
     // shared pref //
 
-    mapController = MapController(initMapWithUserPosition: true);
+    mapController = MapController(
+      initMapWithUserPosition: true,
+      areaLimit: BoundingBox.fromGeoPoints(geoPoints),
+    );
   }
 
   // shared pref //
@@ -85,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(
         children: [
-          // container for testing purpose 
+          // container for testing purpose
           // Container(
           //   color: Colors.red,
           // ),
@@ -126,15 +133,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   <GeoPoint>[
-                    GeoPoint(latitude: 19.060058, longitude: 73.013382),
-                    GeoPoint(latitude: 19.060086, longitude: 73.013468),
-                    GeoPoint(latitude: 19.060093, longitude: 73.013493),
+                    // college stand
+                    GeoPoint(latitude: 19.060088, longitude: 73.013560),
+                    GeoPoint(latitude: 19.060083, longitude: 73.013531),
+                    GeoPoint(latitude: 19.060097, longitude: 73.013553),
+                    GeoPoint(latitude: 19.060096, longitude: 73.013534),
+                    GeoPoint(latitude: 19.060093, longitude: 73.013492),
+                    GeoPoint(latitude: 19.060088, longitude: 73.013458),
+                    // juinagar railway station stand
                     GeoPoint(latitude: 19.056817, longitude: 73.016936),
                     GeoPoint(latitude: 19.056811, longitude: 73.016952),
                     GeoPoint(latitude: 19.065815, longitude: 73.010961),
+                    // sanpada railway station stand
                     GeoPoint(latitude: 19.065725, longitude: 73.010752),
                     GeoPoint(latitude: 19.065751, longitude: 73.010804),
                     GeoPoint(latitude: 19.065759, longitude: 73.010836),
+                    // sanpada station stand
+                    GeoPoint(latitude: 19.062998, longitude: 73.014012),
+                    GeoPoint(latitude: 19.062994, longitude: 73.014032),
+                    GeoPoint(latitude: 19.062985, longitude: 73.014039),
+                    // sanpada millenuim tower stand
+                    GeoPoint(latitude: 19.060049, longitude: 73.010936),
+                    GeoPoint(latitude: 19.060039, longitude: 73.010953),
+                    GeoPoint(latitude: 19.060021, longitude: 73.010979),
+                    // juinagar bridge station
+                    GeoPoint(latitude: 19.053414, longitude: 73.016526),
+                    GeoPoint(latitude: 19.053404, longitude: 73.016438),
+                    GeoPoint(latitude: 19.053389, longitude: 73.016426),
                   ],
                 )
               ],
