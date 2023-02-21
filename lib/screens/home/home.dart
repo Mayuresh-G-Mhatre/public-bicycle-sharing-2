@@ -25,10 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late double height;
 
   late MapController mapController;
-  List<GeoPoint> geoPoints = [
-    GeoPoint(latitude: 19.102158, longitude: 73.001905), // vashi
-    GeoPoint(latitude: 19.004508, longitude: 73.031284), // seawoods
-  ];
 
   @override
   void initState() {
@@ -38,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getWalletAmount();
     // shared pref //
 
-    mapController = MapController(
-      initMapWithUserPosition: true,
-      areaLimit: BoundingBox.fromGeoPoints(geoPoints),
-    );
+    mapController = MapController(initMapWithUserPosition: true);
   }
 
   // shared pref //

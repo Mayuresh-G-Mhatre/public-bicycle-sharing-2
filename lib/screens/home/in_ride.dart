@@ -23,10 +23,6 @@ class _InRideScreenState extends State<InRideScreen> {
   late var displayTime;
 
   late MapController mapController;
-  List<GeoPoint> geoPoints = [
-    GeoPoint(latitude: 19.102158, longitude: 73.001905), // vashi
-    GeoPoint(latitude: 19.004508, longitude: 73.031284), // seawoods
-  ];
 
   @override
   void initState() {
@@ -34,10 +30,7 @@ class _InRideScreenState extends State<InRideScreen> {
     // _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
     _stopWatchTimer.onStartTimer();
 
-    mapController = MapController(
-      initMapWithUserPosition: true,
-      areaLimit: BoundingBox.fromGeoPoints(geoPoints),
-    );
+    mapController = MapController(initMapWithUserPosition: true);
   }
 
   @override
