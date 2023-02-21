@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "133827438873",
+    "project_id": "wepedl-dc83d",
+    "storage_bucket": "wepedl-dc83d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133827438873:android:1d46b08a36860764547d88",
+        "android_client_info": {
+          "package_name": "com.wepedl.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133827438873-9qokne2j50t7127o5pp3ec4lk2javmaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wepedl.app",
+            "certificate_hash": "9331752cf89f2fb770a453a470fa004401da0d69"
+          }
+        },
+        {
+          "client_id": "133827438873-1c2pqa3r6brgpo0pbijr0ilbh4bo1f3b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCww188cXovU_uBDF9GjR7ett0swtZN0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133827438873-1c2pqa3r6brgpo0pbijr0ilbh4bo1f3b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
