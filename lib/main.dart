@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/loading/splash.dart';
 import 'screens/settings/config.dart';
 import 'services/shared_prefs.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -79,7 +85,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: _darkTheme,
       themeMode: currentTheme.currentTheme(),
       home: const SplashScreen(),
-      // home: LoginScreen(), // for testing
+      // home:  // for testing
     );
   }
 }

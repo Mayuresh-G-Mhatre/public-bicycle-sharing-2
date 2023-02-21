@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
@@ -8,7 +9,9 @@ import 'register.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
-  const OtpScreen({super.key, required this.phoneNumber});
+  final String verificationId;
+  const OtpScreen(
+      {super.key, required this.phoneNumber, required this.verificationId});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -19,21 +22,19 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  // late OtpFieldController otpController = OtpFieldController();
-
   TextEditingController otpController = TextEditingController();
   FocusNode otpFocusNode = FocusNode();
   bool showError = false;
 
   bool otpFilled = false;
+  String _otp = '';
   int _seconds = 60;
   late Timer _timer;
 
-  final RegExp repeatedNumbersRegex =
-      RegExp(r'^(1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10})$');
-
   late double width;
   late double height;
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -142,27 +143,27 @@ class _OtpScreenState extends State<OtpScreen> {
             ElevatedButton(
               onPressed: otpFilled
                   ? () {
-                      setState(() {
+                      setState(() async {
                         otpFilled = true;
-                        // check if otp is correct by qureying firestore database //
 
-                        // simulate firebase //
-                        // check if phone number exists in firestore and if doesn't then route to registration screen //
-                        // else route to home screen //
-                        if (!repeatedNumbersRegex
-                            .hasMatch(widget.phoneNumber)) {
+                        // Create a PhoneAuthCredential with the code
+                        try {
+                          PhoneAuthCredential credential =
+                              PhoneAuthProvider.credential(
+                                  verificationId: widget.verificationId,
+                                  smsCode: _otp);
+
+                          // Sign the user in (or link) with the credential
+                          await auth.signInWithCredential(credential);
+
+                          if (!mounted) return;
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                 builder: (context) => RegistrationScreen(
                                     phoneNumber: widget.phoneNumber),
                               ),
                               (route) => false);
-                        } else {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) => const DefaultHomeScreen(),
-                              ),
-                              (route) => false);
+
                           Fluttertoast.showToast(
                             msg: 'Login Successfull',
                             gravity: ToastGravity.BOTTOM,
@@ -171,7 +172,32 @@ class _OtpScreenState extends State<OtpScreen> {
                             textColor: Colors.white,
                             fontSize: 16.0,
                           );
+                        } catch (e) {
+                          showError = true;
                         }
+
+                        // check if otp is correct by qureying firestore database //
+
+                        // simulate firebase //
+                        // check if phone number exists in firestore and if doesn't then route to registration screen //
+                        // else route to home screen //
+                        // if (!repeatedNumbersRegex
+                        //     .hasMatch(widget.phoneNumber)) {
+                        //   Navigator.of(context).pushAndRemoveUntil(
+                        //       MaterialPageRoute(
+                        //         builder: (context) => RegistrationScreen(
+                        //             phoneNumber: widget.phoneNumber),
+                        //       ),
+                        //       (route) => false);
+
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const DefaultHomeScreen(),
+                        //       ),
+                        //       (route) => false);
+                        // } else {
+
+                        // }
                       });
                     }
                   : null,
@@ -196,6 +222,7 @@ class _OtpScreenState extends State<OtpScreen> {
         // },
         onCompleted: (pin) {
           // print(pin);
+          _otp = pin;
           setState(() {
             otpFilled = true;
           });

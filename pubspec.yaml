@@ -32,6 +32,8 @@ dependencies:
   accordion: ^2.5.1
   animated_text_kit: ^4.2.2
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.2.8
+  firebase_core: ^2.6.1
   flutter:
     sdk: flutter
   flutter_osm_plugin: ^0.42.0
@@ -39,7 +41,7 @@ dependencies:
   flutter_svg: ^1.1.6
   fluttertoast: 8.1.1
   geolocator: ^9.0.2
-  intl: ^0.18.0
+  intl: 0.17.0
   introduction_screen: ^3.1.2
   lottie: ^2.0.0
   multiavatar: ^0.1.5

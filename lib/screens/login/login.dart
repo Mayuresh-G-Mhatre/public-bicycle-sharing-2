@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -115,13 +116,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           isButtonEnabled = false;
                         });
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => OtpScreen(
-                              phoneNumber: _phoneController.text,
-                            ),
-                          ),
+
+                        await FirebaseAuth.instance.verifyPhoneNumber(
+                          phoneNumber: '+91${_phoneController.text}',
+                          verificationCompleted:
+                              (PhoneAuthCredential credential) {},
+                          verificationFailed: (FirebaseAuthException e) {},
+                          codeSent: (String verificationId, int? resendToken) {
+                            // push to otp screen after code sent
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => OtpScreen(
+                                  phoneNumber: _phoneController.text,
+                                  verificationId: verificationId,
+                                ),
+                              ),
+                            );
+                          },
+                          codeAutoRetrievalTimeout: (String verificationId) {},
                         );
+                        if (!mounted) return;
+
                         await sprefs.setPhoneNumber(
                             _phoneController.text); // shared prefs //
                       }
