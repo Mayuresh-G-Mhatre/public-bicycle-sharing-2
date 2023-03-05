@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -16,8 +17,9 @@ class _WalletScreenState extends State<WalletScreen> {
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
 
-  late bool _paid;
-  late int _amount;
+  // late bool _paid;
+  // late int _amount;
+  String _phoneNumber = '';
 
   late double width;
   late double height;
@@ -25,38 +27,72 @@ class _WalletScreenState extends State<WalletScreen> {
   TextEditingController amountController = TextEditingController();
   TextEditingController depositController = TextEditingController(text: '200');
 
+  int balance = 0;
+  bool depositPaid = false;
+
   @override
   void initState() {
     super.initState();
-    // shared pref //
-    getDepositStatus();
-    getWalletAmount();
-    // shared pref //
+    // // shared pref //
+    // getDepositStatus();
+    // getWalletAmount();
+    // // shared pref //
+
+    getPhoneNumber();
+    // fetch details from database
+    getUserDetailsFS();
+  }
+
+  void getUserDetailsFS() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: _phoneNumber)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        final doc = querySnapshot.docs.first;
+        setState(() {
+          balance = doc.get('balance') ?? 0;
+          depositPaid = doc.get('deposit_paid') ?? false;
+        });
+      }
+    });
   }
 
   // shared pref //
-  Future<void> getDepositStatus() async {
-    bool? paid = await sprefs.getDepositStatus();
+  Future<void> getPhoneNumber() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
-      _paid = paid!;
+      _phoneNumber = phoneNumber!;
     });
   }
   // shared pref //
 
-  // shared pref //
-  Future<void> getWalletAmount() async {
-    int? amount = await sprefs.getWalletAmount();
-    setState(() {
-      _amount = amount!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getDepositStatus() async {
+  //   bool? paid = await sprefs.getDepositStatus();
+  //   setState(() {
+  //     _paid = paid!;
+  //   });
+  // }
+  // // shared pref //
+
+  // // shared pref //
+  // Future<void> getWalletAmount() async {
+  //   int? amount = await sprefs.getWalletAmount();
+  //   setState(() {
+  //     _amount = amount!;
+  //   });
+  // }
+  // // shared pref //
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    getWalletAmount();
+    // print('phone');
+    // print(_phoneNumber);
+    getUserDetailsFS();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -87,14 +123,6 @@ class _WalletScreenState extends State<WalletScreen> {
                 decoration: BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(17),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.shade400,
-                  //     offset: const Offset(0, 6),
-                  //     blurRadius: 10,
-                  //     spreadRadius: 2,
-                  //   )
-                  // ],
                 ),
                 child: Column(children: [
                   Row(
@@ -104,7 +132,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            '\u{20B9}$_amount',
+                            '\u{20B9}$balance',
                             style: const TextStyle(
                               fontSize: 24,
                             ),
@@ -125,7 +153,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                           const SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: _paid
+                            onPressed: depositPaid
                                 ? null
                                 : () async {
                                     await showDepositPaymentDialog(context);
@@ -135,7 +163,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               disabledBackgroundColor: Colors.green,
                             ),
                             child: Text(
-                              _paid ? 'Paid' : 'Pay Now',
+                              depositPaid ? 'Paid' : 'Pay Now',
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
@@ -213,7 +241,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   height: height * 0.06,
                   width: width * 0.45,
                   child: ElevatedButton(
-                    onPressed: _paid
+                    onPressed: depositPaid
                         ? () async {
                             await showPaymentDialog(context);
                           }
@@ -296,9 +324,9 @@ class _WalletScreenState extends State<WalletScreen> {
                         fontSize: 16.0,
                       );
                       setState(() {
-                        _paid = true;
+                        depositPaid = true;
                       });
-                      await sprefs.setDepositStatus(_paid);
+                      updateDatabase(_phoneNumber);
 
                       if (!mounted) return;
                       Navigator.of(context).pop();
@@ -351,12 +379,13 @@ class _WalletScreenState extends State<WalletScreen> {
                     child: const Text('Cancel'),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      await sprefs.setWalletAmount(
-                          _amount + int.parse(amountController.text));
-                      setState(() {
-                        _amount = _amount + int.parse(amountController.text);
-                      });
+                    onPressed: () {
+                      balance = balance + int.parse(amountController.text);
+                      // setState(() {
+                      //   _amount = _amount + int.parse(amountController.text);
+                      // });
+
+                      updateDatabase(_phoneNumber);
 
                       amountController.clear();
 
@@ -380,5 +409,25 @@ class _WalletScreenState extends State<WalletScreen> {
         }).whenComplete(() {
       setState(() {});
     });
+  }
+
+  Future updateDatabase(String phoneNumber) async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: phoneNumber)
+        .get();
+
+    // print(_phoneNumber);
+    // print(balance);
+    // print(deposit_paid);
+
+    final List<DocumentSnapshot> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final DocumentSnapshot document = documents.first;
+      await document.reference.update({
+        'balance': balance,
+        'deposit_paid': depositPaid,
+      });
+    }
   }
 }

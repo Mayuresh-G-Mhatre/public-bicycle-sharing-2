@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -44,6 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     height = MediaQuery.of(context).size.height;
     _phoneNumber = widget.phoneNumber; // shared prefs //
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -94,13 +96,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       fontSize: 16.0,
                                     );
 
-                                    // shared pref //
-                                    await sprefs
-                                        .setAvatarIndex(_sharedPrefAvatarInd);
-                                    await sprefs.setPhoneNumber(_phoneNumber);
-                                    await sprefs.setName(_name);
-                                    await sprefs.setEmail(_email);
-                                    //shared pref //
+                                    // // shared pref //
+                                    // await sprefs
+                                    //     .setAvatarIndex(_sharedPrefAvatarInd);
+                                    // await sprefs.setPhoneNumber(_phoneNumber);
+                                    // await sprefs.setName(_name);
+                                    // await sprefs.setEmail(_email);
+                                    // //shared pref //
+
+                                    updateDatabase(widget.phoneNumber);
                                   }
                                 }
                               : null,
@@ -240,5 +244,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
     );
+  }
+
+  Future updateDatabase(String phoneNumber) async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: phoneNumber)
+        .get();
+
+    final List<DocumentSnapshot> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final DocumentSnapshot document = documents.first;
+      await document.reference.update({
+        'name': _name,
+        'email': _email,
+        'avatar_index': _sharedPrefAvatarInd,
+        'balance': 0,
+        'deposit_paid': false,
+      });
+    }
   }
 }

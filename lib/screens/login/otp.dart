@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +26,7 @@ class _OtpScreenState extends State<OtpScreen> {
   TextEditingController otpController = TextEditingController();
   FocusNode otpFocusNode = FocusNode();
   bool showError = false;
+  String errorText = '';
 
   bool otpFilled = false;
   String _otp = '';
@@ -125,12 +127,23 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                       )
                     : TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             _seconds = 60;
                           });
                           _startTimer();
-                          // logic for sending firebase otp //
+
+                          // logic for resending firebase otp //
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber: '+91${widget.phoneNumber}',
+                            verificationCompleted:
+                                (PhoneAuthCredential credential) {},
+                            verificationFailed: (FirebaseAuthException e) {},
+                            codeSent:
+                                (String verificationId, int? resendToken) {},
+                            codeAutoRetrievalTimeout:
+                                (String verificationId) {},
+                          );
                         },
                         child: const Text(
                           'Resend Code',
@@ -142,63 +155,63 @@ class _OtpScreenState extends State<OtpScreen> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: otpFilled
-                  ? () {
-                      setState(() async {
+                  ? () async {
+                      setState(() {
                         otpFilled = true;
-
-                        // Create a PhoneAuthCredential with the code
-                        try {
-                          PhoneAuthCredential credential =
-                              PhoneAuthProvider.credential(
-                                  verificationId: widget.verificationId,
-                                  smsCode: _otp);
-
-                          // Sign the user in (or link) with the credential
-                          await auth.signInWithCredential(credential);
-
-                          if (!mounted) return;
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) => RegistrationScreen(
-                                    phoneNumber: widget.phoneNumber),
-                              ),
-                              (route) => false);
-
-                          Fluttertoast.showToast(
-                            msg: 'Login Successfull',
-                            gravity: ToastGravity.BOTTOM,
-                            toastLength: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                        } catch (e) {
-                          showError = true;
-                        }
-
-                        // check if otp is correct by qureying firestore database //
-
-                        // simulate firebase //
-                        // check if phone number exists in firestore and if doesn't then route to registration screen //
-                        // else route to home screen //
-                        // if (!repeatedNumbersRegex
-                        //     .hasMatch(widget.phoneNumber)) {
-                        //   Navigator.of(context).pushAndRemoveUntil(
-                        //       MaterialPageRoute(
-                        //         builder: (context) => RegistrationScreen(
-                        //             phoneNumber: widget.phoneNumber),
-                        //       ),
-                        //       (route) => false);
-
-                        // Navigator.of(context).pushAndRemoveUntil(
-                        //       MaterialPageRoute(
-                        //         builder: (context) => const DefaultHomeScreen(),
-                        //       ),
-                        //       (route) => false);
-                        // } else {
-
-                        // }
                       });
+
+                      // Create a PhoneAuthCredential with the code
+                      try {
+                        PhoneAuthCredential credential =
+                            PhoneAuthProvider.credential(
+                                verificationId: widget.verificationId,
+                                smsCode: _otp);
+
+                        // Sign the user in (or link) with the credential
+                        await auth.signInWithCredential(credential);
+
+                        checkPhoneNumberExistsFS(widget.phoneNumber);
+
+                        // if (!mounted) return;
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //     MaterialPageRoute(
+                        //       builder: (context) => RegistrationScreen(
+                        //           phoneNumber: widget.phoneNumber),
+                        //     ),
+                        //     (route) => false);
+
+                        // Fluttertoast.showToast(
+                        //   msg: 'Login Successfull',
+                        //   gravity: ToastGravity.BOTTOM,
+                        //   toastLength: Toast.LENGTH_SHORT,
+                        //   backgroundColor: Colors.black,
+                        //   textColor: Colors.white,
+                        //   fontSize: 16.0,
+                        // );
+                      } on FirebaseAuthException catch (e) {
+                        print(e.code);
+
+                        Fluttertoast.showToast(
+                          msg: 'Invalid OTP',
+                          gravity: ToastGravity.BOTTOM,
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+
+                        // setState(() {
+                        //   showError = true;
+                        // });
+                      }
+
+                      // check if otp is correct by qureying firestore database //
+
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //       MaterialPageRoute(
+                      //         builder: (context) => const DefaultHomeScreen(),
+                      //       ),
+                      //       (route) => false);
                     }
                   : null,
               child: const Text('Verify OTP'),
@@ -212,14 +225,20 @@ class _OtpScreenState extends State<OtpScreen> {
   SizedBox otpField(int length, PinTheme defaultPinTheme, Color borderColor,
       MaterialColor errorColor) {
     return SizedBox(
-      height: 50,
+      height: 60,
       child: Pinput(
-        // onChanged: (pin) {
-        //   // print(pin + ' ' + (pin.length).toString());
-        //   setState(() {
-        //     otpFilled = pin.length == 6;
-        //   });
+        // validator: (value) {
+        //   if (showError) {
+        //     return "Invalid OTP";
+        //   }
+        //   return null;
         // },
+        onChanged: (pin) {
+          // print(pin + ' ' + (pin.length).toString());
+          setState(() {
+            otpFilled = pin.length == 6;
+          });
+        },
         onCompleted: (pin) {
           // print(pin);
           _otp = pin;
@@ -227,6 +246,7 @@ class _OtpScreenState extends State<OtpScreen> {
             otpFilled = true;
           });
         },
+        autofocus: true,
         length: length,
         controller: otpController,
         androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
@@ -251,5 +271,44 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       ),
     );
+  }
+
+  Future updateDatabasePhoneNumber(String phoneNumber) async {
+    final docUser = FirebaseFirestore.instance.collection('users');
+
+    final jsonn = {
+      'phone_number': widget.phoneNumber,
+    };
+
+    await docUser.add(jsonn);
+  }
+
+  Future checkPhoneNumberExistsFS(String phoneNumber) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: widget.phoneNumber)
+        .limit(1)
+        .get();
+
+    final List<DocumentSnapshot> documents = result.docs;
+    if (documents.isNotEmpty) {
+      // phone number exists in collection
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const DefaultHomeScreen(),
+          ),
+          (route) => false);
+    } else {
+      // phone number does not exist in collection
+      updateDatabasePhoneNumber(widget.phoneNumber);
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) =>
+                RegistrationScreen(phoneNumber: widget.phoneNumber),
+          ),
+          (route) => false);
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -32,8 +33,10 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
-  late int _avatarIndex;
-  late String _name;
+  int _avatarIndex = 1;
+  String _name = 'Loading';
+
+  String? _phoneNumber;
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
@@ -67,23 +70,48 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     ];
   }
 
+  void getUserDetailsFS() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: _phoneNumber)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        final doc = querySnapshot.docs.first;
+        setState(() {
+          _avatarIndex = doc.get('avatar_index') ?? 1;
+          _name = doc.get('name') ?? 'Error';
+        });
+      }
+    });
+  }
+
   // shared pref //
-  Future<void> getAvatarIndex() async {
-    int? avatarIndex = await sprefs.getAvatarIndex();
+  Future<void> getPhoneNumber() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
-      _avatarIndex = avatarIndex!;
+      _phoneNumber = phoneNumber!;
     });
   }
   // shared pref //
 
-  // shared pref //
-  Future<void> getName() async {
-    String? name = await sprefs.getName();
-    setState(() {
-      _name = name!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getAvatarIndex() async {
+  //   int? avatarIndex = await sprefs.getAvatarIndex();
+  //   setState(() {
+  //     _avatarIndex = avatarIndex!;
+  //   });
+  // }
+  // // shared pref //
+
+  // // shared pref //
+  // Future<void> getName() async {
+  //   String? name = await sprefs.getName();
+  //   setState(() {
+  //     _name = name!;
+  //   });
+  // }
+  // // shared pref //
 
   // shared prefs //
   Future<void> logoutSharedPrefs() async {
@@ -101,21 +129,35 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     });
   }
 
+  void setLoginStatus() async {
+    await sprefs.setDepositStatus(true);
+  }
+
   @override
   void initState() {
     super.initState();
     // shared pref //
-    getAvatarIndex();
-    getName();
+    // getAvatarIndex();
+    // getName();
     getDarkThemeStatus();
+    setLoginStatus();
+    getPhoneNumber();
     // shared pref //
+
+    getUserDetailsFS();
   }
 
   @override
   Widget build(BuildContext context) {
-    getAvatarIndex();
-    getName();
+    // getAvatarIndex();
+    // getName();
     getDarkThemeStatus();
+    // print('avind');
+    // print(_avatarIndex);
+    // print('nam');
+    // print(_name);
+    // print('phan');
+    // print(_phoneNumber);
     return Scaffold(
       appBar: AppBar(
         title: const Text('WePedL'),
@@ -213,7 +255,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                         textColor: Colors.white,
                         fontSize: 16.0,
                       );
-                      await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
+                      // await sprefs.setAvatarIndex(_sharedPrefAvatarInd);
+                      updateDatabase(_phoneNumber!);
                     },
                     child: const Text('Done'),
                   )
@@ -259,7 +302,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                 ),
                 // get name from firestore database and set here //
                 Text(
-                  _name, // shared prefs //
+                  _name!, // shared prefs //
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -360,5 +403,24 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
         },
       ),
     );
+  }
+
+  Future updateDatabase(String phoneNumber) async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: phoneNumber)
+        .get();
+
+    // print(_phoneNumber);
+    // print(balance);
+    // print(deposit_paid);
+
+    final List<DocumentSnapshot> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final DocumentSnapshot document = documents.first;
+      await document.reference.update({
+        'avatar_index': _avatarIndex,
+      });
+    }
   }
 }

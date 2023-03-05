@@ -52,6 +52,11 @@ class SharedPrefGetsNSets {
     prefs.setString('bicycle_number', bicycleNumber);
   }
 
+  Future<void> setLoginStatus(bool isLoggedIn) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('login_status', isLoggedIn);
+  }
+
   // getters //
   Future<String?> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
@@ -101,6 +106,11 @@ class SharedPrefGetsNSets {
   Future<String?> getBicycleNumber() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('bicycle_number');
+  }
+
+  Future<bool?> getLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('login_status');
   }
 
   // contains //

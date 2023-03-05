@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
 
   // late String _themeColor;
   late bool _isDark;
+  late bool _isLoggedIn;
 
   // Map<String, Color> stringToColor = {
   //   'blue': Colors.blue,
@@ -46,6 +47,13 @@ class _MyAppState extends State<MyApp> {
     bool? isDark = await sprefs.getDarkThemeStatus();
     setState(() {
       _isDark = isDark!;
+    });
+  }
+
+  Future<void> getLoginStatus() async {
+    bool? isLoggedIn = await sprefs.getLoginStatus();
+    setState(() {
+      _isLoggedIn = isLoggedIn!;
     });
   }
 

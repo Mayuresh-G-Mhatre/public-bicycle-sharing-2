@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -25,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String? _nameErrorText = null;
   late String? _emailErrorText = null;
   late int _avatarIndex; // shared prefs //
-  late String _phoneNumber; // shared prefs //
+  String? _phoneNumber; // shared prefs //
   late String _name;
   late String _email;
   bool nameError = false;
@@ -41,32 +42,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController phoneController =
       TextEditingController(text: '+91 $_phoneNumber');
 
-  // shared pref //
-  Future<void> getAvatarIndex() async {
-    int? avatarIndex = await sprefs.getAvatarIndex();
-    setState(() {
-      _avatarIndex = avatarIndex!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getAvatarIndex() async {
+  //   int? avatarIndex = await sprefs.getAvatarIndex();
+  //   setState(() {
+  //     _avatarIndex = avatarIndex!;
+  //   });
+  // }
+  // // shared pref //
 
-  // shared pref //
-  Future<void> getName() async {
-    String? name = await sprefs.getName();
-    setState(() {
-      _name = name!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getName() async {
+  //   String? name = await sprefs.getName();
+  //   setState(() {
+  //     _name = name!;
+  //   });
+  // }
+  // // shared pref //
 
-  // shared pref //
-  Future<void> getEmail() async {
-    String? email = await sprefs.getEmail();
-    setState(() {
-      _email = email!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getEmail() async {
+  //   String? email = await sprefs.getEmail();
+  //   setState(() {
+  //     _email = email!;
+  //   });
+  // }
+  // // shared pref //
 
   // shared pref //
   Future<void> getPhoneNumber() async {
@@ -81,11 +82,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     // shared pref //
-    getAvatarIndex();
-    getName();
-    getEmail();
+    // getAvatarIndex();
+    // getName();
+    // getEmail();
     getPhoneNumber();
     // shared pref //
+    print(_phoneNumber);
+
+    getUserDetailsFS();
+  }
+
+  void getUserDetailsFS() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: _phoneNumber)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        final doc = querySnapshot.docs.first;
+        setState(() {
+          _name = doc.get('name') ?? 'Error';
+          _email = doc.get('email') ?? 'Error';
+          _avatarIndex = doc.get('avatar_index') ?? 0;
+        });
+      }
+    });
   }
 
   @override
@@ -93,13 +114,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // getAvatarIndex();  // this fixes the side bar profile pic bug but causes another in profile avatar while selecting
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    // _phoneNumber = widget.phoneNumber; // shared prefs //
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: height * 0.03),
               SizedBox(
@@ -121,7 +140,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                    // get name from firestore database and set here //
                   ],
                 ),
               ),
@@ -159,11 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _tfReadOnly = false;
                             _tfEnabled = true;
                           });
-                        }
-
-                        // logic to store avatar index, name, email and phone number in firestore database //
-
-                        else {
+                        } else {
                           setState(() {
                             editOrSave = 'Edit';
                             _tfReadOnly = true;
@@ -179,12 +193,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 16.0,
                           );
 
-                          // shared pref //
-                          await sprefs.setAvatarIndex(_avatarIndex);
-                          await sprefs.setPhoneNumber(_phoneNumber);
-                          await sprefs.setName(_name);
-                          await sprefs.setEmail(_email);
-                          //shared pref //
+                          // logic to store avatar index, name, email and phone number in firestore database //
+                          updateDatabase(_phoneNumber!);
+
+                          // // shared pref //
+                          // await sprefs.setAvatarIndex(_avatarIndex);
+                          // await sprefs.setPhoneNumber(_phoneNumber);
+                          // await sprefs.setName(_name);
+                          // await sprefs.setEmail(_email);
+                          // //shared pref //
                         }
                       },
                       child: Text(editOrSave),
@@ -240,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               return GestureDetector(
                                 onTap: () {
                                   // Handle image tap
-                                  print('clicked image no: $index');
+                                  // print('clicked image no: $index');
                                   setState(() {
                                     defaultAvatar = 'assets/avatars/$index.png';
                                     _avatarIndex = index;
@@ -267,7 +284,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      await sprefs.setAvatarIndex(_avatarIndex);
+                      // await sprefs.setAvatarIndex(_avatarIndex);
+                      updateDatabase(_phoneNumber!);
                     },
                     child: const Text('Done'),
                   )
@@ -362,5 +380,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future updateDatabase(String phoneNumber) async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phone_number', isEqualTo: phoneNumber)
+        .get();
+
+    // print(_phoneNumber);
+    // print(balance);
+    // print(deposit_paid);
+
+    final List<DocumentSnapshot> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final DocumentSnapshot document = documents.first;
+      await document.reference.update({
+        'name': _name,
+        'email': _email,
+        'avatar_index': _avatarIndex,
+      });
+    }
   }
 }

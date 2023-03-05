@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool autoFetchExecuted = false;
 
+  bool isLoading = false;
+
   void openKeyboard() {
     FocusScope.of(context).requestFocus(inputNode);
   }
@@ -54,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _phoneController.addListener(() {
       final isButtonEnabled = _phoneController.text.length == 10;
       setState(() {
-        this.isButtonEnabled = isButtonEnabled;
+        this.isButtonEnabled = true;
       });
     });
   }
@@ -76,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       // backgroundColor: Colors.red,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -113,29 +116,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: isButtonEnabled
                     ? () async {
                         // if no input in text field then disable button else enable
-                        setState(() {
-                          isButtonEnabled = false;
-                        });
+                        // setState(() {
+                        //   isButtonEnabled = false;
+                        // });
+                        // if (_phoneController.text.isEmpty) {
+                        //   setState(() {
+                        //     isButtonEnabled = false;
+                        //   });
+                        // } else {
+                        //   setState(() {
+                        //     isButtonEnabled = true;
+                        //   });
+                        // }
 
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                          phoneNumber: '+91${_phoneController.text}',
-                          verificationCompleted:
-                              (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException e) {},
-                          codeSent: (String verificationId, int? resendToken) {
-                            // push to otp screen after code sent
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtpScreen(
-                                  phoneNumber: _phoneController.text,
-                                  verificationId: verificationId,
-                                ),
-                              ),
-                            );
-                          },
-                          codeAutoRetrievalTimeout: (String verificationId) {},
-                        );
-                        if (!mounted) return;
+                        sendOTP();
 
                         await sprefs.setPhoneNumber(
                             _phoneController.text); // shared prefs //
@@ -156,16 +150,20 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextFormField(
         maxLength: 10,
         // auto focus and open keyboard
-        autofocus: true,
-        focusNode: inputNode,
+        // autofocus: true,
+        // focusNode: inputNode,
         controller: _phoneController,
-        // onChanged: (value) {
-        //   if (value.startsWith('+91')) {
-        //     setState(() {
-        //       _phoneController.text = value.substring(3);
-        //     });
-        //   }
-        // },
+        onChanged: (value) {
+          if (_phoneController.text.length != 10) {
+            setState(() {
+              isButtonEnabled = false;
+            });
+          } else {
+            setState(() {
+              isButtonEnabled = true;
+            });
+          }
+        },
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (_) {
           filterData();
@@ -190,6 +188,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void sendOTP() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+91${_phoneController.text}',
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        // push to otp screen after code sent
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => OtpScreen(
+              phoneNumber: _phoneController.text,
+              verificationId: verificationId,
+            ),
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 }

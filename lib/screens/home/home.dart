@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Lottie.asset('assets/bicycle_anim.json'),
                 ),
               ),
-              initZoom: 20,
+              initZoom: 19,
               userLocationMarker: UserLocationMaker(
                 personMarker: const MarkerIcon(
                     icon: Icon(
