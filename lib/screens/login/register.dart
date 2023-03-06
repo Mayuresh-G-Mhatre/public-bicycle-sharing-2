@@ -40,10 +40,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       TextEditingController(text: '+91 ${widget.phoneNumber}');
 
   @override
+  void initState() {
+    _phoneNumber = widget.phoneNumber; // shared prefs //
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    _phoneNumber = widget.phoneNumber; // shared prefs //
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -86,6 +91,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     );
                                     // logic to store avatar index, name, email and phone number in firestore database //
+                                    updateDatabase(widget.phoneNumber);
 
                                     Fluttertoast.showToast(
                                       msg: 'Registration Successfull',
@@ -104,7 +110,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     // await sprefs.setEmail(_email);
                                     // //shared pref //
 
-                                    updateDatabase(widget.phoneNumber);
                                   }
                                 }
                               : null,
@@ -247,15 +252,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future updateDatabase(String phoneNumber) async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('phone_number', isEqualTo: phoneNumber)
-        .get();
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('users').doc(phoneNumber);
 
-    final List<DocumentSnapshot> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final DocumentSnapshot document = documents.first;
-      await document.reference.update({
+    final DocumentSnapshot documentSnapshot = await documentRef.get();
+
+    if (documentSnapshot.exists) {
+      await documentRef.update({
         'name': _name,
         'email': _email,
         'avatar_index': _sharedPrefAvatarInd,

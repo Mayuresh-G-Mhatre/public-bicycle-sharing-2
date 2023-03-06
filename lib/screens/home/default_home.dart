@@ -36,7 +36,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   int _avatarIndex = 1;
   String _name = 'Loading';
 
-  String? _phoneNumber;
+  String _phoneNumber = '';
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
@@ -71,16 +71,16 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
 
   void getUserDetailsFS() {
+    // print('pahn in getuserdeta: $_phoneNumber');
     FirebaseFirestore.instance
         .collection('users')
-        .where('phone_number', isEqualTo: _phoneNumber)
+        .doc(_phoneNumber)
         .get()
-        .then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        final doc = querySnapshot.docs.first;
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
         setState(() {
-          _avatarIndex = doc.get('avatar_index') ?? 1;
-          _name = doc.get('name') ?? 'Error';
+          _avatarIndex = documentSnapshot.get('avatar_index') ?? 1;
+          _name = documentSnapshot.get('name') ?? 'Error';
         });
       }
     });
@@ -92,6 +92,9 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     setState(() {
       _phoneNumber = phoneNumber!;
     });
+    // print('phone in getphonenum: $_phoneNumber');
+
+    getUserDetailsFS();
   }
   // shared pref //
 
@@ -144,7 +147,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     getPhoneNumber();
     // shared pref //
 
-    getUserDetailsFS();
+    // getUserDetailsFS();
   }
 
   @override
@@ -158,6 +161,8 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     // print(_name);
     // print('phan');
     // print(_phoneNumber);
+
+    getUserDetailsFS();
     return Scaffold(
       appBar: AppBar(
         title: const Text('WePedL'),
@@ -302,7 +307,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                 ),
                 // get name from firestore database and set here //
                 Text(
-                  _name!, // shared prefs //
+                  _name, // shared prefs //
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -406,19 +411,17 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
 
   Future updateDatabase(String phoneNumber) async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('phone_number', isEqualTo: phoneNumber)
-        .get();
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('users').doc(phoneNumber);
 
     // print(_phoneNumber);
     // print(balance);
     // print(deposit_paid);
 
-    final List<DocumentSnapshot> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final DocumentSnapshot document = documents.first;
-      await document.reference.update({
+    final DocumentSnapshot documentSnapshot = await documentRef.get();
+
+    if (documentSnapshot.exists) {
+      await documentRef.update({
         'avatar_index': _avatarIndex,
       });
     }

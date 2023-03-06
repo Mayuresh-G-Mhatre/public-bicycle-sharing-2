@@ -133,6 +133,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         await sprefs.setPhoneNumber(
                             _phoneController.text); // shared prefs //
+
+                        // print('Login Screen ph: ${_phoneController.text}');
                       }
                     : null,
                 child: const Text('Send OTP'),

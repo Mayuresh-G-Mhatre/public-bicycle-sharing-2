@@ -25,10 +25,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
   late String? _nameErrorText = null;
   late String? _emailErrorText = null;
-  late int _avatarIndex; // shared prefs //
-  String? _phoneNumber; // shared prefs //
-  late String _name;
-  late String _email;
+  int _avatarIndex = 1; // shared prefs //
+  String _phoneNumber = ''; // shared prefs //
+  String _name = '';
+  String _email = '';
   bool nameError = false;
   bool emailError = false;
   String editOrSave = 'Edit';
@@ -75,8 +75,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _phoneNumber = phoneNumber!;
     });
+
+    getUserDetailsFS();
   }
   // shared pref //
+
+  void getUserDetailsFS() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(_phoneNumber)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      // print(documentSnapshot.exists);
+      // print('name: $_name');
+      // print('eemial: $_email');
+      // print('phno: $_phoneNumber');
+      if (documentSnapshot.exists) {
+        setState(() {
+          _name = documentSnapshot.get('name') ?? 'Error';
+          _email = documentSnapshot.get('email') ?? 'Error';
+          _avatarIndex = documentSnapshot.get('avatar_index') ?? 1;
+        });
+      }
+      // print('after set');
+      // print('name: $_name');
+      // print('eemial: $_email');
+      // print('phno: $_phoneNumber');
+
+      setState(() {
+        nameController = TextEditingController(text: _name);
+        emailController = TextEditingController(text: _email);
+        phoneController = TextEditingController(text: '+91 $_phoneNumber');
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -87,26 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // getEmail();
     getPhoneNumber();
     // shared pref //
-    print(_phoneNumber);
 
-    getUserDetailsFS();
-  }
-
-  void getUserDetailsFS() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .where('phone_number', isEqualTo: _phoneNumber)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        final doc = querySnapshot.docs.first;
-        setState(() {
-          _name = doc.get('name') ?? 'Error';
-          _email = doc.get('email') ?? 'Error';
-          _avatarIndex = doc.get('avatar_index') ?? 0;
-        });
-      }
-    });
+    // getUserDetailsFS();
   }
 
   @override
@@ -194,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
 
                           // logic to store avatar index, name, email and phone number in firestore database //
-                          updateDatabase(_phoneNumber!);
+                          updateDatabase(_phoneNumber);
 
                           // // shared pref //
                           // await sprefs.setAvatarIndex(_avatarIndex);
@@ -383,19 +397,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future updateDatabase(String phoneNumber) async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('phone_number', isEqualTo: phoneNumber)
-        .get();
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('users').doc(phoneNumber);
 
     // print(_phoneNumber);
     // print(balance);
     // print(deposit_paid);
 
-    final List<DocumentSnapshot> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final DocumentSnapshot document = documents.first;
-      await document.reference.update({
+    final DocumentSnapshot documentSnapshot = await documentRef.get();
+
+    if (documentSnapshot.exists) {
+      await documentRef.update({
         'name': _name,
         'email': _email,
         'avatar_index': _avatarIndex,

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
+import 'package:public_bicycle_sharing/services/shared_prefs.dart';
 
 import '../home/default_home.dart';
 import 'register.dart';
@@ -37,6 +38,8 @@ class _OtpScreenState extends State<OtpScreen> {
   late double height;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
 
   @override
   void initState() {
@@ -172,6 +175,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
                         checkPhoneNumberExistsFS(widget.phoneNumber);
 
+                        // store phone number locally
+                        sprefs.setPhoneNumber(widget.phoneNumber);
+
                         // if (!mounted) return;
                         // Navigator.of(context).pushAndRemoveUntil(
                         //     MaterialPageRoute(
@@ -277,21 +283,19 @@ class _OtpScreenState extends State<OtpScreen> {
     final docUser = FirebaseFirestore.instance.collection('users');
 
     final jsonn = {
-      'phone_number': widget.phoneNumber,
+      'phone_number': phoneNumber,
     };
 
-    await docUser.add(jsonn);
+    await docUser.doc(phoneNumber).set(jsonn);
   }
 
   Future checkPhoneNumberExistsFS(String phoneNumber) async {
-    final QuerySnapshot result = await FirebaseFirestore.instance
+    final DocumentSnapshot result = await FirebaseFirestore.instance
         .collection('users')
-        .where('phone_number', isEqualTo: widget.phoneNumber)
-        .limit(1)
+        .doc(phoneNumber)
         .get();
 
-    final List<DocumentSnapshot> documents = result.docs;
-    if (documents.isNotEmpty) {
+    if (result.exists) {
       // phone number exists in collection
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
@@ -301,12 +305,11 @@ class _OtpScreenState extends State<OtpScreen> {
           (route) => false);
     } else {
       // phone number does not exist in collection
-      updateDatabasePhoneNumber(widget.phoneNumber);
+      updateDatabasePhoneNumber(phoneNumber);
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) =>
-                RegistrationScreen(phoneNumber: widget.phoneNumber),
+            builder: (context) => RegistrationScreen(phoneNumber: phoneNumber),
           ),
           (route) => false);
     }

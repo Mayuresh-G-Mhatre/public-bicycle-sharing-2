@@ -40,20 +40,19 @@ class _WalletScreenState extends State<WalletScreen> {
 
     getPhoneNumber();
     // fetch details from database
-    getUserDetailsFS();
+    // getUserDetailsFS();
   }
 
   void getUserDetailsFS() {
     FirebaseFirestore.instance
         .collection('users')
-        .where('phone_number', isEqualTo: _phoneNumber)
+        .doc(_phoneNumber)
         .get()
-        .then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        final doc = querySnapshot.docs.first;
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
         setState(() {
-          balance = doc.get('balance') ?? 0;
-          depositPaid = doc.get('deposit_paid') ?? false;
+          balance = documentSnapshot.get('balance') ?? 0;
+          depositPaid = documentSnapshot.get('deposit_paid') ?? false;
         });
       }
     });
@@ -65,6 +64,8 @@ class _WalletScreenState extends State<WalletScreen> {
     setState(() {
       _phoneNumber = phoneNumber!;
     });
+
+    getUserDetailsFS();
   }
   // shared pref //
 
@@ -92,7 +93,7 @@ class _WalletScreenState extends State<WalletScreen> {
     height = MediaQuery.of(context).size.height;
     // print('phone');
     // print(_phoneNumber);
-    getUserDetailsFS();
+    // getUserDetailsFS();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -412,19 +413,17 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Future updateDatabase(String phoneNumber) async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('phone_number', isEqualTo: phoneNumber)
-        .get();
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('users').doc(phoneNumber);
 
     // print(_phoneNumber);
     // print(balance);
     // print(deposit_paid);
 
-    final List<DocumentSnapshot> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final DocumentSnapshot document = documents.first;
-      await document.reference.update({
+    final DocumentSnapshot documentSnapshot = await documentRef.get();
+
+    if (documentSnapshot.exists) {
+      await documentRef.update({
         'balance': balance,
         'deposit_paid': depositPaid,
       });
