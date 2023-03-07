@@ -132,9 +132,9 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     });
   }
 
-  void setLoginStatus() async {
-    await sprefs.setDepositStatus(true);
-  }
+  // void setLoginStatus() async {
+  //   await sprefs.setDepositStatus(true);
+  // }
 
   @override
   void initState() {
@@ -143,7 +143,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     // getAvatarIndex();
     // getName();
     getDarkThemeStatus();
-    setLoginStatus();
+    // setLoginStatus();  // checked via contains phone number instead
     getPhoneNumber();
     // shared pref //
 

@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   String splashPrefixText = 'We';
 
   void onboardingOrHome() async {
-    if (await sprefs.getLoginStatus() == true) {
+    if (await sprefs.contains('phone_number')) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const DefaultHomeScreen()));
     } else {
