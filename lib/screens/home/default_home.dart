@@ -87,7 +87,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
 
   // shared pref //
-  Future<void> getPhoneNumber() async {
+  Future<void> getPhoneNumberAndReadDatabase() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
       _phoneNumber = phoneNumber!;
@@ -96,25 +96,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
     getUserDetailsFS();
   }
-  // shared pref //
-
-  // // shared pref //
-  // Future<void> getAvatarIndex() async {
-  //   int? avatarIndex = await sprefs.getAvatarIndex();
-  //   setState(() {
-  //     _avatarIndex = avatarIndex!;
-  //   });
-  // }
-  // // shared pref //
-
-  // // shared pref //
-  // Future<void> getName() async {
-  //   String? name = await sprefs.getName();
-  //   setState(() {
-  //     _name = name!;
-  //   });
-  // }
-  // // shared pref //
 
   // shared prefs //
   Future<void> logoutSharedPrefs() async {
@@ -139,29 +120,16 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   @override
   void initState() {
     super.initState();
-    // shared pref //
-    // getAvatarIndex();
-    // getName();
     getDarkThemeStatus();
     // setLoginStatus();  // checked via contains phone number instead
-    getPhoneNumber();
-    // shared pref //
+    getPhoneNumberAndReadDatabase();
 
     // getUserDetailsFS();
   }
 
   @override
   Widget build(BuildContext context) {
-    // getAvatarIndex();
-    // getName();
     getDarkThemeStatus();
-    // print('avind');
-    // print(_avatarIndex);
-    // print('nam');
-    // print(_name);
-    // print('phan');
-    // print(_phoneNumber);
-
     getUserDetailsFS();
     return Scaffold(
       appBar: AppBar(
@@ -372,7 +340,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                       const MaterialStatePropertyAll<Color>(Colors.blue),
                 ),
                 onPressed: () {
-                  // logic for logout and disconnect from firebase //
                   // shared prefs //
                   logoutSharedPrefs();
                   // shared prefs //

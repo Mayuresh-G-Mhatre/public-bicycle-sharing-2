@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart' hide GeoPoint;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
@@ -18,53 +19,55 @@ class _HomeScreenState extends State<HomeScreen> {
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
 
-  bool _paid = false;
-  int _amount = 0;
-
   late double width;
   late double height;
 
   late MapController mapController;
 
+  int balance = 0;
+  String _phoneNumber = '';
+
   @override
   void initState() {
+    getPhoneNumberAndReadDatabase();
     super.initState();
-    // shared pref //
-    getDepositStatus();
-    getWalletAmount();
-    // shared pref //
+    // // shared pref //
+    // getDepositStatus();
+    // getWalletAmount();
+    // // shared pref //
 
     mapController = MapController(initMapWithUserPosition: true);
   }
 
   // shared pref //
-  Future<void> getDepositStatus() async {
-    bool? paid = await sprefs.getDepositStatus();
+  Future<void> getPhoneNumberAndReadDatabase() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
-      _paid = paid!;
+      _phoneNumber = phoneNumber!;
     });
-  }
-  // shared pref //
 
-  // shared pref //
-  Future<void> getWalletAmount() async {
-    int? amount = await sprefs.getWalletAmount();
-    setState(() {
-      _amount = amount!;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(_phoneNumber)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        setState(() {
+          balance = documentSnapshot.get('balance') ?? 0;
+        });
+      }
     });
   }
-  // shared pref //
 
   @override
   Widget build(BuildContext context) {
-    getDepositStatus();
-    getWalletAmount();
+    getPhoneNumberAndReadDatabase();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _paid && _amount > 10
+        onPressed: balance > 10
             ? () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -73,12 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             : () {
-                showPayFirstToast(_paid
-                    ? 'Wallet should have minimum \u{20B9}10'
-                    : 'Please pay security deposit first!');
-                // print('pay first');
-                // print(_paid);
-                // print(_amount.toString());
+                showPayFirstToast();
               },
         label: const Text("Unlock"),
         icon: const Icon(Icons.qr_code_scanner_outlined),
@@ -179,9 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void showPayFirstToast(String depositOrMoney) {
+  void showPayFirstToast() {
     Fluttertoast.showToast(
-      msg: depositOrMoney,
+      msg: 'Wallet should have minimum \u{20B9}10',
       gravity: ToastGravity.BOTTOM,
       toastLength: Toast.LENGTH_SHORT,
       backgroundColor: Colors.black,

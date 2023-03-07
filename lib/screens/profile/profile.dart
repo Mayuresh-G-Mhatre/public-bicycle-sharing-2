@@ -42,54 +42,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController phoneController =
       TextEditingController(text: '+91 $_phoneNumber');
 
-  // // shared pref //
-  // Future<void> getAvatarIndex() async {
-  //   int? avatarIndex = await sprefs.getAvatarIndex();
-  //   setState(() {
-  //     _avatarIndex = avatarIndex!;
-  //   });
-  // }
-  // // shared pref //
-
-  // // shared pref //
-  // Future<void> getName() async {
-  //   String? name = await sprefs.getName();
-  //   setState(() {
-  //     _name = name!;
-  //   });
-  // }
-  // // shared pref //
-
-  // // shared pref //
-  // Future<void> getEmail() async {
-  //   String? email = await sprefs.getEmail();
-  //   setState(() {
-  //     _email = email!;
-  //   });
-  // }
-  // // shared pref //
-
-  // shared pref //
-  Future<void> getPhoneNumber() async {
+  Future<void> getPhoneNumberAndReadDatabase() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
       _phoneNumber = phoneNumber!;
     });
 
-    getUserDetailsFS();
-  }
-  // shared pref //
-
-  void getUserDetailsFS() {
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
-      // print(documentSnapshot.exists);
-      // print('name: $_name');
-      // print('eemial: $_email');
-      // print('phno: $_phoneNumber');
       if (documentSnapshot.exists) {
         setState(() {
           _name = documentSnapshot.get('name') ?? 'Error';
@@ -97,10 +60,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _avatarIndex = documentSnapshot.get('avatar_index') ?? 1;
         });
       }
-      // print('after set');
-      // print('name: $_name');
-      // print('eemial: $_email');
-      // print('phno: $_phoneNumber');
 
       setState(() {
         nameController = TextEditingController(text: _name);
@@ -117,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // getAvatarIndex();
     // getName();
     // getEmail();
-    getPhoneNumber();
+    getPhoneNumberAndReadDatabase();
     // shared pref //
 
     // getUserDetailsFS();

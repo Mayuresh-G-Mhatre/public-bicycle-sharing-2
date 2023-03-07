@@ -33,17 +33,19 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   void initState() {
     super.initState();
-    // // shared pref //
-    // getDepositStatus();
-    // getWalletAmount();
-    // // shared pref //
 
-    getPhoneNumber();
+    getPhoneNumberAndReadDatabase();
     // fetch details from database
     // getUserDetailsFS();
   }
 
-  void getUserDetailsFS() {
+  // shared pref //
+  Future<void> getPhoneNumberAndReadDatabase() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
+    setState(() {
+      _phoneNumber = phoneNumber!;
+    });
+
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
@@ -57,35 +59,7 @@ class _WalletScreenState extends State<WalletScreen> {
       }
     });
   }
-
   // shared pref //
-  Future<void> getPhoneNumber() async {
-    String? phoneNumber = await sprefs.getPhoneNumber();
-    setState(() {
-      _phoneNumber = phoneNumber!;
-    });
-
-    getUserDetailsFS();
-  }
-  // shared pref //
-
-  // // shared pref //
-  // Future<void> getDepositStatus() async {
-  //   bool? paid = await sprefs.getDepositStatus();
-  //   setState(() {
-  //     _paid = paid!;
-  //   });
-  // }
-  // // shared pref //
-
-  // // shared pref //
-  // Future<void> getWalletAmount() async {
-  //   int? amount = await sprefs.getWalletAmount();
-  //   setState(() {
-  //     _amount = amount!;
-  //   });
-  // }
-  // // shared pref //
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late double width;
   late double height;
 
+  String _phoneNumber = '';
+
   // shared prefs //
   Future<void> logoutSharedPrefs() async {
     final prefs = await SharedPreferences.getInstance();
@@ -36,12 +39,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // shared prefs //
 
   // shared pref //
-  Future<void> getThemeColor() async {
-    String? themeColor = await sprefs.getThemeColor();
+  Future<void> getPhoneNumber() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
-      _themeColor = themeColor!;
+      _phoneNumber = phoneNumber!;
     });
   }
+
+  // // shared pref //
+  // Future<void> getThemeColor() async {
+  //   String? themeColor = await sprefs.getThemeColor();
+  //   setState(() {
+  //     _themeColor = themeColor!;
+  //   });
+  // }
 
   // shared pref //
   Future<void> getDarkThemeStatus() async {
@@ -59,13 +70,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  Future<void> deleteAccountFromDatabase() async {
+    final DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("users").doc(_phoneNumber);
+    await documentReference.delete();
+  }
+
   @override
   void initState() {
-    super.initState();
     _language = 'English';
-    getThemeColor();
+    // getThemeColor();
     getDarkThemeStatus();
     getLanguage();
+    getPhoneNumber();
+    super.initState();
   }
 
   @override
@@ -431,8 +449,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         // backgroundColor: Colors.red,
                         ),
                     onPressed: () async {
-                      logoutSharedPrefs();
+                      deleteAccountFromDatabase();
                       // shared prefs //
+                      logoutSharedPrefs();
                       Fluttertoast.showToast(
                         msg: 'Goodbye',
                         gravity: ToastGravity.BOTTOM,
