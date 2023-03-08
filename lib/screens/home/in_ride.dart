@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart' hide GeoPoint;
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:lottie/lottie.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../../services/shared_prefs.dart';
 import 'after_ride.dart';
 
 class InRideScreen extends StatefulWidget {
@@ -24,13 +26,38 @@ class _InRideScreenState extends State<InRideScreen> {
 
   late MapController mapController;
 
+  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
+  String _phoneNumber = '';
+  int balance = 0;
+
+  Future<void> getPhoneNumberAndReadDatabase() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
+    setState(() {
+      _phoneNumber = phoneNumber!;
+    });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(_phoneNumber)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        setState(() {
+          balance = documentSnapshot.get('balance') ?? 0;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
-    super.initState();
-    // _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
+    _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
     _stopWatchTimer.onStartTimer();
 
     mapController = MapController(initMapWithUserPosition: true);
+    getPhoneNumberAndReadDatabase();
+
+    super.initState();
   }
 
   @override
@@ -67,6 +94,12 @@ class _InRideScreenState extends State<InRideScreen> {
           // print(duration);
           // print(minutes * 0.167);
           _stopWatchTimer.onStopTimer();
+
+          // updated balance after subtracting ride fare
+          balance = balance - rideFare;
+
+          updateDatabase(_phoneNumber);
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) =>
@@ -113,7 +146,7 @@ class _InRideScreenState extends State<InRideScreen> {
                     child: Lottie.asset('assets/bicycle_anim.json'),
                   ),
                 ),
-                initZoom: 20,
+                initZoom: 19,
                 staticPoints: [
                   StaticPositionGeoPoint(
                     "bicycleStands",
@@ -230,5 +263,18 @@ class _InRideScreenState extends State<InRideScreen> {
         ),
       ),
     );
+  }
+
+  Future updateDatabase(String phoneNumber) async {
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('users').doc(phoneNumber);
+
+    final DocumentSnapshot documentSnapshot = await documentRef.get();
+
+    if (documentSnapshot.exists) {
+      await documentRef.update({
+        'balance': balance,
+      });
+    }
   }
 }

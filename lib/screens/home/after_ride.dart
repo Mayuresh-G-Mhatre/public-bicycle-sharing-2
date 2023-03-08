@@ -28,19 +28,19 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
   @override
   void initState() {
     super.initState();
-    // shared pref //
-    getWalletAmount();
-    // shared pref //
+    // // shared pref //
+    // getWalletAmount();
+    // // shared pref //
   }
 
-  // shared pref //
-  Future<void> getWalletAmount() async {
-    int? amount = await sprefs.getWalletAmount();
-    setState(() {
-      _amount = amount!;
-    });
-  }
-  // shared pref //
+  // // shared pref //
+  // Future<void> getWalletAmount() async {
+  //   int? amount = await sprefs.getWalletAmount();
+  //   setState(() {
+  //     _amount = amount!;
+  //   });
+  // }
+  // // shared pref //
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                 const SizedBox(height: 40.0),
                 ElevatedButton(
                   onPressed: () async {
-                    await sprefs.setWalletAmount(_amount - widget.rideFare);
+                    // await sprefs.setWalletAmount(_amount - widget.rideFare);
                     if (!mounted) return;
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
