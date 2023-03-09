@@ -3,7 +3,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 
 import 'home.dart';
-import '../../services/shared_prefs.dart';
 
 class AfterRideScreen extends StatefulWidget {
   var endRideTime;
@@ -18,29 +17,6 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
   String _selectedOption = '';
   String _feedback = '';
   double _emojiRating = 0;
-
-  // shared pref //
-  SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
-  // shared pref //
-
-  late int _amount;
-
-  @override
-  void initState() {
-    super.initState();
-    // // shared pref //
-    // getWalletAmount();
-    // // shared pref //
-  }
-
-  // // shared pref //
-  // Future<void> getWalletAmount() async {
-  //   int? amount = await sprefs.getWalletAmount();
-  //   setState(() {
-  //     _amount = amount!;
-  //   });
-  // }
-  // // shared pref //
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +121,6 @@ class _AfterRideScreenState extends State<AfterRideScreen> {
                 const SizedBox(height: 40.0),
                 ElevatedButton(
                   onPressed: () async {
-                    // await sprefs.setWalletAmount(_amount - widget.rideFare);
                     if (!mounted) return;
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(

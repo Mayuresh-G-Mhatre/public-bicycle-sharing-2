@@ -30,6 +30,8 @@ class _InRideScreenState extends State<InRideScreen> {
   String _phoneNumber = '';
   int balance = 0;
 
+  int _amount = 0;
+
   Future<void> getPhoneNumberAndReadDatabase() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
@@ -51,7 +53,8 @@ class _InRideScreenState extends State<InRideScreen> {
 
   @override
   void initState() {
-    _stopWatchTimer.setPresetMinuteTime(5); // for testing purposes
+    _stopWatchTimer.setPresetMinuteTime(
+        5); // for testing purposes (starts timer from 5 mins)
     _stopWatchTimer.onStartTimer();
 
     mapController = MapController(initMapWithUserPosition: true);
@@ -98,6 +101,7 @@ class _InRideScreenState extends State<InRideScreen> {
           // updated balance after subtracting ride fare
           balance = balance - rideFare;
 
+          sprefs.setWalletAmount(balance);
           updateDatabase(_phoneNumber);
 
           Navigator.of(context).pushReplacement(
