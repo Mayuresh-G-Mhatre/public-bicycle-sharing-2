@@ -25,14 +25,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String defaultAvatar = 'assets/avatars/1.png';
   final RegExp _emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$");
-  late String? _nameErrorText = null;
-  late String? _emailErrorText = null;
+  String? _nameErrorText = null;
+  String? _emailErrorText = null;
   int _sharedPrefAvatarInd = 1; // shared prefs //
   late String _name;
   late String _email;
   late String _phoneNumber; // shared prefs //
-  bool nameError = false;
-  bool emailError = false;
+  bool nameError = true;
+  bool emailError = true;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -77,42 +77,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height * 0.05,
                         ),
                       ),
-                      onPressed:
-                          (_nameErrorText == null && _emailErrorText == null)
-                              ? () async {
-                                  if (_formKey.currentState!.validate() &&
-                                      _nameErrorText == null &&
-                                      _emailErrorText == null) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DefaultHomeScreen(),
-                                      ),
-                                    );
-                                    // logic to store avatar index, name, email and phone number in firestore database //
-                                    updateDatabase(widget.phoneNumber);
+                      onPressed: (!nameError && !emailError)
+                          ? () async {
+                              if (_formKey.currentState!.validate() &&
+                                  _nameErrorText == null &&
+                                  _emailErrorText == null) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DefaultHomeScreen(),
+                                  ),
+                                );
+                                // logic to store avatar index, name, email and phone number in firestore database //
+                                updateDatabase(widget.phoneNumber);
 
-                                    Fluttertoast.showToast(
-                                      msg: 'Registration Successfull',
-                                      gravity: ToastGravity.BOTTOM,
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0,
-                                    );
+                                Fluttertoast.showToast(
+                                  msg: 'Registration Successfull',
+                                  gravity: ToastGravity.BOTTOM,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
 
-                                    // // shared pref //
-                                    // await sprefs
-                                    //     .setAvatarIndex(_sharedPrefAvatarInd);
-                                    // await sprefs.setPhoneNumber(_phoneNumber);
-                                    // await sprefs.setName(_name);
-                                    // await sprefs.setEmail(_email);
-                                    // //shared pref //
+                                // // shared pref //
+                                // await sprefs
+                                //     .setAvatarIndex(_sharedPrefAvatarInd);
+                                // await sprefs.setPhoneNumber(_phoneNumber);
+                                // await sprefs.setName(_name);
+                                // await sprefs.setEmail(_email);
+                                // //shared pref //
 
-                                  }
-                                }
-                              : null,
+                              }
+                            }
+                          : null,
                       child: const Text('Enter'),
                     ),
                   ],
@@ -190,10 +189,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             _name = value;
             if (_name.isEmpty) {
               _nameErrorText = 'Name is required';
+              nameError = true;
             } else if (_name.length < 3) {
               _nameErrorText = 'Name must be at least 3 characters';
+              nameError = true;
             } else {
               _nameErrorText = null;
+              nameError = false;
             }
           });
         },
@@ -220,10 +222,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             _email = value;
             if (_email.isEmpty) {
               _emailErrorText = 'Email is required';
+              emailError = true;
             } else if (!_emailRegex.hasMatch(_email)) {
               _emailErrorText = 'Enter a valid email';
+              emailError = true;
             } else {
               _emailErrorText = null;
+              emailError = false;
             }
           });
         },

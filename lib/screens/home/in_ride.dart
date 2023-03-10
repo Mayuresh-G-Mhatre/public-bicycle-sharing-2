@@ -30,14 +30,14 @@ class _InRideScreenState extends State<InRideScreen> {
   String _phoneNumber = '';
   int balance = 0;
 
-  int _amount = 0;
-
-  Future<void> getPhoneNumberAndReadDatabase() async {
+  Future<void> getPhoneNumber() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
       _phoneNumber = phoneNumber!;
     });
+  }
 
+  Future<void> getUserDetailsFS() async {
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
@@ -53,12 +53,13 @@ class _InRideScreenState extends State<InRideScreen> {
 
   @override
   void initState() {
+    getPhoneNumber();
     _stopWatchTimer.setPresetMinuteTime(
         5); // for testing purposes (starts timer from 5 mins)
     _stopWatchTimer.onStartTimer();
 
     mapController = MapController(initMapWithUserPosition: true);
-    getPhoneNumberAndReadDatabase();
+    getUserDetailsFS();
 
     super.initState();
   }

@@ -29,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    getPhoneNumberAndReadDatabase();
+    getPhoneNumber();
+    getUserDetailsFS();
     super.initState();
     // // shared pref //
     // getDepositStatus();
@@ -40,12 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // shared pref //
-  Future<void> getPhoneNumberAndReadDatabase() async {
+  Future<void> getPhoneNumber() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
       _phoneNumber = phoneNumber!;
     });
+  }
 
+  // shared pref //
+  void getUserDetailsFS() async {
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    getPhoneNumberAndReadDatabase();
+    getUserDetailsFS();
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(

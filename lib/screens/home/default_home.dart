@@ -71,7 +71,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   }
 
   void getUserDetailsFS() {
-    // print('pahn in getuserdeta: $_phoneNumber');
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
@@ -92,7 +91,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     setState(() {
       _phoneNumber = phoneNumber!;
     });
-    // print('phone in getphonenum: $_phoneNumber');
 
     getUserDetailsFS();
   }
@@ -113,22 +111,17 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     });
   }
 
-  // void setLoginStatus() async {
-  //   await sprefs.setDepositStatus(true);
-  // }
-
   @override
   void initState() {
-    super.initState();
     getDarkThemeStatus();
     // setLoginStatus();  // checked via contains phone number instead
     getPhoneNumberAndReadDatabase();
-
-    // getUserDetailsFS();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // checkInternet();
     getDarkThemeStatus();
     getUserDetailsFS();
     return Scaffold(
@@ -380,10 +373,6 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   Future updateDatabase(String phoneNumber) async {
     final DocumentReference documentRef =
         FirebaseFirestore.instance.collection('users').doc(phoneNumber);
-
-    // print(_phoneNumber);
-    // print(balance);
-    // print(deposit_paid);
 
     final DocumentSnapshot documentSnapshot = await documentRef.get();
 
