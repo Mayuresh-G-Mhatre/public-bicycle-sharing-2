@@ -34,7 +34,7 @@ class _WalletScreenState extends State<WalletScreen>
     // getPhoneNumberAndReadDatabase();
     // fetch details from database
     // getUserDetailsFS();
-    getPhoneNumber();
+    // getPhoneNumber();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -42,8 +42,7 @@ class _WalletScreenState extends State<WalletScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      getPhoneNumber();
-      getUserDetailsFS();
+      getPhoneNumberAndReadDatabase();
     }
   }
 
@@ -53,15 +52,12 @@ class _WalletScreenState extends State<WalletScreen>
     super.dispose();
   }
 
-  // shared pref //
-  Future<void> getPhoneNumber() async {
+  Future<void> getPhoneNumberAndReadDatabase() async {
     String? phoneNumber = await sprefs.getPhoneNumber();
     setState(() {
       _phoneNumber = phoneNumber!;
     });
-  }
 
-  void getUserDetailsFS() {
     FirebaseFirestore.instance
         .collection('users')
         .doc(_phoneNumber)
@@ -405,7 +401,7 @@ class _WalletScreenState extends State<WalletScreen>
         'deposit_paid': depositPaid,
       });
 
-      getUserDetailsFS();
+      getPhoneNumberAndReadDatabase();
     }
   }
 }
