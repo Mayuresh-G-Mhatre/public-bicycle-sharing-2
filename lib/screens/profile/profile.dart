@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:public_bicycle_sharing/main.dart';
 
 import '../../services/shared_prefs.dart';
 
@@ -26,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String? _nameErrorText = null;
   late String? _emailErrorText = null;
   int _avatarIndex = 1; // shared prefs //
-  String _phoneNumber = ''; // shared prefs //
+  String _phoneNumber = phNo; // shared prefs //
   String _name = '';
   String _email = '';
   bool nameError = false;
@@ -42,11 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController phoneController =
       TextEditingController(text: '+91 $_phoneNumber');
 
-  Future<void> getPhoneNumberAndReadDatabase() async {
-    String? phoneNumber = await sprefs.getPhoneNumber();
-    setState(() {
-      _phoneNumber = phoneNumber!;
-    });
+  void getPhoneNumberAndReadDatabase() async {
+    // String? phoneNumber = await sprefs.getPhoneNumber();
+    // setState(() {
+    //   _phoneNumber = phoneNumber!;
+    // });
 
     FirebaseFirestore.instance
         .collection('users')

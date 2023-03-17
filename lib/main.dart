@@ -5,6 +5,7 @@ import 'screens/loading/splash.dart';
 import 'screens/settings/config.dart';
 import 'services/shared_prefs.dart';
 
+String phNo = '';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -43,6 +44,14 @@ class _MyAppState extends State<MyApp> {
   // }
 
   // shared pref //
+  Future<void> getPhoneNumber() async {
+    String? phoneNumber = await sprefs.getPhoneNumber();
+    setState(() {
+      phNo = phoneNumber!;
+    });
+  }
+
+  // shared pref //
   Future<void> getDarkThemeStatus() async {
     bool? isDark = await sprefs.getDarkThemeStatus();
     setState(() {
@@ -78,6 +87,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // getThemeColor();
+    getPhoneNumber();
     getDarkThemeStatus();
     currentTheme.addListener(() {
       setState(() {});

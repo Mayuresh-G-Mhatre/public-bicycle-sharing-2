@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:public_bicycle_sharing/main.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -29,14 +30,14 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   String defaultAvatar = 'assets/avatars/1.png'; // maybe useless
   int _sharedPrefAvatarInd = 1; // shared prefs //
-  late bool _isDark;
+  bool _isDark = false;
 
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
   int _avatarIndex = 1;
   String _name = 'Loading';
 
-  String _phoneNumber = '';
+  String _phoneNumber = phNo;
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
@@ -70,30 +71,34 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
     ];
   }
 
-  void getUserDetailsFS() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(_phoneNumber)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        setState(() {
-          _avatarIndex = documentSnapshot.get('avatar_index') ?? 1;
-          _name = documentSnapshot.get('name') ?? 'Error';
-        });
-      }
-    });
+  void getUserDetailsFS() async {
+    if (_phoneNumber.isNotEmpty) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(_phoneNumber)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          setState(() {
+            _avatarIndex = documentSnapshot.get('avatar_index') ?? 1;
+            _name = documentSnapshot.get('name') ?? 'Error';
+          });
+        }
+      });
+      // print('****************phone def home: $_phoneNumber');
+    }
   }
 
   // shared pref //
-  Future<void> getPhoneNumberAndReadDatabase() async {
-    String? phoneNumber = await sprefs.getPhoneNumber();
-    setState(() {
-      _phoneNumber = phoneNumber!;
-    });
+  // Future<void> getPhoneNumberAndReadDatabase() async {
+  //   String? phoneNumber = await sprefs.getPhoneNumber();
+  //   setState(() {
+  //     _phoneNumber = phoneNumber!;
+  //   });
+  //   print('after getting phno home: $_phoneNumber');
 
-    getUserDetailsFS();
-  }
+  //   getUserDetailsFS();
+  // }
 
   // shared prefs //
   Future<void> logoutSharedPrefs() async {
@@ -115,7 +120,7 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
   void initState() {
     getDarkThemeStatus();
     // setLoginStatus();  // checked via contains phone number instead
-    getPhoneNumberAndReadDatabase();
+    getUserDetailsFS();
     super.initState();
   }
 

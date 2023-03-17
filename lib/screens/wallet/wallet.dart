@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:public_bicycle_sharing/main.dart';
 
 import 'transactions.dart';
 import '../../services/shared_prefs.dart';
@@ -18,7 +19,7 @@ class _WalletScreenState extends State<WalletScreen>
   SharedPrefGetsNSets sprefs = SharedPrefGetsNSets();
   // shared pref //
 
-  String _phoneNumber = '';
+  String _phoneNumber = phNo;
 
   late double width;
   late double height;
@@ -31,12 +32,12 @@ class _WalletScreenState extends State<WalletScreen>
 
   @override
   void initState() {
-    // getPhoneNumberAndReadDatabase();
+    getPhoneNumberAndReadDatabase();
     // fetch details from database
     // getUserDetailsFS();
     // getPhoneNumber();
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
@@ -52,11 +53,18 @@ class _WalletScreenState extends State<WalletScreen>
     super.dispose();
   }
 
-  Future<void> getPhoneNumberAndReadDatabase() async {
-    String? phoneNumber = await sprefs.getPhoneNumber();
-    setState(() {
-      _phoneNumber = phoneNumber!;
-    });
+  // Future<void> getPhoneNumber() async {
+  //   String? phoneNumber = await sprefs.getPhoneNumber();
+  //   setState(() {
+  //     _phoneNumber = phoneNumber!;
+  //   });
+  // }
+
+  void getPhoneNumberAndReadDatabase() async {
+    // String? phoneNumber = await sprefs.getPhoneNumber();
+    // setState(() {
+    //   _phoneNumber = phoneNumber!;
+    // });
 
     FirebaseFirestore.instance
         .collection('users')
@@ -125,6 +133,23 @@ class _WalletScreenState extends State<WalletScreen>
                             'Balance',
                             textAlign: TextAlign.left,
                           ),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue[50]),
+                            child: const Text(
+                              'Refresh',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            // color: Colors.blue[100],
+                            onPressed: () {
+                              getPhoneNumberAndReadDatabase();
+                              showToast('Refreshed');
+                            },
+                            // icon: const Icon(Icons.refresh_outlined),
+                          )
                         ],
                       ),
                       Column(

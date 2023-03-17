@@ -269,6 +269,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         'avatar_index': _sharedPrefAvatarInd,
         'balance': 0,
         'deposit_paid': false,
+        'location': {},
       });
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:public_bicycle_sharing/main.dart';
 
 import 'qr_scan.dart';
 import '../../services/shared_prefs.dart';
@@ -25,12 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
   late MapController mapController;
 
   int balance = 0;
-  String _phoneNumber = '';
+  String _phoneNumber = phNo;
 
   @override
   void initState() {
-    getPhoneNumber();
     getUserDetailsFS();
+    // getPhoneNumber().then(
+    //   (_) {
+    //   },
+    // );
     super.initState();
     // // shared pref //
     // getDepositStatus();
@@ -41,26 +45,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // shared pref //
-  Future<void> getPhoneNumber() async {
-    String? phoneNumber = await sprefs.getPhoneNumber();
-    setState(() {
-      _phoneNumber = phoneNumber!;
-    });
-  }
+  // Future<void> getPhoneNumber() async {
+  //   String? phoneNumber = await sprefs.getPhoneNumber();
+  //   setState(() {
+  //     _phoneNumber = phoneNumber!;
+  //   });
+  //   print('after getting phno def home: $_phoneNumber');
+  // }
 
   // shared pref //
   void getUserDetailsFS() async {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(_phoneNumber)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        setState(() {
-          balance = documentSnapshot.get('balance') ?? 0;
-        });
-      }
-    });
+    if (_phoneNumber.isNotEmpty) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(_phoneNumber)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          setState(() {
+            balance = documentSnapshot.get('balance') ?? 0;
+          });
+        }
+      });
+      // print('********************phone home: $_phoneNumber');
+    }
+    // print('********************balance: $balance');
   }
 
   @override
